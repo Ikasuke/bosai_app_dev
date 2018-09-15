@@ -18,8 +18,7 @@ gem 'uglifier', '>= 1.3.0'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
-# Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
-gem 'turbolinks', '~> 5'
+
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
@@ -36,6 +35,34 @@ gem 'jbuilder', '~> 2.5'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
+#bootstrap4を使う
+gem 'bootstrap', '> 4.0.0.beta2.1'
+gem 'popper_js', '> 1.12.3'
+gem 'tether-rails'
+
+#calendar表示 bootstrap4用
+gem 'bootstrap4-datetime-picker-rails'
+gem 'momentjs-rails', '>= 2.9.0'
+
+# Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
+gem 'turbolinks', '~> 5'
+
+
+#jquery
+gem 'jquery-rails'
+gem 'jquery-ui-rails'
+gem 'jquery-turbolinks'
+
+#ログイン認証,
+gem 'devise'
+gem 'sidekiq'
+gem 'sinatra'
+gem 'redis-rails'
+gem 'redis'
+
+#ユーザー管理
+gem 'activeadmin'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -49,11 +76,19 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+
+  #debug用
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'pry-byebug'
   gem 'pry-rails'
-  
+
+  #
+  gem 'rubocop'
+
+ #ストラクチャ情報
+  gem 'annotate'
+
 end
 
 
