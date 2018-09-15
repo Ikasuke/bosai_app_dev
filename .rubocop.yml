@@ -1,9 +1,9 @@
-inherit_form: .rubocop_todo.yml
+inherit_from: .rubocop_todo.yml
 
 AllCops:
-    Exclude:
-        -db/**/*
-
+  Exclude:
+    - db/**/*
+    - vendor/**/*
 #classやmoduleの先頭コメント
 Documentation:
   Enabled: false
@@ -13,12 +13,11 @@ Style/AsciiComments:
   Enabled: false
 
 #行長
- Metrics/LineLength:
-   Max: 120
+Metrics/LineLength:
+  Max: 120
 
 #ブロック内の行数
- Metrics/BlockLength:
-   Exclude:
-     - spec/**/*
-     - config/**/*
-       
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*
+    - config/**/*

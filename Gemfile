@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
@@ -35,62 +37,59 @@ gem 'jbuilder', '~> 2.5'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
-#bootstrap4を使う
+# bootstrap4を使う
 gem 'bootstrap', '> 4.0.0.beta2.1'
 gem 'popper_js', '> 1.12.3'
 gem 'tether-rails'
 
-#calendar表示 bootstrap4用
+# calendar表示 bootstrap4用
 gem 'bootstrap4-datetime-picker-rails'
 gem 'momentjs-rails', '>= 2.9.0'
 
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
 
-
-#jquery
+# jquery
 gem 'jquery-rails'
-gem 'jquery-ui-rails'
 gem 'jquery-turbolinks'
+gem 'jquery-ui-rails'
 
-#ログイン認証,
+# ログイン認証,
 gem 'devise'
+gem 'redis'
+gem 'redis-rails'
 gem 'sidekiq'
 gem 'sinatra'
-gem 'redis-rails'
-gem 'redis'
 
-#ユーザー管理
+# ユーザー管理
 gem 'activeadmin'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-
+  gem 'byebug', platforms: %i[mri mingw x64_mingw]
 end
 
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
-  gem 'web-console', '>= 3.3.0'
   gem 'listen', '>= 3.0.5', '< 3.2'
+  gem 'web-console', '>= 3.3.0'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 
-  #debug用
+  # debug用
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'pry-byebug'
   gem 'pry-rails'
 
-  #
+  # コードチェック
+  gem 'overcommit'
   gem 'rubocop'
 
- #ストラクチャ情報
+  # ストラクチャ情報
   gem 'annotate'
-
 end
 
-
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
