@@ -2,13 +2,13 @@
 
 # == Schema Information
 #
-# Table name: categories
+# Table name: murmurs
 #
 #  id            :bigint(8)        not null, primary key
+#  murmur_detail :text(65535)      not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
-#  category_name :string(255)      default(""), not null
 #
 
-class Category < ApplicationRecord
+class Murmur < ApplicationRecord
 end
