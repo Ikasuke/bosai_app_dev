@@ -8,6 +8,7 @@
 #  remind_email :string(255)      default(""), not null
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
+#  user_id      :bigint(8)
 #
 
 class Remindmail < ApplicationRecord

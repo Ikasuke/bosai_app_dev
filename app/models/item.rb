@@ -14,6 +14,8 @@
 #  item_public_memo  :text(65535)
 #  item_private_memo :text(65535)
 #  item_open_flag    :boolean          default(TRUE), not null
+#  user_id           :bigint(8)
+#  category_id       :bigint(8)
 #
 
 class Item < ApplicationRecord

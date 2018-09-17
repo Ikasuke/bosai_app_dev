@@ -8,6 +8,7 @@
 #  murmur_detail :text(65535)      not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
+#  user_id       :bigint(8)
 #
 
 class Murmur < ApplicationRecord
