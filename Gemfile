@@ -56,10 +56,13 @@ gem 'jquery-ui-rails'
 
 # ログイン認証,
 gem 'devise'
-gem 'redis'
-gem 'redis-rails'
-gem 'sidekiq'
+# gem 'redis'
+# gem 'redis-rails'
+# gem 'sidekiq'
 gem 'sinatra'
+
+# 画像アップローダ
+gem 'paperclip', '~> 5.0.0'
 
 # ユーザー管理
 gem 'activeadmin'
