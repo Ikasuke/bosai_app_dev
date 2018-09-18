@@ -14,7 +14,7 @@ Style/AsciiComments:
 
 #行長
 Metrics/LineLength:
-  Max: 120
+  Max: 160
 
 #ブロック内の行数
 Metrics/BlockLength:

@@ -1,0 +1,22 @@
+<nav class = "navbar bg-warning navbar-dark">
+  <a class = "navbar-brand" href="/"><%=ApplicationHelper::APP_NAME %></a>
+    <% if user_signed_in? %>
+       <ul class="nav justfy-content-end">
+
+           <%if @user.role == "admin" %>
+
+            <%= link_to  admin_users_path, :target=>["_blank"],class: "nav-link text-secondary" do %>
+                 <li class="nav-item">アドミンページ</li>
+            <% end %>
+
+           <% end %>
+            <li class="nav-item">
+              <%= link_to "プロフィール編集", edit_user_registration_path, class: "nav-link text-secondary"%>
+            </li>
+            <li class="nav-item">
+              <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "nav-link text-secondary"%>
+            </li>
+
+        </ul>
+    <% end %>
+</nav>
