@@ -33,6 +33,7 @@
 #
 
 class User < ApplicationRecord
+  # #devise
   # Include default devise modules. Others available are:
   # :omniauthable
   devise :database_authenticatable, :registerable,
@@ -43,7 +44,7 @@ class User < ApplicationRecord
                     styles: { medium: '300x300>', thumb: '100x100>' },
                     default_url: 'http://localhost:3000/rocket.jpg'
 
-  # validation
+  ## validation
   validates_attachment_content_type :avatar, content_type: ['image/jpeg', 'image/gif', 'image/png']
   validates :name, presence: true # ,uniquness: { case_sensitive: false}
   validates_format_of :name, with: /^[a-zA-Z0-9_¥.]*$/, multiline: true
@@ -53,16 +54,7 @@ class User < ApplicationRecord
     errors.add(:name, :invalid) if User.where(email: name).exists?
   end
 
-  # ログイン属性を追加する
-
-  # def login
-  #   @login || name || email
-  # end
-
-  # rubocopする前の書き方
-  #
-  #  attr_accessor :login
-
+  ## ログイン属性を追加する
   # ゲッター
   def login
     @login || name || email
@@ -74,7 +66,7 @@ class User < ApplicationRecord
   #  @login = value
   # end
 
-  # ログイン時のアクションを変更する name or email
+  ## ログイン時のアクションを変更する name or emailでログインできる
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup
     conditions[:email]&.downcase!
@@ -86,6 +78,10 @@ class User < ApplicationRecord
     ).first
   end
 
+  # #管理者権限
+  enum role: { user: 0, admin: 1 }
+
+  # #リレーション
   # favoriteをuserと２つ　つなげるしくみ
   has_many :favorites_of_from_user, class_name: 'Favorite', foreign_key: 'from_user_id', dependent: :destroy
   has_many :favorites_of_to_user, class_name: 'Favorite', foreign_key: 'to_user_id', dependent: :destroy
