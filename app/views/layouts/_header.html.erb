@@ -4,9 +4,11 @@
        <ul class="nav justfy-content-end">
 
            <%if @user.role == "admin" %>
-            <li class="nav-item">
-              <%= link_to 'アドミンページ',  admin_users_path, class: "nav-link text-secondary"%>
-            </li>
+
+            <%= link_to  admin_users_path, :target=>["_blank"],class: "nav-link text-secondary" do %>
+                 <li class="nav-item">アドミンページ</li>
+            <% end %>
+
            <% end %>
             <li class="nav-item">
               <%= link_to "プロフィール編集", edit_user_registration_path, class: "nav-link text-secondary"%>
