@@ -23,7 +23,7 @@ class Item < ApplicationRecord
   # user
   belongs_to :user
   # category
-  belogns_to :category
+  belongs_to :category
   # comments
   has_many :comments, dependent: :destroy
   # likeitems
