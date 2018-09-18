@@ -25,11 +25,15 @@
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  name                   :string(255)      default(""), not null
-#  role                   :integer          default(0), not null
+#  role                   :integer          default("user"), not null
 #  avatar_file_name       :string(255)
 #  avatar_content_type    :string(255)
 #  avatar_file_size       :integer
 #  avatar_updated_at      :datetime
+#  public_name            :string(255)      default(""), not null
+#  area1                  :string(255)      default(""), not null
+#  area2                  :string(255)
+#  family                 :string(255)
 #
 
 class User < ApplicationRecord
@@ -82,10 +86,21 @@ class User < ApplicationRecord
   enum role: { user: 0, admin: 1 }
 
   # #リレーション
+  # items
+  has_many :items, dependent: :destroy
+  # comments
+  has_many :comments, dependent: :destroy
+  # remindmails
+  has_many :remindmails, dependent: :destroy
+  # murmurs
+  has_many :murmurs, dependent: :destroy
+  # favorites
   # favoriteをuserと２つ　つなげるしくみ
   has_many :favorites_of_from_user, class_name: 'Favorite', foreign_key: 'from_user_id', dependent: :destroy
   has_many :favorites_of_to_user, class_name: 'Favorite', foreign_key: 'to_user_id', dependent: :destroy
   # 自己結合するしくみ
   has_many :friends_of_from_user, through: :favorites_of_from_user, source: 'to_user'
   has_many :friends_of_to_user, through: :favorites_of_to_user, source: 'from_user'
+  # likeitems
+  has_many :likeitems, dependent: :destroy
 end

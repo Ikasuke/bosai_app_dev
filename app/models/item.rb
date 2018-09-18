@@ -19,4 +19,13 @@
 #
 
 class Item < ApplicationRecord
+  # #リレーション
+  # user
+  belongs_to :user
+  # category
+  belogns_to :category
+  # comments
+  has_many :comments, dependent: :destroy
+  # likeitems
+  has_many :likeitems, dependent: :destroy
 end

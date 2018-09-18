@@ -11,4 +11,7 @@
 #
 
 class Category < ApplicationRecord
+  # #リレーション
+  # items
+  has_many :items, dependent: :destroy
 end

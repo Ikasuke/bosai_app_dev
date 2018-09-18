@@ -10,4 +10,9 @@
 #
 
 class Likeitem < ApplicationRecord
+  # #リレーション
+  # user
+  belongs_to :user
+  # item
+  belongs_to :item
 end

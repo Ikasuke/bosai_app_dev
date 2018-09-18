@@ -12,4 +12,7 @@
 #
 
 class Remindmail < ApplicationRecord
+  # #リレーション
+  # user
+  belongs_to :user
 end
