@@ -1,5 +1,9 @@
-<p>hello ,<%= @user.name %></p>
 
+<div class="item">
+  <nav class = "navbar bg-warning navbar-dark box-header">
+    <a class = "navbar-brand" href="/">防災グッズ</a>
+  </nav>
+</div>
 
 <% content_for :sidebar_left do %>
 <div class= 'profile'>
@@ -19,8 +23,12 @@
 <tr><td>名前:</td><td><%= @user.public_name %></td></tr>
 <tr><td>エリア:</td> <td><%= @user.area1 %> / <%= @user.area2 %></td></tr>
 <tr><td>家族構成:</td> <td><%= @user.family %></td></tr>
-
-
+<% if @remindmails.nil? %>
+<% else%>
+  <% @remindmails.each_with_index do |remindmail, i| %>
+       <tr><td><%= "メールアドレス#{i+1}"%>:</td> <td><%= remindmail.remind_email %></td></tr>
+  <% end %>
+ <% end %>
 </table>
 
 </div>

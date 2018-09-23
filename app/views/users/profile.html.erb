@@ -1,25 +1,28 @@
-
-<%= form_with(model:@user ,local: true) do |form| %>
-   <% if @user.errors.any? %>
-        <div id="error_explanation">
-           <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
-           <ul>
-             <% user.errors.full_messages.each do |message| %>
-                  <li><%= message %></li>
-             <% end %>
-           </ul>
-        </div>
-  <% end %>
-
 <!--  プロフィール編集  -->
-
 <div class="profile_edit">
      <!-- プロフィールのヘッダ -->
      <nav class = "navbar bg-warning navbar-dark box-header">
        <a class = "navbar-brand" href="/">プロフィール編集</a>
      </nav>
 
+    <!--  公開用プロフィールの編集 -->
+     <h5 class="form-group" align="left">プロフィール1(公開情報)</h5>
+     <hr>
+     <%= form_with(model:@user ,local: true) do |form| %>
+        <!--  @userのエラーがあるか確認。あった場合、@user.errors.full_messagesをすべて出力 -->
+        <% if @user.errors.any? %>
+             <div id="error_explanation">
+                <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+                <ul>
+                  <% user.errors.full_messages.each do |message| %>
+                       <li><%= message %></li>
+                  <% end %>
+                </ul>
+             </div>
+       <% end %>
+
      <div class="col-md-9">
+
           <!-- avatar-->
           <div class = "py-2">
                <%= image_tag current_user.avatar.url, class: "border rounded-circle" %>
@@ -51,11 +54,44 @@
       <div class="actions">
       <%= form.submit "更新する",:class=>"btn btn-primary" %>
        <%= link_to"戻る", home_path,:class=> 'btn gray'  %>
-
       </div>
+      <% end %>  <!--  form_with end -->
+       <hr>
+    <!--  公開用プロフィールの編集end -->
 
+    <!--  送信用メールアドレスの編集 -->
+      <h5 class="form-group" align="left">プロフィール2(期限送信用メールアドレス)</h5>
+      <hr>
+     <div class="col-md-9">
+       <% if @remindmails.nil? %>
+          <!-- 何もしない -->
+       <% else %>
+           <% @remindmails.each_with_index do |remindmail, i| %>
+               <%= form_with(model:remindmail ,local: true) do |form| %>
+                 <div class="field form-inline">
+                   <span class="form-group">
+                       <%= form.label :"メールアドレス#{i+1} " %>
+                       <%= form.text_field :remind_email, class: "form-control" %>
+                   </span>
+                   <span class="actions">
+                       <%= form.submit "更新する",:class=>"btn btn-primary" %>
+                   </span>
+                 </div>
+
+               <% end %>  <!--  remindmail form_with -->
+           <% end %>   <!--  remindmails.each end -->
+       <% end %>   <!--  if end -->
+       <br>
+       <%= form_with model: Remindmail.new do |form|%>
+          <div class="field form-group">
+             <%= form.label :"新規メールアドレス" %>
+             <%= form.text_field :remind_email, placeholder: 'メール入力',class:"form-control" %>
+          </div>
+          <div class="actions">
+             <%= form.submit "作成する",:class=>"btn btn-success" %>
+             <%= link_to"戻る", home_path,:class=> 'btn gray'  %>
+          </div>
+       <% end %>   <!--  form_with new end -->
+     </div> <!-- col-md-9 div -->
 
 </div>  <!-- profile_edit end-->
-
-
-<% end %>  <!--  form_with end -->

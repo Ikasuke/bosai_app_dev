@@ -24,13 +24,18 @@ margin: 0 auto;
 }
 
 #service{
-
    width: 1000px;
    text-align: center;
 }
 
 .profile{
-  height: 500px;
+  /*height: 500px;  */
+  border-radius: 20px;
+  border: solid 1px;
+   text-align: center;
+}
+.item{
+  height: 1000px;
   border-radius: 20px;
   border: solid 1px;
    text-align: center;
@@ -55,11 +60,11 @@ margin: 0 auto;
   float: left;
   width: 25%;
    height: 1000px;
-  margin-right: 1%;
+  margin-right: 5%;
 }
 
 #center{
   float: left;
-  width: 74%;
+  width: 70%;
  height: 1000px;
 }

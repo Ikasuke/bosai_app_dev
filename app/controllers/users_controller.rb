@@ -3,6 +3,14 @@ class UsersController < ApplicationController
 
 def profile
   @user = current_user
+  # リマインドメールを表示するために登録されているものを呼び出す。なければ新規登録のみ表示する。
+  remindmails = current_user.remindmails
+   if remindmails.empty? then
+      # 新規に作るようにする controllerではなにもしない
+   else
+        @remindmails = remindmails
+   end
+
 end
 
 def update
