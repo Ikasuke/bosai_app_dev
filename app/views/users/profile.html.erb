@@ -1,0 +1,61 @@
+
+<%= form_with(model:@user ,local: true) do |form| %>
+   <% if @user.errors.any? %>
+        <div id="error_explanation">
+           <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+           <ul>
+             <% user.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+             <% end %>
+           </ul>
+        </div>
+  <% end %>
+
+<!--  プロフィール編集  -->
+
+<div class="profile_edit">
+     <!-- プロフィールのヘッダ -->
+     <nav class = "navbar bg-warning navbar-dark box-header">
+       <a class = "navbar-brand" href="/">プロフィール編集</a>
+     </nav>
+
+     <div class="col-md-9">
+          <!-- avatar-->
+          <div class = "py-2">
+               <%= image_tag current_user.avatar.url, class: "border rounded-circle" %>
+           </div>
+          <div class = "form-group">
+               <%= form.label :avatar %><br />
+              <%= form.file_field :avatar %>
+          </div>
+          <!--  名前、エリア、家族構成 -->
+          <div class="field form-group">
+                <%= form.label :"公開用名前(公開されます)" %>
+                <%= form.text_field :public_name, class: "form-control" %>
+          </div>
+          <div class="field form-group">
+                <%= form.label :"エリア1(公開されます)" %>
+                <%= form.text_field :area1, class: "form-control"   %>
+          </div>
+          <div class="field form-group">
+                <%= form.label :"エリア2(より詳細なエリア) (公開されます)" %>
+                <%= form.text_field :area2, class: "form-control"  %>
+          </div>
+          <div class="field form-group">
+                <%= form.label :"家族構成(公開されます)" %>
+                <%= form.text_field :family, class: "form-control"  %>
+          </div>
+
+     </div>  <!-- col-md-9 end -->
+
+      <div class="actions">
+      <%= form.submit "更新する",:class=>"btn btn-primary" %>
+       <%= link_to"戻る", home_path,:class=> 'btn gray'  %>
+
+      </div>
+
+
+</div>  <!-- profile_edit end-->
+
+
+<% end %>  <!--  form_with end -->

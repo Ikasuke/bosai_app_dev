@@ -34,7 +34,10 @@ margin: 0 auto;
   border-radius: 20px;
   border: solid 1px;
    text-align: center;
+}
 
+.gray{
+  background: #EEEEEE;
 }
 
 .card{
@@ -50,13 +53,13 @@ margin: 0 auto;
 #left{
    /* background: #EEEEEE;   */
   float: left;
-  width: 20%;
+  width: 25%;
    height: 1000px;
   margin-right: 1%;
 }
 
 #center{
   float: left;
-  width: 79%;
+  width: 74%;
  height: 1000px;
 }
