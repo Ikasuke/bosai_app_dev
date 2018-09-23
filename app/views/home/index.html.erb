@@ -1,1 +1,21 @@
 <p>hello ,<%= @user.name %></p>
+
+
+<% content_for :sidebar_left do %>
+<div class= 'profile'>
+  <nav class = "navbar bg-warning navbar-dark box-header">
+    <a class = "navbar-brand" href="/">プロフィール</a>
+  </nav>
+
+  <div class="col-md-10">
+       <div class= "card p-4">
+             <%= image_tag current_user.avatar.url, class: "card-img-top rounded-circle"%>
+       </div>
+  </div>
+
+<table>
+<tr><td>名前:</td><td><%= @user.name %></td></tr>
+<tr><td>エリア:</td> <td><%= @user.area1 %><%= @user.area2 %></td></tr>
+<tr><td>家族構成:</td> <td><%= @user.family %></td></tr>
+</table>
+<% end %>
