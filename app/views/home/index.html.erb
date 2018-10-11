@@ -1,9 +1,57 @@
 
-<div class="item">
+<div class="items">
   <nav class = "navbar bg-warning navbar-dark box-header">
     <a class = "navbar-brand" href="/">防災グッズ</a>
   </nav>
+<table class="table">
+<tr><td>
+  <div class="item">
+  <nav>
+  <a class = "navbar-brand" href="/">防災グッズ</a>
+  </nav>
+  </div>
+ </td>
+ <td>
+  <div class="item">
+  <nav>
+    <a class = "navbar-brand" href="/">防災グッズ</a>
+  </nav>
+  </div>
+</td>
+<td>
+  <div class="item">
+  <nav>
+    <a class = "navbar-brand" href="/">防災グッズ</a>
+  </nav>
+  </div>
+</td>
+</tr>
+<tr><td>
+  <div class="item">
+  <nav>
+  <a class = "navbar-brand" href="/">防災グッズ</a>
+  </nav>
+  </div>
+ </td>
+ <td>
+  <div class="item">
+  <nav>
+    <a class = "navbar-brand" href="/">防災グッズ</a>
+  </nav>
+  </div>
+</td>
+<td>
+  <div class="item">
+  <nav>
+    <a class = "navbar-brand" href="/">防災グッズ</a>
+  </nav>
+  </div>
+</td>
+</tr>
+</table>
+
 </div>
+
 
 <% content_for :sidebar_left do %>
 <div class= 'profile'>
@@ -29,7 +77,15 @@
        <tr><td><%= "メールアドレス#{i+1}"%>:</td> <td><%= remindmail.remind_email %></td></tr>
   <% end %>
  <% end %>
-</table>
 
+ <%if @user.role == "admin" %>
+  <tr><td></td>
+  <td><%= link_to "アドミンページ", admin_users_path %></td></tr>
+<% end %>
+
+</table>
 </div>
+
+
+
 <% end %>

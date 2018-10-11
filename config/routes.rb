@@ -18,5 +18,7 @@ Rails.application.routes.draw do
  ##  remindmail model
  resources :remindmails
 
+ ##item model
+ resources :items
 
 end

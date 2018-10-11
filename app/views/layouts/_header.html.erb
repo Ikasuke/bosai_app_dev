@@ -3,13 +3,7 @@
     <% if user_signed_in? %>
        <ul class="nav justfy-content-end">
 
-           <%if @user.role == "admin" %>
-
-            <%= link_to  admin_users_path, :target=>["_blank"],class: "nav-link text-secondary" do %>
-                 <li class="nav-item">アドミンページ</li>
-            <% end %>
-
-           <% end %>
+       
             <li class="nav-item">
               <%= link_to "ログイン情報編集", edit_user_registration_path, class: "nav-link text-secondary"%>
             </li>
@@ -25,7 +19,7 @@
 <table class="table table-bordered table-hover" id = "service" align="center">
   <tr>
    <td><%= link_to"グッズ管理", home_path %> </td>
-   <td>グッズ登録</td>
+   <td><%= link_to"グッズ登録", new_item_path %></td>
    <td>防災情報</td>
    <td>みんなのグッズ</td>
    <td> つながり</td>

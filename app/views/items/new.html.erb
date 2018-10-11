@@ -1,0 +1,14 @@
+<p> registration </p>
+<div class="items">
+
+<%= form_with(model:@item ,local: true) do |form| %>
+    <div class="field ">
+    <%= form.label :"名前" %>
+    <%= form.text_field :item_name%>
+</div>
+
+<% end %>  <!--  form_with end -->
+
+
+
+</div>
