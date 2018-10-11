@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 ## no model
   root 'start#index'
   get 'home', to: 'home#index'
-
+  get 'adminhome', to: 'home#adminhome'
 ## user model
  get 'user/profile', to: 'users#profile'
  resources :users
@@ -20,5 +20,8 @@ Rails.application.routes.draw do
 
  ##item model
  resources :items
+
+ ##category model
+ resources :categories
 
 end

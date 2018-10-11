@@ -3,14 +3,37 @@
   <nav class = "navbar bg-warning navbar-dark box-header">
     <a class = "navbar-brand" href="/">防災グッズ</a>
   </nav>
+
 <table class="table">
-<tr><td>
-  <div class="item">
-  <nav>
-  <a class = "navbar-brand" href="/">防災グッズ</a>
-  </nav>
-  </div>
- </td>
+<tr>
+  
+    
+  <% if @items.nil? %>
+  <% else%>
+   <% @items.each do |item| %>
+   <td>
+   <div class="item">
+      <div class="col-md-12">
+        <div class= "card p-4">
+          <%= image_tag item.picture.url, class: "card-img-top"%>
+        </div>
+      </div>
+
+       
+      <table class="table">
+       <tr><td><%= "名前"%>:</td> <td><%= item.item_name %></td></tr>
+       <tr><td><%= "数量"%>:</td> <td><%= item.item_volume %></td></tr>
+       <tr><td><%= "期限"%>:</td> <td><%= item.item_expiry %></td></tr>
+       </table>
+    </div>
+  </td>
+   <% end %>
+  <% end %>
+
+
+
+
+ 
  <td>
   <div class="item">
   <nav>
@@ -80,7 +103,7 @@
 
  <%if @user.role == "admin" %>
   <tr><td></td>
-  <td><%= link_to "アドミンページ", admin_users_path %></td></tr>
+  <td><%= link_to "アドミンページ", admin_users_path, :target=>["_blank"] %></td></tr>
 <% end %>
 
 </table>
