@@ -15,36 +15,42 @@
  */
 
 @import "bootstrap";
+@import "tempusdominus-bootstrap-4.css";
 
-
-.container{
-/*width: 1800px;
-margin: 0 auto;
-*/
-}
 
 #service{
    width: 1000px;
    text-align: center;
 }
 
+#left{
+  /* background: #EEEEEE;   */
+ float: left;
+ width: 25%;
+  height: 1000px;
+ margin-right: 5%;
+}
+
+#center{
+ float: left;
+ width: 70%;
+height: 1000px;
+}
+
+
+
 .profile{
-  /*height: 500px;  */
   border-radius: 20px;
   border: solid 1px;
    text-align: center;
 }
 .items{
-  height: 1000px;
   border-radius: 20px;
   border: solid 1px;
    text-align: center;
 }
 
 .item{
-  
-  width: 200px;
-  border: solid 1px;
    text-align: center;
 }
 
@@ -63,16 +69,3 @@ margin: 0 auto;
 
 }
 
-#left{
-   /* background: #EEEEEE;   */
-  float: left;
-  width: 25%;
-   height: 1000px;
-  margin-right: 5%;
-}
-
-#center{
-  float: left;
-  width: 70%;
- height: 1000px;
-}

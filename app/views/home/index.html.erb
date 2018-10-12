@@ -1,85 +1,41 @@
 
-<div class="items">
-  <nav class = "navbar bg-warning navbar-dark box-header">
+<div class="items container ">
+  <nav class = "navbar bg-warning navbar-dark box-header row">
     <a class = "navbar-brand" href="/">防災グッズ</a>
   </nav>
-
-<table class="table">
-<tr>
-  
-    
-  <% if @items.nil? %>
-  <% else%>
-   <% @items.each do |item| %>
-   <td>
-   <div class="item">
-      <div class="col-md-12">
-        <div class= "card p-4">
-          <%= image_tag item.picture.url, class: "card-img-top"%>
-        </div>
-      </div>
-
-       
-      <table class="table">
-       <tr><td><%= "名前"%>:</td> <td><%= item.item_name %></td></tr>
-       <tr><td><%= "数量"%>:</td> <td><%= item.item_volume %></td></tr>
-       <tr><td><%= "期限"%>:</td> <td><%= item.item_expiry %></td></tr>
-       </table>
-    </div>
-  </td>
-   <% end %>
-  <% end %>
-
-
 
 
  
- <td>
-  <div class="item">
-  <nav>
-    <a class = "navbar-brand" href="/">防災グッズ</a>
-  </nav>
-  </div>
-</td>
-<td>
-  <div class="item">
-  <nav>
-    <a class = "navbar-brand" href="/">防災グッズ</a>
-  </nav>
-  </div>
-</td>
-</tr>
-<tr><td>
-  <div class="item">
-  <nav>
-  <a class = "navbar-brand" href="/">防災グッズ</a>
-  </nav>
-  </div>
- </td>
- <td>
-  <div class="item">
-  <nav>
-    <a class = "navbar-brand" href="/">防災グッズ</a>
-  </nav>
-  </div>
-</td>
-<td>
-  <div class="item">
-  <nav>
-    <a class = "navbar-brand" href="/">防災グッズ</a>
-  </nav>
-  </div>
-</td>
-</tr>
-</table>
+  <div class="row" >
+   <% if @items.nil? %>
+   <% else%>
+      <% @items.each do |item| %>
+  
+      <div class="item col-md-4">
+        <div class="col-md-10">
+          <div class= "card p-4">
+            <%= image_tag item.picture.url, class: "card-img-top"%>
+          </div> <!-- card-->
+        </div>  <!-- col-md-->
 
-</div>
+       
+        <table class="table">
+          <tr><td><%= "名前"%>:</td> <td><%= item.item_name %></td></tr>
+          <tr><td><%= "数量"%>:</td> <td><%= item.item_volume %></td></tr>
+          <tr><td><%= "期限"%>:</td> <td><%= item.item_expiry.strftime('%Y年%m月%d日') %></td></tr>
+        </table>
+     </div> <!-- item-->
+     <% end %>
+  <% end %>
+    </div> <!-- row -->
+
+</div>  <!-- items-->
 
 
 <% content_for :sidebar_left do %>
 <div class= 'profile'>
   <nav class = "navbar bg-warning navbar-dark box-header">
-    <a class = "navbar-brand" href="/">プロフィール</a>
+    <a class = "navbar-brand" href="/user/profile">プロフィール</a>
     <p><%= link_to '編集', user_profile_path %></p>
   </nav>
 
