@@ -3,34 +3,67 @@
   <nav class = "navbar bg-warning navbar-dark box-header row">
     <a class = "navbar-brand" href="/">防災グッズ</a>
   </nav>
-
-
- 
-  <div class="row" >
-   <% if @items.nil? %>
-   <% else%>
-      <% @items.each do |item| %>
   
-      <div class="item col-md-4">
-        <div class="col-md-10">
-          <div class= "card p-4">
-            <%= image_tag item.picture.url, class: "card-img-top"%>
-          </div> <!-- card-->
-        </div>  <!-- col-md-->
+  <!-- タブボタン部分 -->
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a href="#tab1" class="nav-link active" data-toggle="tab">全て</a>
+  </li>
+  <li class="nav-item">
+    <a href="#tab2" class="nav-link" data-toggle="tab">カテゴリー別</a>
+  </li>
+  <li class="nav-item">
+    <a href="#tab3" class="nav-link" data-toggle="tab">期限近い</a>
+  </li>
+  <li class="nav-item">
+    <a href="#tab4" class="nav-link" data-toggle="tab">コメント</a>
+  </li>
+</ul>
 
-       
-        <table class="table">
-          <tr><td><%= "名前"%>:</td> <td><%= item.item_name %></td></tr>
-          <tr><td><%= "数量"%>:</td> <td><%= item.item_volume %></td></tr>
-          <tr><td><%= "期限"%>:</td> <td><%= item.item_expiry.strftime('%Y年%m月%d日') %></td></tr>
-        </table>
-     </div> <!-- item-->
-     <% end %>
-  <% end %>
-    </div> <!-- row -->
+    <br>
+   <div class="tab-content">
+     <div id="tab1" class="tab-pane active">
+       <div class="row" >
+         <% if @items.nil? %>
+         <% else%>
+           <% @items.each do |item| %>
+               <div class="item col-md-4">
+                <%= link_to edit_item_path(item) do %>
+                 <div class="col-md-10">
+                   <div class= " p-3 item_pic">
+                      <%= image_tag item.picture.url, class: "card-img-top"%>
+                   </div> <!-- item_pic-->
+                 </div>  <!-- col-md-->
+                <% end %> <!-- link_to end -->
+                 <table class="table">
+                   <tr><td><%= "名前"%>:</td> <td><%= item.item_name %></td></tr>
+                   <tr><td><%= "数量"%>:</td> <td><%= item.item_volume %></td></tr>
+                   <% if item.item_expiry.blank? %>
+                   <tr><td><%= "期限"%>:</td> <td> なし </td></tr>
+                   <% else %>
+                   <tr><td><%= "期限"%>:</td> <td><%= item.item_expiry.strftime('%Y年%m月%d日') %></td></tr>
+                   <% end %>  <!-- if item.expiry end-->
+                 </table>
+               </div> <!-- item-->
+            <% end %> <!-- @items.each end-->
+         <% end %>  <!-- if end -->
+        </div> <!-- row -->
+     </div>   <!-- tab1 -->
+     <div id="tab2" class="tab-pane">
 
-</div>  <!-- items-->
 
+     </div>  <!-- tab2-->
+     <div id="tab3" class="tab-pane">
+
+
+      </div>  <!-- tab3-->
+      <div id="tab4" class="tab-pane">
+
+
+        </div>  <!-- tab4-->
+
+    </div>  <!-- tab-content -->
+</div>  <!-- items container -->
 
 <% content_for :sidebar_left do %>
 <div class= 'profile'>

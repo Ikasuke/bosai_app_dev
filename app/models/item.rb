@@ -11,7 +11,7 @@
 #  item_expiry          :datetime
 #  item_public_memo     :text(65535)
 #  item_private_memo    :text(65535)
-#  item_open_flag       :boolean          default(TRUE), not null
+#  item_open_flag       :boolean          default("公開する"), not null
 #  user_id              :bigint(8)
 #  category_id          :bigint(8)
 #  picture_file_name    :string(255)

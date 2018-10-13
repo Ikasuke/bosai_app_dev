@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_11_090153) do
+ActiveRecord::Schema.define(version: 2018_10_13_032743) do
 
   create_table "categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -57,6 +57,10 @@ ActiveRecord::Schema.define(version: 2018_10_11_090153) do
   create_table "likeitems", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.bigint "item_id"
+    t.index ["item_id"], name: "index_likeitems_on_item_id"
+    t.index ["user_id"], name: "index_likeitems_on_user_id"
   end
 
   create_table "murmurs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -115,6 +119,8 @@ ActiveRecord::Schema.define(version: 2018_10_11_090153) do
   add_foreign_key "comments", "users"
   add_foreign_key "items", "categories"
   add_foreign_key "items", "users"
+  add_foreign_key "likeitems", "items"
+  add_foreign_key "likeitems", "users"
   add_foreign_key "murmurs", "users"
   add_foreign_key "remindmails", "users"
 end

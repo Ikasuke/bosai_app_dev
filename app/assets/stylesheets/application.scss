@@ -58,9 +58,17 @@ height: 1000px;
 .gray{
   background: #EEEEEE;
 }
+.red{
+  background: #D03000;
+  color: #FFFFFF;
+}
 
 .card{
     border:solid 0px;
+}
+
+.item_pic{
+  border:solid 1px;
 }
 
 .box-header{
@@ -68,4 +76,3 @@ height: 1000px;
   border-top-right-radius: 20px;
 
 }
-

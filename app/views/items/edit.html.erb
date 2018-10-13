@@ -1,0 +1,67 @@
+<p> edit  </p>
+
+
+<%= form_with(model: @item, local: true) do |form| %>
+
+<!--name-->    
+<div class="field ">
+    <%= form.label :"名前" %>
+    <%= form.text_field :item_name%>
+  </div>
+
+<!-- picture-->
+ <div class="col-md-3">
+    <div class= " p-3 item_pic">
+        <%= image_tag @item.picture.url, class: "card-img-top"%>
+    </div> <!-- item_pic-->
+ </div>  <!-- col-md-->
+ <div class = "form-group">
+    <%= form.label :画像を選択 %><br />
+    <%= form.file_field :picture %>
+ </div>
+
+ <p>
+    <strong>登録日</strong>
+    <%= @item.created_at.strftime('%Y年%m月%d日')  %>
+  </p>
+
+   <!-- category-->
+   <%= form.select :category_id, @category_selects,{:prompt => "category?"}, {:class => "btn category_tab"} %>
+     
+   <!--数量-->    
+        <div class="field ">
+          <%= form.label :"数量" %>
+          <%= form.text_field :item_volume%>
+        </div>
+  
+   <!--期限--> 
+        <div class="field">   
+       <span class="input-group date" id="datetimepicker1" data-target-input="nearest">
+            <%= form.text_field(:item_expiry, placeholder: '期限',
+                 class: "form-control datetimepicker-input", data: {target:"#datetimepicker1"}) %>
+            <span class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                <span class="input-group-text"><i class="fas fa-calendar-plus"></i></span>
+           </span>
+       </span>
+         </div>
+   <!--public_memo-->    
+   <div class="field ">
+      <%= form.label :"公開用memo" %>
+      <%= form.text_area :item_public_memo%>
+    </div>
+  <!--private_memo-->    
+  <div class="field ">
+      <%= form.label :"非公開memo" %>
+      <%= form.text_area :item_private_memo%>
+    </div>
+  
+  <div class="field">
+      <%= form.label :"公開する" %>
+      <%= form.check_box :item_open_flag, {},  "公開する", "公開しない"%>
+  </div>
+
+  <%= form.submit "更新する", :class=>"btn btn-info" %>
+  <%= link_to 'Destroy', @item, method: :delete, data: { confirm: '削除します。よろしいですか?' }, class: 'btn red' %>
+  <%= link_to "戻る", home_path, class: 'btn btn-default gray' %>
+  
+<% end %> <!-- form_with end -->
