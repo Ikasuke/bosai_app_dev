@@ -22,6 +22,8 @@ class HomeController < ApplicationController
 
  def adminhome
   @categories = Category.all
+
+  render :layout => 'admin.html.erb'
  end
 
 end   #class end

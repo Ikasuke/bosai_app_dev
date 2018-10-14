@@ -1,0 +1,16 @@
+<nav class = "navbar bg-warning navbar-dark">
+        <a class = "navbar-brand" href="/"><%=ApplicationHelper::APP_NAME %></a>
+          <% if user_signed_in? %>
+             <ul class="nav justfy-content-end">
+      
+             
+                  <li class="nav-item">
+                    <%= link_to "ログイン情報編集", edit_user_registration_path, class: "nav-link text-secondary"%>
+                  </li>
+                  <li class="nav-item">
+                    <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "nav-link text-secondary"%>
+                  </li>
+      
+              </ul>
+          <% end %>
+      </nav>

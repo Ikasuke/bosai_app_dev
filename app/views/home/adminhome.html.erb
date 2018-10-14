@@ -1,17 +1,32 @@
 <h1> これは管理者用ページです </h1>
 
 <ul>
-  <li>  <%= link_to 'ログイン画面へ',  home_path %> </li>
+  <li>  <%= link_to 'ホーム画面へ戻る',  home_path %> </li>
   <li>  <%= link_to "ユーザー管理画面へ", admin_users_path, :target=>["_blank"] %> </li>
 </ul>
 
-<p> カテゴリー登録　</p>
+<p> カテゴリー管理　</p>
 
+<table class="table"> 
+   <thead>
+    <tr>  
+        <th>index</th>
+        <th>カテゴリー名</th>
+        <th>作成日</th>
+        <th>削除</th>
+    </tr>
+  </thead>
+ <tbody>
 <%  @categories.each_with_index do |category, i| %>
-    <%= category.category_name %>
-    <br>
+ <tr>  
+  <td><%= category.id %></td>
+  <td><%= category.category_name %></td>
+  <td><%= category.created_at %></td>
+  <td>削除ボタン</td>
+ </tr>  
  <% end %>
-
+</tbody>   
+</table>
 
 <%= form_with( model: Category.new, url: categories_path) do |form| %>
 

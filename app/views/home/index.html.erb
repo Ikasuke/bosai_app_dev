@@ -55,7 +55,10 @@
         <% else%>
         <% @categories.each do |category| %>
         <div class="row" >
-        <strong><%= category.category_name %> </strong>  
+        <label class="control-label">▪️<%= category.category_name %> </label>
+        </div>  <!-- row category名 -->
+        <br>
+        <div class="row">
           <% @items.each do |item| %>
                 <% if item.category_id == category.id %>  
                 <div class="item col-md-4">
@@ -79,7 +82,7 @@
                 <% else %>
                 <% end %>
           <% end %> <!-- @items.each end-->
-        </div>   <!-- row -->
+        </div>   <!-- row item -->
          <% end %>   <!-- @categories end-->
           <% end %>  <!-- if end -->
        
@@ -124,7 +127,7 @@
 
  <%if @user.role == "admin" %>
   <tr><td></td>
-  <td><%= link_to "アドミンページ", admin_users_path, :target=>["_blank"] %></td></tr>
+  <td><%= link_to "アドミンページ", adminhome_path %></td></tr>
 <% end %>
 
 </table>

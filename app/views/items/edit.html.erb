@@ -82,9 +82,23 @@
  
  </div> <!--col-md-5 -->
  </div>   <!-- row -->
- 
- 
- 
- <% end %>  <!--  form_with end -->
+<% end %>  <!--  form_with end -->
+
+</div>  <!-- items container -->
+
+<br>
+
+<div class="items container">
+    <nav class = "navbar bg-warning navbar-dark box-header row">
+        <a class = "navbar-brand">コメント</a>
+      </nav>
+
+<div class="row">
+    <p>aaa</p>
+  
+
+    <%= (@item.item_expiry - Time.now)/(3600*24) %>
+  </div>   <!-- row 2つめ -->
 
 </div>
+
