@@ -1,49 +1,69 @@
-<div class="items">
-
-<%= form_with model: Item.new do |form|%>
+<div class="items container">
     
- <!--name-->    
-    <div class="field ">
-      <%= form.label :"名前" %>
-      <%= form.text_field :item_name%>
-    </div>
-
- <!-- picture-->
-          <div>
-               <%= image_tag '/noimage.jpg' %>
-           </div>
+   <%= form_with model: Item.new do |form|%>    
+ <div class="row">
+     <div class="col-md-3">
+<!--name-->    
+       <div class="field box_name">
+          <%= form.label :"名前" %>
+          <%= form.text_field :item_name%>
+       </div>  <!-- field box_name-->
+<!-- picture-->
+          <div class = "change_pic">
+             <%= image_tag '/noimage.jpg', class: "card-img-top" %>
+          </div>
           <div class = "form-group">
                <%= form.label :picture %><br />
-              <%= form.file_field :picture %>
-          </div>
-          <!-- category-->
-      <%= form.select :category_id, @category_selects,{:prompt => "category?"}, {:class => "btn category_tab"} %>
-     
- <!--数量-->    
+              <%= form.file_field :picture, class: 'form_pic' %>
+          </div>  <!-- form-group -->
+     </div>  <!-- col-md-3-->
+     <div class="col-md-4">
+　    <table class="table table-borderless">   
+<!-- 登録日 -->      
+        <tr>
+          <td>登録日</td>
+          <td> <%= Time.now.strftime('%Y年%m月%d日') %>(本日)</td>
+        </tr>
+<!-- category-->
+        <tr>
+          <td>カテゴリー</td>
+          <td><%= form.select :category_id, @category_selects,{:prompt => "category?"}, {:class => "btn category_tab"} %></td>
+        </tr>
+<!--数量--> 
       <div class="field ">
-        <%= form.label :"数量" %>
-        <%= form.text_field :item_volume%>
+         <tr>
+          <td>  <%= form.label :"数量" %></td>
+          <td><%= form.text_field :item_volume%></td>
+         </tr>
       </div>
-
- <!--期限--> 
-      <div class="field">   
-     <span class="input-group date" id="datetimepicker1" data-target-input="nearest">
-          <%= form.text_field(:item_expiry, placeholder: '期限',
-               class: "form-control datetimepicker-input", data: {target:"#datetimepicker1"}) %>
-          <span class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
-              <span class="input-group-text"><i class="fas fa-calendar-plus"></i></span>
-         </span>
-     </span>
-       </div>
- <!--public_memo-->    
- <div class="field ">
+<!--期限-->
+        <tr>
+          <td>期限</td>
+          <td>
+              <div class="field">   
+                  <span class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                       <%= form.text_field(:item_expiry, placeholder: '期限',
+                            class: "form-control datetimepicker-input", data: {target:"#datetimepicker1"}) %>
+                       <span class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                           <span class="input-group-text"><i class="fas fa-calendar-plus"></i></span>
+                      </span>
+                  </span>
+                    </div>
+          </td>
+        </tr>
+      </table>
+     </div>  <!-- col-md-4 -->
+     <div class="col-md-5">
+       <br>
+<!--public_memo-->    
+ <div class="field form-group">
     <%= form.label :"公開用memo" %>
-    <%= form.text_area :item_public_memo%>
+    <%= form.text_area :item_public_memo,class:'form-control'%>
   </div>
 <!--private_memo-->    
-<div class="field ">
+<div class="field form-group">
     <%= form.label :"非公開memo" %>
-    <%= form.text_area :item_private_memo%>
+    <%= form.text_area :item_private_memo,class:'form-control'%>
   </div>
 
 <div class="field">
@@ -51,11 +71,15 @@
     <%= form.check_box :item_open_flag, {},  "公開する", "公開しない"%>
 </div>
 
+<%= form.submit "登録する", :class=>"btn btn-info" %>
 
-  <%= form.submit "登録する", :class=>"btn btn-info" %>
+</div> <!--col-md-5 -->
+</div>   <!-- row -->
+
+
 
 <% end %>  <!--  form_with end -->
 
+</div>  <!-- container -->
 
-
-</div>
+<h6>a</h6>

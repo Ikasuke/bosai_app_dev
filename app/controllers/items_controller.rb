@@ -33,19 +33,17 @@ end #edit end
 
 
  def create
-    @item = Item.new(item_params)
-    @item.user_id = current_user.id
-   
+  @item = Item.new(item_params)
+  @item.user_id = current_user.id
     respond_to do |format|
       if @item.save
         format.html { redirect_to home_url, notice: 'item was successfully created.' }
         #format.json { render :show, status: :created, location: @category }
-    
       else
         format.html { redirect_to home_url }
         #format.json { render json: @category.errors, status: :unprocessable_entity }
-      end
-    end
+      end  #if end
+    end    # respond_to end
   end # create end
 
   def update
@@ -68,6 +66,11 @@ end #edit end
       #format.json { head :no_content }
     end
   end # destroy end 
+
+def picture
+   @picture = params[:picture]
+end
+
 
   private
 

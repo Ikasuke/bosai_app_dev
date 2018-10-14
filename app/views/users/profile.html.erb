@@ -75,6 +75,7 @@
                    </span>
                    <span class="actions">
                        <%= form.submit "更新する",:class=>"btn btn-primary" %>
+                       <%= link_to '消去する', remindmail, method: :delete, data: { confirm: '削除します。よろしいですか?' }, class: 'btn red' %>
                    </span>
                  </div>
 
@@ -83,14 +84,17 @@
        <% end %>   <!--  if end -->
        <br>
        <%= form_with model: Remindmail.new do |form|%>
-          <div class="field form-group">
+        <div class="field form-inline">
+          <div class="form-group">
              <%= form.label :"新規メールアドレス" %>
              <%= form.text_field :remind_email, placeholder: 'メール入力',class:"form-control" %>
           </div>
           <div class="actions">
              <%= form.submit "作成する",:class=>"btn btn-success" %>
-             <%= link_to"戻る", home_path,:class=> 'btn gray'  %>
           </div>
+        </div>  <!-- form inline -->
+             <%= link_to"戻る", home_path,:class=> 'btn gray'  %>
+         
        <% end %>   <!--  form_with new end -->
      </div> <!-- col-md-9 div -->
 

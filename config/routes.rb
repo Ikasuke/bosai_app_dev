@@ -20,6 +20,9 @@ Rails.application.routes.draw do
 
  ##item model
  resources :items
+  #ajax
+   post 'item/picture', to: 'items#picture'
+   get 'item/picture', to: 'items#picture'
 
  ##category model
  resources :categories
