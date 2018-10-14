@@ -1,19 +1,21 @@
 <div class="items container">
     
-   <%= form_with model: Item.new do |form|%>    
+<%= form_with model: Item.new do |form|%>    
  <div class="row">
      <div class="col-md-3">
 <!--name-->    
-       <div class="field box_name">
+   <br>
+       <div class="field">
           <%= form.label :"名前" %>
           <%= form.text_field :item_name%>
        </div>  <!-- field box_name-->
-<!-- picture-->
-          <div class = "change_pic">
-             <%= image_tag '/noimage.jpg', class: "card-img-top" %>
+<!-- picture-->       
+          <div class = "preview col-md-10 col-sm-10 col-xs-6">
+             <%= image_tag '/noimage.jpg' ,class:"card-img-top" %>
           </div>
+        
           <div class = "form-group">
-               <%= form.label :picture %><br />
+               <%= form.label :画像を選択 %><br />
               <%= form.file_field :picture, class: 'form_pic' %>
           </div>  <!-- form-group -->
      </div>  <!-- col-md-3-->
@@ -30,12 +32,15 @@
           <td><%= form.select :category_id, @category_selects,{:prompt => "category?"}, {:class => "btn category_tab"} %></td>
         </tr>
 <!--数量--> 
-      <div class="field ">
+      
          <tr>
           <td>  <%= form.label :"数量" %></td>
-          <td><%= form.text_field :item_volume%></td>
+          <td>
+              <div class="field">
+                <%= form.text_field :item_volume%>
+              </div>
+          </td>
          </tr>
-      </div>
 <!--期限-->
         <tr>
           <td>期限</td>
@@ -81,5 +86,3 @@
 <% end %>  <!--  form_with end -->
 
 </div>  <!-- container -->
-
-<h6>a</h6>

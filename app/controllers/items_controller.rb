@@ -3,7 +3,7 @@ class ItemsController < ApplicationController
 
  def new
     
-  ## Todo作成用の@categoresを準備
+  ## @categoresを準備
   categories = Category.all
   category_selects = Array.new()      # 空
   categories.each do |category|
@@ -18,7 +18,7 @@ class ItemsController < ApplicationController
 
 
 def edit
-    ## Todo作成用の@categoresを準備
+    ## @categoresを準備
   categories = Category.all
   category_selects = Array.new()      # 空
   categories.each do |category|

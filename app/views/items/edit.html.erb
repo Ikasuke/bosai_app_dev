@@ -10,12 +10,12 @@
       </div> <!-- field-->
 
 <!-- picture-->
-        <div class="col-md-10 col-sm-10 col-xs-6">
+        <div class="preview col-md-10 col-sm-10 col-xs-6">
         <%= image_tag @item.picture.url, class: "card-img-top"%>
         </div>
       <div class = "form-group">
         <%= form.label :画像を選択 %><br />
-        <%= form.file_field :picture %>
+        <%= form.file_field :picture, class: 'form_pic' %>
      </div>  <!-- form-group-->
     </div>  <!-- col-md-3-->
     <div class="col-md-4">
@@ -31,12 +31,16 @@
                   <td><%= form.select :category_id, @category_selects,{:prompt => "category?"}, {:class => "btn category_tab"} %></td>
                 </tr>
  <!--数量--> 
-                <div class="field ">
+               
                 <tr>
                   <td>  <%= form.label :"数量" %></td>
-                  <td><%= form.text_field :item_volume%></td>
+                  <td>
+                      <div class="field ">
+                        <%= form.text_field :item_volume%>
+                      </div>
+                  </td>
                 </tr>
-                </div>
+                
 <!--期限-->
                 <tr>
                  <td>期限</td>
@@ -82,3 +86,5 @@
  
  
  <% end %>  <!--  form_with end -->
+
+</div>

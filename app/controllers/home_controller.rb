@@ -15,7 +15,10 @@ class HomeController < ApplicationController
           @remindmails = remindmails
           @items = items
      end
-  end
+
+     @categories = Category.all
+  end #index end
+
 
  def adminhome
   @categories = Category.all

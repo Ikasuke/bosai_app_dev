@@ -50,17 +50,49 @@
         </div> <!-- row -->
      </div>   <!-- tab1 -->
      <div id="tab2" class="tab-pane">
-
-
+        
+        <% if @items.nil? %>
+        <% else%>
+        <% @categories.each do |category| %>
+        <div class="row" >
+        <strong><%= category.category_name %> </strong>  
+          <% @items.each do |item| %>
+                <% if item.category_id == category.id %>  
+                <div class="item col-md-4">
+                    <%= link_to edit_item_path(item) do %>
+                     <div class="col-md-10">
+                       <div class= " p-3 item_pic">
+                          <%= image_tag item.picture.url, class: "card-img-top"%>
+                       </div> <!-- item_pic-->
+                     </div>  <!-- col-md-->
+                    <% end %> <!-- link_to end -->
+                     <table class="table">
+                       <tr><td><%= "名前"%>:</td> <td><%= item.item_name %></td></tr>
+                       <tr><td><%= "数量"%>:</td> <td><%= item.item_volume %></td></tr>
+                       <% if item.item_expiry.blank? %>
+                       <tr><td><%= "期限"%>:</td> <td> なし </td></tr>
+                       <% else %>
+                       <tr><td><%= "期限"%>:</td> <td><%= item.item_expiry.strftime('%Y年%m月%d日') %></td></tr>
+                       <% end %>  <!-- if item.expiry end-->
+                     </table>
+                   </div> <!-- item-->
+                <% else %>
+                <% end %>
+          <% end %> <!-- @items.each end-->
+        </div>   <!-- row -->
+         <% end %>   <!-- @categories end-->
+          <% end %>  <!-- if end -->
+       
      </div>  <!-- tab2-->
-     <div id="tab3" class="tab-pane">
 
+     <div id="tab3" class="tab-pane">
+        <p>a</p>
 
       </div>  <!-- tab3-->
       <div id="tab4" class="tab-pane">
 
 
-        </div>  <!-- tab4-->
+      </div>  <!-- tab4-->
 
     </div>  <!-- tab-content -->
 </div>  <!-- items container -->

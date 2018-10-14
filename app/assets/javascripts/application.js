@@ -50,27 +50,31 @@
     });
 
     $('.form_pic').on('change',function(e){
-
-        console.log(e.target.files);
-        if (e.target.files[0].size > 0) {
-           // $(this).parents('form').submit();      
-             $.get('/item/picture.json',{
-               picture: $('.form_pic').val()
-              }, function(data){
-                  console.log(data);
-                       
-                       $('.change_pic').children('img').attr('src', data.picture);
-         });
+        var file = e.target.files[0], 
+        reader = new FileReader(),
+        $preview =$(".preview");
+        t = this;
+        console.log(file.type.indexOf("image"));
+        // 画像ファイル以外の場合は何もしない
+        if (file.type.indexOf("image") < 0) {
+             return false;
         }
-
-      
-
+        
+            reader.onload = (function(file){
+                console.log(file);
+                 return function(e){
+                     //既存のプレビューを削除
+                     $preview.empty();
+                     // change_picの領域にロードした画像を表示するimgタグを追加
+                     $preview.append($('<img>').attr({
+                               src: e.target.result,
+                               class: "preview card-img-bottom",
+                               title: file.name
+                     }));
+                 };
+                })(file);
+          reader.readAsDataURL(file);      
      });
-   
-
-
-
-   
 });
 
 
