@@ -75,6 +75,8 @@
                 })(file);
           reader.readAsDataURL(file);      
      });
-});
+  
+
+}); //document end
 
 

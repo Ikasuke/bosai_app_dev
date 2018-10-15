@@ -6,8 +6,8 @@
 </ul>
 
 <p> カテゴリー管理　</p>
-
-<table class="table"> 
+<div class="table-responsive">
+<table class="table table-bordered table-striped"> 
    <thead>
     <tr>  
         <th>index</th>
@@ -17,16 +17,24 @@
     </tr>
   </thead>
  <tbody>
+   
 <%  @categories.each_with_index do |category, i| %>
  <tr>  
-  <td><%= category.id %></td>
-  <td><%= category.category_name %></td>
+  <td><%= "#{i+1}" %></td>
+  <td>
+    <form id="form_<%= "#{i+1}" %>">
+    <input type="text" id="category_name_<%= "#{i+1}" %>" value=<%= category.category_name %>>
+    </form>
+  </td>
+  <td><input type="button" id="category_name_btn_<%= "#{i+1}" %>" class="btn btn-primary category_name_btn" value="変更" /> </td>
   <td><%= category.created_at %></td>
   <td>削除ボタン</td>
  </tr>  
  <% end %>
 </tbody>   
 </table>
+</div> <!-- table responsive-->
+
 
 <%= form_with( model: Category.new, url: categories_path) do |form| %>
 
