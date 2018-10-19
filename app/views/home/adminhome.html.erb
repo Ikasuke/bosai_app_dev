@@ -6,34 +6,36 @@
 </ul>
 
 <p> カテゴリー管理　</p>
-<div class="table-responsive">
-<table class="table table-bordered table-striped"> 
-   <thead>
-    <tr>  
-        <th>index</th>
-        <th>カテゴリー名</th>
-        <th>作成日</th>
-        <th>削除</th>
-    </tr>
-  </thead>
- <tbody>
-   
+
 <%  @categories.each_with_index do |category, i| %>
+<%= form_with model:category do |form| %>
+<table class="table table-bordered"> 
+   
+ <tbody>
+    
  <tr>  
   <td><%= "#{i+1}" %></td>
   <td>
-    <form id="form_<%= "#{i+1}" %>">
-    <input type="text" id="category_name_<%= "#{i+1}" %>" value=<%= category.category_name %>>
-    </form>
+      <div class="form-group">
+          <%= form.text_field :category_name, class: "form-control" %>
+      </div>
   </td>
-  <td><input type="button" id="category_name_btn_<%= "#{i+1}" %>" class="btn btn-primary category_name_btn" value="変更" /> </td>
+  <td>
+      <div class="actions">
+          <%= form.submit "変更",:class=>"btn btn-primary" %>
+      </div>
+  </td>
   <td><%= category.created_at %></td>
-  <td>削除ボタン</td>
+  <td>
+      <div class="actions">
+      <%= link_to '消去する', category, method: :delete, data: { confirm: '削除します。よろしいですか?' }, class: 'btn red' %>
+      </div>
+  </td>
  </tr>  
- <% end %>
 </tbody>   
 </table>
-</div> <!-- table responsive-->
+<% end %>  <!--  category form_with -->
+<% end %>   <!--  category.each end -->
 
 
 <%= form_with( model: Category.new, url: categories_path) do |form| %>

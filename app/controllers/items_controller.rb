@@ -67,10 +67,6 @@ end #edit end
     end
   end # destroy end 
 
-def picture
-   @picture = params[:picture]
-end
-
 
   private
 
