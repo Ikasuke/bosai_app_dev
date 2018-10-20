@@ -26,4 +26,6 @@ class HomeController < ApplicationController
   render :layout => 'admin.html.erb'
  end
 
+
+
 end   #class end

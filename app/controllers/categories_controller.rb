@@ -17,7 +17,7 @@ class CategoriesController < ApplicationController
         respond_to do |format|
           if @category.save
             format.html { redirect_to adminhome_url, notice: 'Category was successfully created.' }
-            #format.json { render :show, status: :created, location: @category }
+            format.json { render :show, status: :created, location: @category }
           else
             format.html { redirect_to adminhome_url }
             #format.json { render json: @category.errors, status: :unprocessable_entity }
@@ -26,7 +26,7 @@ class CategoriesController < ApplicationController
       end
 
     def update
-   
+     @action = params[:action]
       respond_to do |format|
         if @category.update(category_params)
           #format.html { redirect_to home_url, notice: ' category was successfully updated.' }
@@ -39,13 +39,15 @@ class CategoriesController < ApplicationController
     end
 
     def destroy
+      @action = params[:action]
       @category.destroy
       respond_to do |format|
-        format.html { redirect_to home_url, notice: 'category was successfully destroyed.' }
-        #format.json { head :no_content }
-      end
+        #format.html { redirect_to home_url, notice: 'category was successfully destroyed.' }
+        format.json { render 'categories.json.jbuilder' }
+     end
     end # destroy end 
 
+   
 
     private
 

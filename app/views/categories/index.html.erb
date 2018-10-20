@@ -1,7 +1,7 @@
+
 <p> カテゴリー管理　</p>
 
 
-<h4 id = 'change_info' ></h4>
 <%  @categories.each_with_index do |category, i| %>
 <%= form_with model:category do |form| %>
 <table class="table table-bordered"> 
@@ -31,7 +31,7 @@
   <td><%= category.created_at %></td>
   <td>
       <div class="actions">
-      <%= link_to '消去する', category, method: :delete, data: { confirm: '削除します。よろしいですか?' }, class: 'btn red' %>
+      <%= link_to '消去する', category, method: :delete, data: { confirm: '削除します。よろしいですか?' }, class: 'btn red delete',remote: true%>
       </div>
   </td>
  </tr>  

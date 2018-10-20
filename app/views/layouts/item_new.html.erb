@@ -12,10 +12,10 @@
   <body data-controller="<%= params[:controller] %>" data-action="<%= params[:action] %>">
    <%= render "layouts/header" %>
     <div class="container py-2 px-0">
-     <%= flash_message(flash[:success], :success) if flash[:success] %>
-     <%= flash_message(flash[:error], :danger) if flash[:error] %>
-     <%= flash_message(flash[:alert], :warning) if flash[:alert] %>
-     <%= flash_message(flash[:notice], :info) if flash[:notice] %>
+        <%= flash_message(flash[:success], :success) if flash[:success] %>
+        <%= flash_message(flash[:error], :danger) if flash[:error] %>
+        <%= flash_message(flash[:alert], :warning) if flash[:alert] %>
+        <%= flash_message(flash[:notice], :info) if flash[:notice] %>
 
               <div><%= yield %> </div>
 
