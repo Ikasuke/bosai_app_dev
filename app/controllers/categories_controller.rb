@@ -2,6 +2,11 @@ class CategoriesController < ApplicationController
     before_action :authenticate_admin_user!
     before_action :set_category, only: [:update, :destroy]
 
+   def index
+    @categories = Category.all
+    render :layout => false
+   end 
+
     def new
         @category = Category.new
       end

@@ -9,7 +9,7 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
+  <body data-controller="<%= params[:controller] %>" data-action="<%= params[:action] %>">
    <%= render "layouts/adminheader" %>
     <div class="container py-2 px-0">
      <%= flash_message(flash[:success], :success) if flash[:success] %>

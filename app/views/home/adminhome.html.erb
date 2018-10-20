@@ -1,41 +1,16 @@
+
+
 <h1> これは管理者用ページです </h1>
+
 
 <ul>
   <li>  <%= link_to 'ホーム画面へ戻る',  home_path %> </li>
   <li>  <%= link_to "ユーザー管理画面へ", admin_users_path, :target=>["_blank"] %> </li>
 </ul>
 
-<p> カテゴリー管理　</p>
+<div id="category_show">
+</div>
 
-<%  @categories.each_with_index do |category, i| %>
-<%= form_with model:category do |form| %>
-<table class="table table-bordered"> 
-   
- <tbody>
-    
- <tr>  
-  <td><%= "#{i+1}" %></td>
-  <td>
-      <div class="form-group">
-          <%= form.text_field :category_name, class: "form-control" %>
-      </div>
-  </td>
-  <td>
-      <div class="actions">
-          <%= form.submit "変更",:class=>"btn btn-primary" %>
-      </div>
-  </td>
-  <td><%= category.created_at %></td>
-  <td>
-      <div class="actions">
-      <%= link_to '消去する', category, method: :delete, data: { confirm: '削除します。よろしいですか?' }, class: 'btn red' %>
-      </div>
-  </td>
- </tr>  
-</tbody>   
-</table>
-<% end %>  <!--  category form_with -->
-<% end %>   <!--  category.each end -->
 
 
 <%= form_with( model: Category.new, url: categories_path) do |form| %>
