@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_18_003158) do
+ActiveRecord::Schema.define(version: 2018_10_13_032743) do
 
   create_table "categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -41,12 +41,15 @@ ActiveRecord::Schema.define(version: 2018_09_18_003158) do
     t.string "item_name", default: "", null: false
     t.string "item_volume", default: "", null: false
     t.datetime "item_expiry"
-    t.string "item_picture_file"
     t.text "item_public_memo"
     t.text "item_private_memo"
     t.boolean "item_open_flag", default: true, null: false
     t.bigint "user_id"
     t.bigint "category_id"
+    t.string "picture_file_name"
+    t.string "picture_content_type"
+    t.integer "picture_file_size"
+    t.datetime "picture_updated_at"
     t.index ["category_id"], name: "index_items_on_category_id"
     t.index ["user_id"], name: "index_items_on_user_id"
   end
@@ -54,6 +57,10 @@ ActiveRecord::Schema.define(version: 2018_09_18_003158) do
   create_table "likeitems", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.bigint "item_id"
+    t.index ["item_id"], name: "index_likeitems_on_item_id"
+    t.index ["user_id"], name: "index_likeitems_on_user_id"
   end
 
   create_table "murmurs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -112,6 +119,8 @@ ActiveRecord::Schema.define(version: 2018_09_18_003158) do
   add_foreign_key "comments", "users"
   add_foreign_key "items", "categories"
   add_foreign_key "items", "users"
+  add_foreign_key "likeitems", "items"
+  add_foreign_key "likeitems", "users"
   add_foreign_key "murmurs", "users"
   add_foreign_key "remindmails", "users"
 end

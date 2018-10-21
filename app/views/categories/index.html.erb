@@ -1,0 +1,41 @@
+
+<p> カテゴリー管理　</p>
+
+
+<%  @categories.each_with_index do |category, i| %>
+<%= form_with model:category do |form| %>
+<table class="table table-bordered"> 
+   <thead>
+       <th>index</th>
+       <th>id</th>
+       <th>名前</th>
+       <th>変更</th>
+       <th>登録日</th>
+       <th>消去</th>
+   </thead>
+
+ <tbody> 
+ <tr>  
+  <td><%= "#{i+1}" %></td>
+  <td><%= category.id %></td>
+  <td>
+      <div class="form-group">
+          <%= form.text_field :category_name, class: "form-control" %>
+      </div>
+  </td>
+  <td>
+      <div class="actions">
+          <%= form.submit "変更",:class=>"btn btn-primary" %>
+      </div>
+  </td>
+  <td><%= category.created_at %></td>
+  <td>
+      <div class="actions">
+      <%= link_to '消去する', category, method: :delete, data: { confirm: '削除します。よろしいですか?' }, class: 'btn red delete',remote: true%>
+      </div>
+  </td>
+ </tr>  
+</tbody>   
+</table>
+<% end %>  <!--  category form_with -->
+<% end %>   <!--  category.each end -->

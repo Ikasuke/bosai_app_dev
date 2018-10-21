@@ -9,15 +9,14 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body data-controller="<%= params[:controller] %>" data-action="<%= params[:action] %>" >
-   <%= render "layouts/header" %>
+  <body data-controller="<%= params[:controller] %>" data-action="<%= params[:action] %>">
+   <%= render "layouts/adminheader" %>
     <div class="container py-2 px-0">
         <%= flash_message(flash[:success], :success) if flash[:success] %>
         <%= flash_message(flash[:error], :danger) if flash[:error] %>
         <%= flash_message(flash[:alert], :warning) if flash[:alert] %>
         <%= flash_message(flash[:notice], :info) if flash[:notice] %>
-     <div id="left"> <%= yield :sidebar_left %></div>
-              <div id ="center"><%= yield %> </div>
+              <div><%= yield %> </div>
 
               
   </body>

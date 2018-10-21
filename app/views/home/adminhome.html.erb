@@ -1,0 +1,23 @@
+
+
+<h1> これは管理者用ページです </h1>
+
+
+<ul>
+  <li>  <%= link_to 'ホーム画面へ戻る',  home_path %> </li>
+  <li>  <%= link_to "ユーザー管理画面へ", admin_users_path, :target=>["_blank"] %> </li>
+</ul>
+
+<h4 id = 'change_info' ></h4>
+<div id="category_show"></div>
+
+<%= form_with( model: Category.new, url: categories_path) do |form| %>
+
+    <div class="field">
+      <%= form.label :category_name %>
+      <%= form.text_field :category_name %>
+    </div>
+    <div class="actions">
+       <%= form.submit "作成する",:class=>"btn btn-success" %>
+    </div>
+<% end %>
