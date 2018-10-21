@@ -88,10 +88,110 @@
        
      </div>  <!-- tab2-->
 
-     <div id="tab3" class="tab-pane">
-        <p>a</p>
+     <div id="tab3" class="tab-pane">  <!-- 期限近いもの -->
+<!--1週間以内 -->      
+      <div class="row" >
+          <label class="control-label">▪️1週間以内 </label>
+          </div>  <!-- row  -->
+      <% if @items.nil? %>
+      <% else%>
+      <div class="row">
+           <% @items.each do |item| %>
+             <% delta_t = ((item.item_expiry - Time.now)/(3600*24)).ceil %>
+             <% if delta_t < 8 %>
+              
+                <div class="item col-md-4">
+                    <%= link_to edit_item_path(item) do %>
+                     <div class="col-md-10">
+                       <div class= " p-3 item_pic">
+                          <%= image_tag item.picture.url, class: "card-img-top"%>
+                       </div> <!-- item_pic-->
+                     </div>  <!-- col-md-->
+                    <% end %> <!-- link_to end -->
+                     <table class="table">
+                       <tr><td><%= "名前"%>:</td> <td><%= item.item_name %></td></tr>
+                       <tr><td><%= "数量"%>:</td> <td><%= item.item_volume %></td></tr>
+                       <% if item.item_expiry.blank? %>
+                       <tr><td><%= "期限"%>:</td> <td> なし </td></tr>
+                       <% else %>
+                       <tr><td><%= "期限"%>:</td> <td><%= item.item_expiry.strftime('%Y年%m月%d日') %></td></tr>
+                       <% end %>  <!-- if item.expiry end-->
+                     </table>
+                   </div> <!-- item-->
+             <% end %>  <!-- if delta_t end-->  
+           <% end %>  <!-- @items -->
+         </div>  <!-- row --> 
+      <% end %> <!--if end -->
+      
+<!--1ヶ月以内 -->      
+      <div class="row" >
+          <label class="control-label">▪️1ヵ月以内 </label>
+          </div>  <!-- row  -->
+      <% if @items.nil? %>
+      <% else%>
+      <div class="row">
+           <% @items.each do |item| %>
+             <% delta_t = ((item.item_expiry - Time.now)/(3600*24)).ceil %>
+             <% if delta_t > 7 && delta_t < 31 %>   <!-- 8 - 30 -->
+              
+                <div class="item col-md-4">
+                    <%= link_to edit_item_path(item) do %>
+                     <div class="col-md-10">
+                       <div class= " p-3 item_pic">
+                          <%= image_tag item.picture.url, class: "card-img-top"%>
+                       </div> <!-- item_pic-->
+                     </div>  <!-- col-md-->
+                    <% end %> <!-- link_to end -->
+                     <table class="table">
+                       <tr><td><%= "名前"%>:</td> <td><%= item.item_name %></td></tr>
+                       <tr><td><%= "数量"%>:</td> <td><%= item.item_volume %></td></tr>
+                       <% if item.item_expiry.blank? %>
+                       <tr><td><%= "期限"%>:</td> <td> なし </td></tr>
+                       <% else %>
+                       <tr><td><%= "期限"%>:</td> <td><%= item.item_expiry.strftime('%Y年%m月%d日') %></td></tr>
+                       <% end %>  <!-- if item.expiry end-->
+                     </table>
+                   </div> <!-- item-->
+             <% end %>  <!-- if delta_t end-->  
+           <% end %>  <!-- @items -->
+         </div>  <!-- row --> 
+      <% end %> <!--if end -->
+      
+<!--3ヶ月以内 -->      
+      <div class="row" >
+          <label class="control-label">▪️3ヵ月以内 </label>
+          </div>  <!-- row  -->
+      <% if @items.nil? %>
+      <% else%>
+      <div class="row">
+           <% @items.each do |item| %>
+             <% delta_t = ((item.item_expiry - Time.now)/(3600*24)).ceil %>
+             <% if delta_t > 30 && delta_t < 91 %>    <!-- 31 - 90 -->
+              
+                <div class="item col-md-4">
+                    <%= link_to edit_item_path(item) do %>
+                     <div class="col-md-10">
+                       <div class= " p-3 item_pic">
+                          <%= image_tag item.picture.url, class: "card-img-top"%>
+                       </div> <!-- item_pic-->
+                     </div>  <!-- col-md-->
+                    <% end %> <!-- link_to end -->
+                     <table class="table">
+                       <tr><td><%= "名前"%>:</td> <td><%= item.item_name %></td></tr>
+                       <tr><td><%= "数量"%>:</td> <td><%= item.item_volume %></td></tr>
+                       <% if item.item_expiry.blank? %>
+                       <tr><td><%= "期限"%>:</td> <td> なし </td></tr>
+                       <% else %>
+                       <tr><td><%= "期限"%>:</td> <td><%= item.item_expiry.strftime('%Y年%m月%d日') %></td></tr>
+                       <% end %>  <!-- if item.expiry end-->
+                     </table>
+                   </div> <!-- item-->
+             <% end %>  <!-- if delta_t end-->  
+           <% end %>  <!-- @items -->
+         </div>  <!-- row --> 
+      <% end %> <!--if end -->
 
-      </div>  <!-- tab3-->
+    </div>  <!-- tab3-->
       <div id="tab4" class="tab-pane">
 
 

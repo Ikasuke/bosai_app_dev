@@ -96,7 +96,10 @@
 <div class="row">
     <p>aaa</p>
   
-
+    <%= Time.now %>
+    <br>
+    <%= @item.item_expiry %>
+    <br>
     <%= (@item.item_expiry - Time.now)/(3600*24) %>
   </div>   <!-- row 2つめ -->
 
