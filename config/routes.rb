@@ -25,4 +25,7 @@ Rails.application.routes.draw do
  ##category model
  resources :categories
 
+##comments model
+ resources :comments
+
 end

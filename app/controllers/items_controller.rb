@@ -67,6 +67,13 @@ end #edit end
     end
   end # destroy end 
 
+ ##
+
+ def index   
+   @items = Item.all
+  
+end
+
 
   private
 

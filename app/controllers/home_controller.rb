@@ -13,9 +13,10 @@ class HomeController < ApplicationController
         # ないので何もしない
      else
           @remindmails = remindmails
-          @items = items
+         
      end
-
+     
+     @items = items
      @categories = Category.all
   end #index end
 
