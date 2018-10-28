@@ -94,13 +94,23 @@
       </nav>
 
 <div class="row">
-    <p>aaa</p>
-  
-    <%= Time.now %>
-    <br>
-    <%= @item.item_expiry %>
-    <br>
-    <%= (@item.item_expiry - Time.now)/(3600*24) %>
+        
+        <% @item.comments.each do |comment| %>
+        <div class="col-md-2"></div>   
+        <div class="col-md-2">
+             <div class= "card p-4">
+                   <%= image_tag comment.user.avatar.url, class: "card-img-top rounded-circle"%>
+             </div>
+             <p> <%= comment.user.public_name %></p>
+           </div>
+           <div class="col-md-8">
+            <div class="balloon1-left">     
+          <p><%= comment.comment_detail %></p>
+            </div>
+           </div>
+        <% end %>  
+         
+
   </div>   <!-- row 2つめ -->
 
 </div>

@@ -70,7 +70,19 @@ end #edit end
  ##
 
  def index   
-   @items = Item.all
+
+  @user = current_user
+  # リマインドメールを表示するために登録されているものを呼び出す。なければ表示しない
+remindmails = current_user.remindmails
+  # グッズを表示するために登録されているものを呼び出す。なければ表示しない
+ if remindmails.empty? then
+    # ないので何もしない
+ else
+      @remindmails = remindmails
+ end
+
+ @categories = Category.all
+ @items = Item.all
   
 end
 
@@ -85,7 +97,7 @@ end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def item_params
-    params.require(:item).permit(:item_name, :picture, :item_volume, :item_expiry, :item_public_memo, :item_private_memo, :item_open_flag, :uer_id, :category_id)
+    params.require(:item).permit(:item_name, :picture, :item_volume, :item_expiry, :item_public_memo, :item_private_memo, :item_open_flag, :category_id)
   end
 
 
