@@ -29,4 +29,7 @@ Rails.application.routes.draw do
 ##comments model
  resources :comments
 
+##likeitems model
+ resources :likeitems
+
 end

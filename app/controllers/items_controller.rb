@@ -79,17 +79,17 @@ end #edit end
  ##
 
  def index   #みんなのグッズが見れるページ
-
+  # #ログインユーザー情報
   @user = current_user
-  # リマインドメールを表示するために登録されているものを呼び出す。なければ表示しない
-  remindmails = current_user.remindmails
-  # グッズを表示するために登録されているものを呼び出す。なければ表示しない
-   if remindmails.empty? then
+   #リマインドメールを表示するために登録されているものを呼び出す。なければ表示しない
+   remindmails = current_user.remindmails
+   # グッズを表示するために登録されているものを呼び出す。なければ表示しない
+    if remindmails.empty? then
       # ないので何もしない
-   else
+    else
       @remindmails = remindmails
-  end
-       ## @categoresを準備
+    end
+  # # @categoresを準備
   categories = Category.all
   category_selects = Array.new()      # 空
   categories.each do |category|
@@ -97,9 +97,10 @@ end #edit end
       category_selects.push(category_select)
   end
   @category_selects = category_selects 
+  # # item情報
+  @items = Item.search(params[:search])
 
- @items = Item.search(params[:search])
- #binding.pry
+ @likeitem =Likeitem.new()
 end
 
 def reading_table  #検索結果を表示させる

@@ -14,15 +14,25 @@
             <div class="item col-lg-3 col-md-4 col-sm-4">
                   <%= link_to edit_item_path(item) do %>
                      <div class= " p-3 pic_frame">
+                        <p><%= item.likeitems.count %></p>
                         <%= image_tag item.picture.url, class: "item_pic"%>
                      </div> <!-- pic_frame-->
                   <% end %> <!-- link_to end -->
             </div>
           <div class="col-md-7">
-        <p><%= item.item_name %> </p>
-        <%= item.item_volume %>
-        <%= item.item_public_memo %>
-      </div>
+            <p><%= item.item_name %> </p>
+            <%= item.item_volume %>
+            <%= item.item_public_memo %>
+           
+          
+          
+             <%= form_with model: Likeitem.new do |form|%>
+                 <%= form.hidden_field :item_id, :value => item.id %>
+                 <%= form.hidden_field :user_id, :value => current_user.id %>
+                 <%= form.submit "いいね", :class=>"good-btn" %>
+             <% end %>     
+
+         </div>
            </div>  <!-- row-->
            <br>
   <!-- コメント欄始まり-->        

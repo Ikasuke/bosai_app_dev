@@ -28,9 +28,26 @@
   }
 
  .pic_frame{
+     position: relative;
     border:solid 1px;
     height:150px;
  }
+.pic_frame p{
+     position: absolute;
+     color: #ffffff;
+     background-color: #ff0000;
+     bottom:0;
+     right:0;
+     margin: 0px;
+     
+     text-align: center;
+     line-height: 30px;
+    
+     width: 30px;
+	height: 30px;
+     border-radius: 50%;
+}
+
 
   .item_pic{
     height:100%;
