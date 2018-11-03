@@ -43,4 +43,17 @@ class Item < ApplicationRecord
   has_many :comments, dependent: :destroy
   # likeitems
   has_many :likeitems, dependent: :destroy
+
+## search メソッド
+def self.search(search)
+  if search
+  Item.where(['item_name LIKE ?', "%#{search}%"])
+  else
+  Item.all
+  end
+end
+
+
+
+
 end

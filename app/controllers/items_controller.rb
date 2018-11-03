@@ -1,5 +1,10 @@
 class ItemsController < ApplicationController
-  before_action :set_item, only: [:edit, :update, :destroy]
+  before_action :set_item, only: [:edit, :update, :destroy, :show]
+
+def show　#他人のもみれる
+
+end
+
 
  def new
     
@@ -17,7 +22,8 @@ class ItemsController < ApplicationController
  end
 
 
-def edit
+def edit  #自分のitemしか編集できないようにする
+  if @item.user == current_user then
     ## @categoresを準備
   categories = Category.all
   category_selects = Array.new()      # 空
@@ -28,6 +34,9 @@ def edit
   @category_selects = category_selects
 
   render :layout => 'item_new.html.erb'
+else
+  redirect_to item_url     #自分の出ないので、showへ
+end
 end #edit end
 
 
@@ -69,23 +78,37 @@ end #edit end
 
  ##
 
- def index   
+ def index   #みんなのグッズが見れるページ
 
   @user = current_user
   # リマインドメールを表示するために登録されているものを呼び出す。なければ表示しない
-remindmails = current_user.remindmails
+  remindmails = current_user.remindmails
   # グッズを表示するために登録されているものを呼び出す。なければ表示しない
- if remindmails.empty? then
-    # ないので何もしない
- else
+   if remindmails.empty? then
+      # ないので何もしない
+   else
       @remindmails = remindmails
- end
+  end
+       ## @categoresを準備
+  categories = Category.all
+  category_selects = Array.new()      # 空
+  categories.each do |category|
+      category_select = [category.category_name,category.id]
+      category_selects.push(category_select)
+  end
+  @category_selects = category_selects 
 
- @categories = Category.all
- @items = Item.all
-  
+ @items = Item.search(params[:search])
+ #binding.pry
 end
 
+def reading_table  #検索結果を表示させる
+  @items = Item.search(params[:search])
+ 
+  respond_to do |format|
+    format.js    # reading_table.js.erbを処理させる
+  end
+end
 
   private
 

@@ -4,7 +4,7 @@
         </nav>
 
 <!-- タブボタン部分 -->
-<ul class="nav nav-tabs">
+<ul class="nav nav-tabs row">
         <li class="nav-item">
           <a href="#tab1" class="nav-link active" data-toggle="tab">グッズから探す</a>
         </li>
@@ -21,77 +21,32 @@
 
 <br>
 <!-- タブ内容部分 -->
-<div class="tab-content">
-   <div id="tab1" class="tab-pane active">
-
-   
-
-
-
-    <table class="table">
-     <% @items.each do |item| %>
-     <tr><td>
-        <div class="row">
-          <div class="col-md-2">
-          <div class= "card p-4">
-                <%= image_tag item.user.avatar.url, class: "card-img-top rounded-circle"%>
-          </div>
-          <p> <%= item.user.public_name %></p>
-        </div>  
-          <div class="item col-md-3">
-                <%= link_to edit_item_path(item) do %>
-                 <div class="col-md-10">
-                   <div class= " p-3 item_pic">
-                      <%= image_tag item.picture.url, class: "card-img-top"%>
-                   </div> <!-- item_pic-->
-                 </div>  <!-- col-md-->
-                <% end %> <!-- link_to end -->
-          </div>
-        <div class="col-md-7">
-      <p><%= item.item_name %> </p>
-      <%= item.item_volume %>
-      <%= item.item_public_memo %>
-    </div>
-         </div>  <!-- row-->
-         <div class="row comments">    
-               <% item.comments.each do |comment| %>
-               <div class="col-md-2"></div>   
-               <div class="col-md-2">
-                    <div class= "card p-4">
-                          <%= image_tag comment.user.avatar.url, class: "card-img-top rounded-circle"%>
-                    </div>
-                    <p> <%= comment.user.public_name %></p>
-                  </div>
-                  <div class="col-md-8">
-                   <div class="balloon1-left">     
-                 <p><%= comment.comment_detail %></p>
-                   </div>
-                  </div>
-               <% end %>  
-                
-         </div> <!-- row-->
-
-
-         <div class="row">
-            <div class="col-md-3"></div>
-            <div class="col-md-9">
-                    <%= form_with model: Comment.new do |form|%>
-                    <div class="field form-group">
-                            <%= form.label :"コメントを記入する" %>
-                            <%= form.text_area :comment_detail,class:'form-control'%>
-                         </div>  <!-- field box_comment_detail-->
-                       <%= form.hidden_field :item_id, :value => item.id %>
-                     <%= form.submit "コメントする", :class=>"btn btn-info" %>
-                    <% end %>  <!-- form_with Commnet  -->
-            </div>   <!-- col-md-9 -->
-         </div>  <!--row-->
-        </td></tr>
-     <% end %>
-
-    </table>
+<div class="tab-content row">
+    <div id="tab1" class="tab-pane active container">   
+        <%= form_with(url: '/item/reading_table') do |form|%>
+        <div class = "form-group search">
+          <%= form.label :グッズを検索 %>
+          <%= form.text_field :search,class:'search_field' %>
+      </div>
+      <%= form.submit "検索", :class=>"btn btn-info" %>
+      <% end %>
+      <div id="reading_table">
+          <%= render 'reading_table', items: @items %>   <!-- 検索結果が表示される -->
+      </div>
+  
    </div> <!-- tab1 -->
 
-   <div id="tab2" class="tab-pane"></div>  <!-- tab2-->
+   <div id="tab2" class="tab-pane">
+    <%= form_with(url: '/items',:method => 'get',local: true) do |form|%>
+      <div class = "form-group search">
+        <%= form.label :カテゴリから検索 %>
+        <%= form.select :category_id, @category_selects,{:prompt => "category?"}, {:class => "btn category_tab"} %>
+    </div>
+    <%= form.submit "検索", :class=>"btn btn-info" %>
+    <% end %>
+
+
+   </div>  <!-- tab2-->
    <div id="tab3" class="tab-pane"></div>  <!-- tab3-->
    <div id="tab4" class="tab-pane"></div>  <!-- tab4-->
 

@@ -92,24 +92,32 @@
     <nav class = "navbar bg-warning navbar-dark box-header row">
         <a class = "navbar-brand">コメント</a>
       </nav>
-
-<div class="row">
-        
-        <% @item.comments.each do |comment| %>
-        <div class="col-md-2"></div>   
-        <div class="col-md-2">
-             <div class= "card p-4">
-                   <%= image_tag comment.user.avatar.url, class: "card-img-top rounded-circle"%>
-             </div>
-             <p> <%= comment.user.public_name %></p>
-           </div>
-           <div class="col-md-8">
-            <div class="balloon1-left">     
-          <p><%= comment.comment_detail %></p>
-            </div>
-           </div>
-        <% end %>  
-         
+<!-- コメント欄始まり-->
+     <div class="row">
+                  <% @item.comments.each do |comment| %>
+    <!-- 画像始まり-->    
+                  <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                       <div class= "p-3 com_frame">
+                             <%= image_tag comment.user.avatar.url, class: "com_pic rounded-circle"%>
+                       </div>
+                       <p> <%= comment.user.public_name %></p>
+                  </div>
+    <!-- 画像終わり-->    
+      <!-- 吹き出し始まり-->                
+                  <div class=" col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                      <div class="comment">  
+                               <p><%= comment.comment_detail %></p>
+                               <div class="comment_time">
+                                   <p><%= comment.created_at.strftime('%Y/%m/%d-%H:%M') %>
+                                </div>
+                     </div>
+                  </div> 
+      <!-- 吹き出し終わり --> 
+                  <% end %>
+                  
+        </div> <!-- row comments --> 
+  <!--コメント欄終わり -->  
+      
 
   </div>   <!-- row 2つめ -->
 

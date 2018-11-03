@@ -1,34 +1,61 @@
 .comments{
-    border-radius: 20px;
-    border: solid 1px;
-    border-color: #eeeeee;
-     text-align: center;
-
+    border-radius: 0px;
+    border: solid 2px;
+    border-color: #dddddd;
+    overflow: scroll;
+    height: 200px;
+    overflow-x: hidden;
+    background-color: #ffffff;
   }
 
-  .balloon1-left {
-    position: relative;
-   display: inline-block;
-    margin: 1.5em 0 1.5em 15px;
-   padding: 7px 10px;
-   min-width: 120px;
-    max-width: 100%;
-    color: #555;
-   font-size: 16px;
-   background: #e0edff;
+  
+  //.test td{
+  //  border: 4px;
+  //  border-color: rgb(22, 17, 17) !important; }
+
+  .comment {
+    display: inline-block;
+    position: relative; 
+    margin: 15px 0 0 0px;
+    padding: 17px 13px;
+    border-radius: 12px;
+    background: #f0f0f0;
+    float: left;
+    
+   
 }
 
-.balloon1-left:before{
-   content: "";
-   position: absolute;
-   top: 50%;
-   left: -30px;
-    margin-top: -15px;
-   border: 15px solid transparent;
-   border-right: 15px solid #e0edff;
+.comment:after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    top: 18px; 
+    left: -24px;
+    border: 12px solid transparent;
+    border-right: 12px solid #f0f0f0;
 }
 
-.balloon1-left p {
-   margin: 0;
-   padding: 0;
+.comment p {
+    margin: 0;
+    padding: 0;
+    word-break: break-all;
+
 }
+
+.com_frame{
+    height:100px;
+ }
+
+  .com_pic{
+    height:70%;
+    transform: translate(0%,20%);
+  }
+  
+
+  .comment_time{
+      font-size: 5px;
+     position: absolute;
+     bottom: -15px;
+     left: 10px;
+     white-space: nowrap;
+  }
