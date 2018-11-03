@@ -30,20 +30,23 @@
       </div>
       <%= form.submit "検索", :class=>"btn btn-info" %>
       <% end %>
-      <div id="reading_table">
+      <div class="reading_table">
           <%= render 'reading_table', items: @items %>   <!-- 検索結果が表示される -->
       </div>
   
    </div> <!-- tab1 -->
 
-   <div id="tab2" class="tab-pane">
-    <%= form_with(url: '/items',:method => 'get',local: true) do |form|%>
+   <div id="tab2" class="tab-pane container">
+    <%= form_with(url: '/item/reading_table') do |form|%>
       <div class = "form-group search">
         <%= form.label :カテゴリから検索 %>
         <%= form.select :category_id, @category_selects,{:prompt => "category?"}, {:class => "btn category_tab"} %>
     </div>
     <%= form.submit "検索", :class=>"btn btn-info" %>
     <% end %>
+    <div class="reading_table">
+        <%= render 'reading_table', items: @items %>   <!-- 検索結果が表示される -->
+    </div>
 
 
    </div>  <!-- tab2-->

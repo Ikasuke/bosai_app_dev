@@ -103,8 +103,17 @@ end #edit end
 end
 
 def reading_table  #検索結果を表示させる
-  @items = Item.search(params[:search])
- 
+  
+  #グッズから探す場合
+  if params[:search] then
+    @items = Item.search(params[:search])
+  end  
+   
+  #カテゴリから探す場合
+  if params[:category_id] then
+    @items = Item.where(category_id: params[:category_id])
+  end  
+
   respond_to do |format|
     format.js    # reading_table.js.erbを処理させる
   end
