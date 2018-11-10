@@ -5,28 +5,23 @@ class HomeController < ApplicationController
 
   def index
     @user = current_user
-      # リマインドメールを表示するために登録されているものを呼び出す。なければ表示しない
+    # リマインドメールを表示するために登録されているものを呼び出す。なければ表示しない
     remindmails = current_user.remindmails
-      # グッズを表示するために登録されているものを呼び出す。なければ表示しない
+    # グッズを表示するために登録されているものを呼び出す。なければ表示しない
     items = current_user.items
-     if remindmails.empty? then
-        # ないので何もしない
-     else
-          @remindmails = remindmails
-         
-     end
-     
-     @items = items
-     @categories = Category.all
+    if remindmails.empty?
+      # ないので何もしない
+    else
+      @remindmails = remindmails
+    end
+
+    @items = items
+    @categories = Category.all
   end #index end
 
+  def adminhome
+    @categories = Category.all
 
- def adminhome
-  @categories = Category.all
-
-  render :layout => 'admin.html.erb'
- end
-
-
-
+    render :layout => "admin.html.erb"
+  end
 end   #class end

@@ -1,0 +1,10 @@
+// イイネボタンoffでカウント処理&ボタンをいいねへ変更
+
+$('.count_item<%= @item.id %>').text(<%= @count %>);
+
+$('.goodbtn_item<%= @item.id %>').html(
+    ' <%= form_with model: Likeitem.new do |form|%><%= form.hidden_field :item_id, :value => @item.id %><%= form.hidden_field :user_id, :value => current_user.id %><%= form.submit "いいね", :class=>"good-btn" %><% end %>'
+ );
+
+
+console.log("destroy.js.erb_いいねボタン処理");

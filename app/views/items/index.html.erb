@@ -31,7 +31,7 @@
       <%= form.submit "検索", :class=>"btn btn-info" %>
       <% end %>
       <div class="reading_table">
-          <%= render 'reading_table', items: @items %>   <!-- 検索結果が表示される -->
+          <%= render partial: 'reading_table', locals: {items: @items, like_hash: @like_hash} %>   <!-- 検索結果が表示される -->
       </div>
   
    </div> <!-- tab1 -->
@@ -45,7 +45,7 @@
     <%= form.submit "検索", :class=>"btn btn-info" %>
     <% end %>
     <div class="reading_table">
-        <%= render 'reading_table', items: @items %>   <!-- 検索結果が表示される -->
+      <%= render partial: 'reading_table', locals: {items: @items, like_hash: @like_hash} %>   <!-- 検索結果が表示される -->
     </div>
 
 

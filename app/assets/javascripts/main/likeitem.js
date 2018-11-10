@@ -3,6 +3,4 @@ $(document).on('ajax:error',function(e){
         console.log("error");
         $('.error').text('既に登録されています');
        } 
-         
-
 });

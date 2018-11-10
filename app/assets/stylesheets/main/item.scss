@@ -32,6 +32,7 @@
     border:solid 1px;
     height:150px;
  }
+ // 写真部分に赤い丸
 .pic_frame p{
      position: absolute;
      color: #ffffff;
@@ -53,3 +54,13 @@
     height:100%;
   }
   
+  .public_memo_explain {
+    text-align: left;
+    border-radius: 0px;
+    border: solid 1px;
+    border-color: #dddddd;
+    background-color: #fafafa;
+    word-break: break-all;
+    font-size: 12px;
+  }
+

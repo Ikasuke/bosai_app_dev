@@ -1,4 +1,4 @@
 // グッズ検索結果を表示させる処理 id=reading_tableの表示を変更
 
-$('.reading_table').html( "<%= escape_javascript(render partial: 'reading_table', locals: {items: @items}) %>" );
+$('.reading_table').html( "<%= escape_javascript(render partial: 'reading_table', locals: {items: @items, like_hash: @like_hash}) %>" );
 console.log("reading_table.js.erb");
