@@ -21,11 +21,8 @@
              </div>
             <div class="col-lg-7 col-md-6 col-sm-6"> <!--説明部  -->
               <table class="table">
-                  <tr>
-                    <td>名前:</td><td><%= item.item_name %> </td>
-                  </tr>
-                   <tr><td>数量:</td><td><%= item.item_volume %></td> 
-                  </tr>  
+                  <tr><td>名前:</td><td><%= item.item_name %> </td></tr>
+                  <tr><td>カテゴリ:</td><td><%= item.category.category_name %> </td></tr>
               </table>      
                   <p class="public_memo_explain">
                       <%= item.item_public_memo %>
