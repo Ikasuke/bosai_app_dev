@@ -37,8 +37,8 @@ class ItemsController < ApplicationController
     @item.user_id = current_user.id
     respond_to do |format|
       if @item.save
-        format.html { redirect_to home_url, notice: "item was successfully created." }
-        #format.json { render :show, status: :created, location: @category }
+        #format.html { redirect_to home_url, notice: "item was successfully created." }
+        format.json { render :show, status: :created, location: @category }
       else
         format.html { redirect_to home_url }
         #format.json { render json: @category.errors, status: :unprocessable_entity }
@@ -106,7 +106,7 @@ class ItemsController < ApplicationController
     end
 
     @like_hash = Likeitem.where(user_id: current_user.id).pluck(:id, :item_id).to_h
-    
+
     respond_to do |format|
       format.js    # reading_table.js.erbを処理させる
     end

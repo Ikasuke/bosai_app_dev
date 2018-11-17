@@ -10,7 +10,8 @@
                <div class= "card p-3">
                   <%= image_tag item.user.avatar.url, class: "card-img-top rounded-circle"%>
                </div>
-               <p> <%= item.user.public_name %></p>
+               <p style="font-size:14px;"><%= item.user.public_name %> </p>
+               <p style="font-size:12px;"> <%= item.user.area1 %>/ <%= item.user.area2 %>  </p>
             </div>  
             <div class="item col-lg-3 col-md-4 col-sm-4">  <!-- グッズ画像部  -->
                   <%= link_to edit_item_path(item) do %>
@@ -21,7 +22,7 @@
              </div>
             <div class="col-lg-7 col-md-6 col-sm-6"> <!--説明部  -->
               <table class="table">
-                  <tr><td>名前:</td><td><%= item.item_name %> </td></tr>
+                  <tr><td>グッズ名:</td><td><%= item.item_name %> </td></tr>
                   <tr><td>カテゴリ:</td><td><%= item.category.category_name %> </td></tr>
               </table>      
                   <p class="public_memo_explain">
@@ -54,34 +55,11 @@
                   </span>
             </div> <!-- いいね数、コメント数　end-->
           </div> <!-- イイネボタン、いいね数、コメント数表示部のend-->
-
   <!-- コメント欄始まり-->        
            <div class="row"> <!--コメント欄 -->    
               <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"></div>  <!-- 空欄-->
-              <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10"> <!--コメント欄-->
-                <div class="row comments">
-                 <% item.comments.each do |comment| %>
-   <!-- 画像始まり-->    
-                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                      <div class= "p-3 com_frame">
-                            <%= image_tag comment.user.avatar.url, class: "com_pic rounded-circle"%>
-                      </div>
-                      <p> <%= comment.user.public_name %></p>
-                 </div>
-   <!-- 画像終わり-->    
-     <!-- 吹き出し始まり-->                
-                 <div class=" col-lg-9 col-md-9 col-sm-9 col-xs-9">
-                     <div class="comment">  
-                              <p><%= comment.comment_detail %></p>
-                              <div class="comment_time">
-                                  <p><%= comment.created_at.strftime('%Y/%m/%d-%H:%M') %>
-                               </div>
-                    </div>
-                 </div> 
-     <!-- 吹き出し終わり --> 
-                 <% end %>
-                 
-                </div> <!-- row comments -->
+              <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 comments_box" id="comments_box_<%= item.id %>" >
+              
               </div> <!--コメント欄終わり -->  
            </div> <!-- row-->
   <!-- コメント欄終わり -->

@@ -50,7 +50,24 @@
 
 
    </div>  <!-- tab2-->
-   <div id="tab3" class="tab-pane"></div>  <!-- tab3-->
+   <div id="tab3" class="tab-pane container">
+     <%= form_with(url: '/item/reading_table') do |form|%>
+      <div class = "form-group search">
+        <%= form.label :都道府県から検索 %>
+         <%= form.select :area1, ["選択してください"],{} ,{ class: "form-control" }  %>
+     </div>
+　     <div class = "form-group search">
+        <%= form.label :詳細なエリアから検索 %>
+         <%= form.select :area2, ["選択してください"],{} ,{ class: "form-control" }  %>
+     </div>
+    <%= form.submit "検索", :class=>"btn btn-info" %>
+    <% end %>
+    <div class="reading_table">
+      <%= render partial: 'reading_table', locals: {items: @items, like_hash: @like_hash} %>   <!-- 検索結果が表示される -->
+    </div>
+
+
+   </div>  <!-- tab3-->
    <div id="tab4" class="tab-pane"></div>  <!-- tab4-->
 
 </div>  <!-- tab-content -->
