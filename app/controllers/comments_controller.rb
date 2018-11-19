@@ -1,21 +1,20 @@
 class CommentsController < ApplicationController
   def index
     @item = Item.find(params[:item_id])
-    #binding.pry
+    @tab = params[:tab]
     render :layout => false
   end
 
   def create
     @comment = Comment.new(comment_params)
     @comment.user_id = current_user.id
-
+    #item_id = @comment.item.id    いらないはず
+    @commit_name = params.keys[3]
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to home_url, notice: "comment was successfully created." }
-        #format.json { render :show, status: :created, location: @category }
+        format.js
       else
         format.html { redirect_to home_url }
-        #format.json { render json: @category.errors, status: :unprocessable_entity }
       end  #if end
     end    # respond_to end
   end

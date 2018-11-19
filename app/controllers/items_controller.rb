@@ -37,8 +37,8 @@ class ItemsController < ApplicationController
     @item.user_id = current_user.id
     respond_to do |format|
       if @item.save
-        #format.html { redirect_to home_url, notice: "item was successfully created." }
-        format.json { render :show, status: :created, location: @category }
+        format.html { redirect_to home_url, notice: "item was successfully created." }
+        #format.json { render :show, status: :created, location: @category }
       else
         format.html { redirect_to home_url }
         #format.json { render json: @category.errors, status: :unprocessable_entity }
@@ -98,11 +98,13 @@ class ItemsController < ApplicationController
     #グッズから探す場合
     if params[:search]
       @items = Item.search(params[:search])
+      @tab = "tab1"
     end
 
     #カテゴリから探す場合
     if params[:category_id]
       @items = Item.where(category_id: params[:category_id])
+      @tab = "tab2"
     end
 
     @like_hash = Likeitem.where(user_id: current_user.id).pluck(:id, :item_id).to_h

@@ -1,4 +1,15 @@
 // グッズ検索結果を表示させる処理 id=reading_tableの表示を変更
 
-$('.reading_table').html( "<%= escape_javascript(render partial: 'reading_table', locals: {items: @items, like_hash: @like_hash}) %>" );
+$('.reading_table').html( "<%= escape_javascript(render partial: 'reading_table', locals: {items: @items, like_hash: @like_hash, tab: @tab}) %>" );
 console.log("reading_table.js.erb");
+
+     // comments_box部を　呼び出す　
+$('.comments_box').each(function(i,elem){
+       
+        $.get('comments.html', {
+            item_id: elem.id.slice(18), tab: elem.id.slice(0,4)
+            }, function(data){
+            elem.innerHTML = data
+        });
+    }); // each   
+
