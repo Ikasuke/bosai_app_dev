@@ -14,7 +14,7 @@ default: &default
   encoding: utf8
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: root
-  password:
+  password: 
   socket: /tmp/mysql.sock
 
 development:
@@ -49,6 +49,7 @@ test:
 #
 production:
   <<: *default
-  database: bosai_app_dev_production
-  username: bosai_app_dev
-  password: <%= ENV['BOSAI_APP_DEV_DATABASE_PASSWORD'] %>
+  host: <%= Rails.application.credentials.production[:DB_HOST] %>
+  database: <%= Rails.application.credentials.production[:DB_NAME] %>
+  username: <%= Rails.application.credentials.production[:DB_USERNAME] %>
+  password: <%= Rails.application.credentials.production[:DB_PASSWORD] %>

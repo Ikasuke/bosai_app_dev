@@ -7,22 +7,29 @@ Rails.application.routes.draw do
   devise_for :users
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
-## no model
-  root 'start#index'
-  get 'home', to: 'home#index'
-  get 'adminhome', to: 'home#adminhome'
- 
-## user model
- get 'user/profile', to: 'users#profile'
- resources :users
+  ## no model
+  root "start#index"
+  get "home", to: "home#index"
+  get "adminhome", to: "home#adminhome"
+  get "user/area", to: "users#area"
 
- ##  remindmail model
- resources :remindmails
+  ## user model
+  get "user/profile", to: "users#profile"
+  resources :users
 
- ##item model
- resources :items
-  
- ##category model
- resources :categories
+  ##  remindmail model
+  resources :remindmails
 
+  ##item model
+  resources :items
+  post "item/reading_table", to: "items#reading_table"  #グッズ検索でコントローラに検索params(:search)をコントローラへ送る
+
+  ##category model
+  resources :categories
+
+  ##comments model
+  resources :comments
+
+  ##likeitems model
+  resources :likeitems
 end

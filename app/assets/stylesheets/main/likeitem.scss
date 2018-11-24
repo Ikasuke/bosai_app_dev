@@ -1,0 +1,42 @@
+ .goodbtn_part{
+     position: relative;
+     height: 30px;
+       
+ }
+
+
+  .good-btn{
+     background-color: #e0e0e0;
+     width: 100%;
+     font-size: 14px;
+     border-radius: 5px;
+     border: solid 1px;
+     border-color: #c0c0c0;
+     position: absolute;
+     top: 5px;
+     left:0;
+  }
+  
+  .off-btn{
+    background-color: #f8c10e;
+    width: 100%;
+    font-size: 14px;
+    border-radius: 5px;
+    border: solid 1px;
+    border-color: #c0c0c0;
+    position: absolute;
+    top: 5px;
+    left:0;
+
+  }
+
+.count_region{
+    position: relative;
+}
+
+.count_part{
+    font-size: 14px;
+    position: absolute;
+    top: 5px;
+    left: 0;
+}

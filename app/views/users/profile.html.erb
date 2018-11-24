@@ -37,12 +37,12 @@
                 <%= form.text_field :public_name, class: "form-control" %>
           </div>
           <div class="field form-group">
-                <%= form.label :"エリア1(公開されます)" %>
-                <%= form.text_field :area1, class: "form-control"   %>
+                <%= form.label :"都道府県(公開されます)" %>
+                <%= form.select :area1, [@user.area1],{} ,{ class: "form-control" }  %>
           </div>
           <div class="field form-group">
-                <%= form.label :"エリア2(より詳細なエリア) (公開されます)" %>
-                <%= form.text_field :area2, class: "form-control"  %>
+                <%= form.label :"地域(公開されます)" %>
+                <%= form.select :area2, [@user.area2],{} ,{ class: "form-control" }  %>
           </div>
           <div class="field form-group">
                 <%= form.label :"家族構成(公開されます)" %>

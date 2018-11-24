@@ -1,0 +1,35 @@
+       // comments_box部にコメントを載せる (更新させる)
+        var item_id = "<%= @comment.item.id %>";
+        var tab = "<%= @commit_name%>".slice(0,4);
+        var box_id = tab + "_comments_box_" + item_id
+    
+        console.log(box_id);
+  
+         $.get('comments.html', {
+            item_id: item_id, tab: tab
+            }, function(data){
+            document.getElementById(box_id).innerHTML = data
+        });
+       //  コメント書き込み部をまっさらに
+    $('.form-control').val("");
+      
+      // コメント数を更新　
+      $('.comment_num<%= @comment.item.id %>').html("<%= @comment.item.comments.count %>");
+
+      // スクロールを一番下にして　書き込んだことがわかるようにする
+      var comments_id = tab + "_comments_" + item_id
+      console.log(comments_id);
+     var scrollPosition = document.getElementById(comments_id).scrollTop;
+     var scrollHeight = document.getElementById(comments_id).scrollHeight;
+     
+           // 上記コメント更新が終了してからスクロールされるように少し遅延させてスクロールする
+     var num = 0;
+     var scroll = setInterval(function() {
+    document.getElementById(comments_id).scrollTop = scrollHeight; 
+      num++;
+    if(num ==1){
+     clearInterval(scroll);
+    }
+    console.log("scroll");
+}, 250);
+

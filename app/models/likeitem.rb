@@ -16,4 +16,9 @@ class Likeitem < ApplicationRecord
   belongs_to :user
   # item
   belongs_to :item
+
+  ## validation
+  validates_uniqueness_of :item_id, scope: :user_id
+
+
 end

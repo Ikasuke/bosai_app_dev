@@ -1,0 +1,9 @@
+// イイネボタンonでカウント処理&ボタンをいいね削除へ変更
+
+$('.count_item<%= @item.id %>').html("<%= @count %>");
+
+$('.goodbtn_item<%= @item.id %>').html(
+   '<%= button_to likeitem_path(@likeitem.id), method: :delete, class: 'off-btn', remote: true do %>取り消す<% end %>'
+);
+
+console.log("creste.js.erb_いいねボタン処理");

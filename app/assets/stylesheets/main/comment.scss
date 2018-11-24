@@ -1,0 +1,57 @@
+.comments{
+    border-radius: 0px;
+    border: solid 2px;
+    border-color: #dddddd;
+    overflow: auto;      //scroll 
+    height: 200px;
+    //overflow-x: hidden;
+    background-color: #ffffff;
+  }
+
+
+  .comment {
+    display: inline-block;
+    position: relative; 
+    margin: 15px 0 0 0px;
+    padding: 17px 13px;
+    border-radius: 12px;
+    background: #f0f0f0;
+    float: left;
+    
+   
+}
+
+.comment:after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    top: 18px; 
+    left: -24px;
+    border: 12px solid transparent;
+    border-right: 12px solid #f0f0f0;
+}
+
+.comment p {
+    margin: 0;
+    padding: 0;
+    word-break: break-all;
+
+}
+
+.com_frame{
+    height:100px;
+ }
+
+  .com_pic{
+    height:70%;
+    transform: translate(0%,20%);
+  }
+  
+
+  .comment_time{
+      font-size: 5px;
+     position: absolute;
+     bottom: -15px;
+     left: 10px;
+     white-space: nowrap;
+  }
