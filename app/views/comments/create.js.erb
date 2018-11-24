@@ -13,6 +13,9 @@
        //  コメント書き込み部をまっさらに
     $('.form-control').val("");
       
+      // コメント数を更新　
+      $('.comment_num<%= @comment.item.id %>').html("<%= @comment.item.comments.count %>");
+
       // スクロールを一番下にして　書き込んだことがわかるようにする
       var comments_id = tab + "_comments_" + item_id
       console.log(comments_id);

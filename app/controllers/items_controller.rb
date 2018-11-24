@@ -91,6 +91,11 @@ class ItemsController < ApplicationController
     @items = Item.search(params[:search])
 
     @like_hash = Likeitem.where(user_id: current_user.id).pluck(:id, :item_id).to_h
+    ## いいねしたアイテムを表示する準備
+    @item_like = Array.new()
+    @user.likeitems.each do |likeitem|
+      @item_like.push(likeitem.item)
+    end
   end
 
   def reading_table #検索結果を表示させる
