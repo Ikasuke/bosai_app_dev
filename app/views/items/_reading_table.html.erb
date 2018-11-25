@@ -25,9 +25,9 @@
                   <tr><td>グッズ名:</td><td><%= item.item_name %> </td></tr>
                   <tr><td>カテゴリ:</td><td><%= item.category.category_name %> </td></tr>
               </table>      
-                  <p class="public_memo_explain">
-                      <%= item.item_public_memo %>
-                  </p>
+                  <dev class="public_memo_explain">
+                      <%= simple_format(item.item_public_memo) %>
+                  </dev>
             </div>  
           </div> <!-- プロフィール画像、グッズ画像、説明を格納するrow のend -->
 <!-- イイネボタン、いいね数、コメント数表示部の始まり-->   

@@ -9,4 +9,5 @@ module ApplicationHelper
       concat raw(message)
     end
   end
+
 end

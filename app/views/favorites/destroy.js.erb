@@ -1,0 +1,10 @@
+// お気に入りボタンoffでカウント処理&ボタンをいいねへ変更
+
+$('.count_favorite<%= @favorite.to_user_id %>').html("<%= @count %>");
+
+$('.favorite_btn_<%= @favorite.to_user.id %>').html(
+    '<%= form_with model: Favorite.new do |form|%><%= form.hidden_field :to_user_id, :value => @favorite.to_user_id %><%= form.hidden_field :from_user_id, :value => @favorite.from_user_id %><%= form.submit "お気に入り", :class=>"good-btn" %><% end %>'
+ );
+       
+
+console.log("/favorite/destroy.js.erb_お気に入りボタン処理");

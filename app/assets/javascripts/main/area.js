@@ -44,8 +44,8 @@ $(document).on('turbolinks:load', function () {
  
 
 //////////
-  // items/indexだったときのみ、実施
-  if (state == 'items#index') {
+  // murmurs/indexだったときのみ、実施
+  if (state == 'murmurs#index') {
     console.log("OK");
   // 都道府県を選択するセレクトボックスを作成
   $.get('/user/area.json',{  

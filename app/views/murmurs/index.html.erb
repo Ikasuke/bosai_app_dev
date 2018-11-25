@@ -1,0 +1,123 @@
+<div class="items container ">
+        <nav class = "navbar bg-warning navbar-dark box-header row">
+          <a class = "navbar-brand" href="/">つながり</a>
+        </nav>
+
+<!-- タブボタン部分 -->
+<ul class="nav nav-tabs row">
+        <li class="nav-item">
+          <a href="#tab1" class="nav-link active" data-toggle="tab">最近のつぶやき</a>
+        </li>
+        <li class="nav-item">
+          <a href="#tab2" class="nav-link" data-toggle="tab">地域の人々</a>
+        </li>
+        <li class="nav-item">
+          <a href="#tab3" class="nav-link" data-toggle="tab">お気に入り</a>
+        </li>
+      </ul>
+
+<!-- タブ内容部分 -->
+　<div class="tab-content row">
+    <div id="tab1" class="tab-pane active container">   
+　   
+　     <div class="row">
+      <div class="col-lg-2 col-md-2 col-sm-2">  <!-- プロフィール画像部-->
+               <div class= "card p-3">
+                  <%= image_tag @user.avatar.url, class: "card-img-top rounded-circle"%>
+               </div>
+               <p style="font-size:14px;"><%= @user.public_name %> </p> 
+       </div> <!-- col end-->
+       <!--  つぶやき記入部 -->
+       <div class="col-lg-10 col-md-10 col-sm-10">
+        <%= form_with model: Murmur.new do |form|%>
+                 <div class="row">
+                    <div class="col-md-9">
+                      <div class="field form-group">
+                              <%= form.text_area :murmur_detail,placeholder: 'つぶやく',class:'form-control'%>
+                      </div>  <!-- field box_comment_detail-->
+                      
+                    </div>
+                    <div class="col-md-3">
+                       <%= form.submit "つぶやく", :class=>"btn btn-info" %>
+                    </div>   <!-- col-md-2 -->
+                 </div>  <!-- コメント記入部 row　end-->
+               <% end %>  <!-- form_with Commnet  -->
+        </div>    <!-- つぶやき記入部　col end -->
+   </div> <!-- row end -->　     
+ <Hr style="border: solid 1.5px; border-color:#f0f0f0;">
+      <% @murmurs.each do |murmur| %>  <!-- グッズごとのループ -->
+         <div class="row">
+              <div class="col-lg-2 col-md-2 col-sm-2">  <!-- プロフィール画像部-->
+                  <div class= "card p-3">
+                   <%= image_tag murmur.user.avatar.url, class: "card-img-top rounded-circle"%>
+                  </div>
+                  <p style="font-size:14px;"><%= murmur.user.public_name %> </p>
+                    <p style="font-size:12px;"> <%= murmur.user.area1 %>/ <%= murmur.user.area2 %>  </p>   
+              </div> <!-- col end-->
+              <div class="col-lg-10 col-md-10 col-sm-10">
+                     <div class="comment">  
+                             <p> <%= simple_format(murmur.murmur_detail) %> </p>
+                              <div class="comment_time">
+                                  <p><%= murmur.created_at.strftime('%Y/%m/%d-%H:%M') %>
+                               </div>
+                    </div>  <!-- comment end-->
+              </div> <!-- col end -->
+        </div> <!-- row end -->
+            <div class="row"> <!-- お気に入りボタン　row-->
+             <div class="col-lg-2 col-md-2 col-sm-2"></div>
+            <div class= "col-lg-2 col-md-3 col-sm-3"> <!-- favoriteボタン--> 
+                <div  class="favorite_btn_<%= murmur.user.id %> goodbtn_part">
+                   <% if @favorite_hash.has_value?(murmur.user.id)%>
+                     <%= button_to favorite_path(@favorite_hash.key(murmur.user.id)), method: :delete, class: 'off-btn',remote: true do %>
+                     取り消す
+                     <% end %>
+                   <% else %>
+     　               <%= form_with model: Favorite.new do |form|%>
+                        <%= form.hidden_field :to_user_id, :value => murmur.user.id %>
+                        <%= form.hidden_field :from_user_id, :value => current_user.id %>
+                        <%= form.submit "お気に入り", :class=>"good-btn" %>
+                      <% end %>       
+                   <% end %>
+                </div>
+            </div>  <!-- favorite ボタン col end -->
+               <div class="col-lg-8 col-md-7 col-sm-7 count_region"> <!-- いいね数、コメント数-->
+                  <span class="count_part">
+                      お気に入り:<span class="count_favorite<%= murmur.user.id %>"><%= murmur.user.favorites_of_to_user.count %></span>件
+                </span>                
+               </div> <!-- いいね数、コメント数　end-->
+            </div> <!-- お気に入りボタン　row -->
+
+
+        <hr>
+      <% end %>
+      
+
+   </div> <!-- tab1 -->
+
+   <div id="tab2" class="tab-pane container">
+       
+    <%= form_with(url: '/murmur/region') do |form|%>
+      <div class = "form-group search">
+        <%= form.label :都道府県から検索 %>
+         <%= form.select :area1, ["選択してください"],{} ,{ class: "form-control" }  %>
+     </div>
+　     <div class = "form-group search">
+        <%= form.label :詳細なエリアから検索 %>
+         <%= form.select :area2, ["選択してください"],{} ,{ class: "form-control" }  %>
+     </div>
+    <%= form.submit "検索", :class=>"btn btn-info" %>
+    <% end %>
+      
+
+   </div>  <!-- tab2 end-->
+   <div id="tab3" class="tab-pane container">
+      
+   </div>  <!-- tab3 end-->
+ 
+　</div>  <!-- tab-content -->
+</div>  <!-- items container-->
+
+
+<% content_for :sidebar_left do %>
+ <%= render partial: 'layouts/sidebar', locals: {user: @user, remindmails: @remindmails} %>
+<% end %>

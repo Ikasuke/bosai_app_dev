@@ -27,9 +27,15 @@ Rails.application.routes.draw do
   ##category model
   resources :categories
 
-  ##comments model
+  ##comment model
   resources :comments
 
-  ##likeitems model
+  ##likeitem model
   resources :likeitems
+
+  ##murmur model
+  resources :murmurs
+
+  ##favorite model
+  resources :favorites
 end
