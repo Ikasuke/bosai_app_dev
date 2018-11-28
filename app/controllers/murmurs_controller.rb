@@ -32,6 +32,7 @@ class MurmursController < ApplicationController
   end #create end
 
   def region
+    @region_user = User.where(area1: params[:area1], area2: params[:area2])
   end
 
   private

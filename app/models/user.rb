@@ -103,4 +103,6 @@ class User < ApplicationRecord
   has_many :friends_of_to_user, through: :favorites_of_to_user, source: 'from_user'
   # likeitems
   has_many :likeitems, dependent: :destroy
+
+
 end

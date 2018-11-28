@@ -86,8 +86,6 @@
                 </span>                
                </div> <!-- いいね数、コメント数　end-->
             </div> <!-- お気に入りボタン　row -->
-
-
         <hr>
       <% end %>
       
@@ -99,11 +97,11 @@
     <%= form_with(url: '/murmur/region') do |form|%>
       <div class = "form-group search">
         <%= form.label :都道府県から検索 %>
-         <%= form.select :area1, ["選択してください"],{} ,{ class: "form-control" }  %>
+         <%= form.select :area1, [@user.area1],{} ,{ class: "form-control" }  %>
      </div>
 　     <div class = "form-group search">
         <%= form.label :詳細なエリアから検索 %>
-         <%= form.select :area2, ["選択してください"],{} ,{ class: "form-control" }  %>
+         <%= form.select :area2, [@user.area2],{} ,{ class: "form-control" }  %>
      </div>
     <%= form.submit "検索", :class=>"btn btn-info" %>
     <% end %>
