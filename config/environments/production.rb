@@ -105,4 +105,20 @@ Rails.application.configure do
       secret_access_key: Rails.application.credentials.AWS_SECRET_ACCESS_KEY,
     },
   }
+
+  # Action mailer
+
+  config / action_mailer.defautlt_url_options = {
+    host: Rails.application.credentials.dig(:production, :HOST_ADDRESS),
+  }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address: "smtp.gmail.com",
+    port: 587,
+    authentication: :plain,
+    domain: "smtp.gmail.com",
+    user_name: Rails.application.credentials.dig(:production, :SMTP_EMAIL),
+    password: Rails.application.credentials.dig(:production, :SMTP_PASSWORD),
+
+  }
 end
