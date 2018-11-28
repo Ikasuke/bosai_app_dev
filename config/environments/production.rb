@@ -108,7 +108,7 @@ Rails.application.configure do
 
   # Action mailer
 
-  config / action_mailer.defautlt_url_options = {
+  config.action_mailer.defautlt_url_options = {
     host: Rails.application.credentials.dig(:production, :HOST_ADDRESS),
   }
   config.action_mailer.delivery_method = :smtp
