@@ -105,7 +105,7 @@ group :development do
   gem "capistrano-nginx"
   gem "capistrano-sidekiq"
 
-  gem "therubyracer"
+  #gem "therubyracer"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
