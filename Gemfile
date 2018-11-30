@@ -104,7 +104,7 @@ group :development do
   gem "capistrano3-puma"
   gem "capistrano-nginx"
   gem "capistrano-sidekiq"
-
+  gem 'mini_racer'
   #gem "therubyracer"
 end
 
