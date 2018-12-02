@@ -12,7 +12,7 @@ set :repo_url, "https://github.com/Ikasuke/bosai_app_dev.git"
 
 # base
 set :application, "bosai_app_dev"
-set :branch, "aws_setup"
+set :branch, ENV['BRANCH'] || "master"
 set :user, "admin"
 set :deploy_to, "/opt/#{fetch(:application)}"
 set :rbenv_ruby, File.read(".ruby-version").strip
@@ -22,7 +22,7 @@ set :stage, :production
 set :deploy_via, :remote_cache
 set :linked_dirs, fetch(:linked_dirs, []).push("log", "tmp/pids", "tmp/cache", "tmp/sockets", "vendor/bundle", "public/system", "public/uploads")
 set :linked_files, fetch(:linked_files, []).push("config/database.yml", "config/credentials.yml.enc", "config/master.key")
-
+set :
 set :node_bin, "~/.nodenv/shims/node"
 #set :node_env, (fetch(:node_env) || fetch(:stage))
 
