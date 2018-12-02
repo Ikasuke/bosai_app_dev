@@ -8,7 +8,7 @@ lock "~> 3.11.0"
 #---------------------------------
 # ご自身の環境に合わせて修正が必要です。
 #---------------------------------
-set :repo_url, "https://github.com/Ikasuke/bosai_app_dev"
+set :repo_url, "https://github.com/Ikasuke/bosai_app_dev.git"
 
 # base
 set :application, "RailsSampleApp"
