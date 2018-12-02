@@ -22,7 +22,6 @@ set :stage, :production
 set :deploy_via, :remote_cache
 set :linked_dirs, fetch(:linked_dirs, []).push("log", "tmp/pids", "tmp/cache", "tmp/sockets", "vendor/bundle", "public/system", "public/uploads")
 set :linked_files, fetch(:linked_files, []).push("config/database.yml", "config/credentials.yml.enc", "config/master.key")
-set :
 set :node_bin, "~/.nodenv/shims/node"
 #set :node_env, (fetch(:node_env) || fetch(:stage))
 
