@@ -12,7 +12,7 @@ set :repo_url, "https://github.com/Ikasuke/bosai_app_dev.git"
 
 # base
 set :application, "bosai_app_dev"
-set :branch, ENV['BRANCH'] || "master"
+set :branch,  ENV["REVISION"] || ENV["BRANCH_NAME"]
 set :user, "admin"
 set :deploy_to, "/opt/#{fetch(:application)}"
 set :rbenv_ruby, File.read(".ruby-version").strip
