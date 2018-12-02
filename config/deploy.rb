@@ -11,7 +11,7 @@ lock "~> 3.11.0"
 set :repo_url, "https://github.com/Ikasuke/bosai_app_dev.git"
 
 # base
-set :application, "RailsSampleApp"
+set :application, "bosai_app_dev"
 set :branch, "aws_setup"
 set :user, "admin"
 set :deploy_to, "/opt/#{fetch(:application)}"
