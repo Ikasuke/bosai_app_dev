@@ -95,6 +95,15 @@ group :development do
 
   # ストラクチャ情報
   gem "annotate"
+
+  #capistrano
+  gem "capistrano"
+  gem "capistrano-rbenv"
+  gem "capistrano-bundler"
+  gem "capistrano-rails"
+  gem "capistrano3-puma"
+  gem "capistrano-nginx"
+  gem "capistrano-sidekiq"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

@@ -97,12 +97,27 @@ Rails.application.configure do
   #Paperclip
   config.paperclip_defaults = {
     storage: :s3,
-    bucket: Rails.application.credentials.S3_BUCKET_NAME,
-    s3_region: Rails.application.credentials.AWS_REGION,
+    bucket: Rails.application.credentials.production[:S3_BUCKET_NAME],
+    s3_region: Rails.application.credentials.production[:AWS_REGION],
     s3_host_name: "s3-ap-northeast-1.amazonaws.com",
     s3_credentials: {
-      access_key_id: Rails.application.credentials.AWS_ACCESS_KEY_ID,
-      secret_access_key: Rails.application.credentials.AWS_SECRET_ACCESS_KEY,
+      access_key_id: Rails.application.credentials.production[:AWS_ACCESS_KEY_ID],
+      secret_access_key: Rails.application.credentials.production[:AWS_SECRET_ACCESS_KEY],
     },
+  }
+
+  # Action mailer
+  config.action_mailer.default_url_options = {
+    host: Rails.application.credentials.prodution[:HOST_ADDRESS],
+  }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address: "smtp.gmail.com",
+    port: 587,
+    authentication: :plain,
+    domain: "smtp.gmail.com",
+    user_name: Rails.application.credentials.dig(:production, :SMTP_EMAIL),
+    password: Rails.application.credentials.dig(:production, :SMTP_PASSWORD),
+
   }
 end
