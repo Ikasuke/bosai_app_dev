@@ -23,7 +23,7 @@ set :stage, :production
 set :deploy_via, :remote_cache
 set :linked_dirs, fetch(:linked_dirs, []).push("log", "tmp/pids", "tmp/cache", "tmp/sockets",
                                                "vendor/bundle", "public/system", "public/uploads")
-set :linked_files, fetch(:linked_files, []).push("config/database.yml", "config/credentials.yml", "config/master.key")
+set :linked_files, fetch(:linked_files, []).push("config/database.yml", "config/credentials.yml.enc", "config/master.key")
 
 # puma
 set :puma_threads, [4, 16]
@@ -82,7 +82,7 @@ namespace :deploy do
       sudo :mkdir, "-p", "/etc/nginx/sites-available"
 
       upload!("config/database.yml", "#{shared_path}/config/database.yml")
-      upload!("config/credentials.yml", "#{shared_path}/config/credentials.yml")
+      upload!("config/credentials.yml.enc", "#{shared_path}/config/credentials.yml.enc")
       upload!("config/master.key", "#{shared_path}/config/master.key")
     end
   end
