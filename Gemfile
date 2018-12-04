@@ -104,6 +104,7 @@ group :development do
   gem "capistrano3-puma"
   gem "capistrano-nginx"
   gem "capistrano-sidekiq"
+  gem "capistrano-nodenv", "~> 1.0", ">= 1.0.1"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
