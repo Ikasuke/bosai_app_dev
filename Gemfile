@@ -64,7 +64,7 @@ gem "paperclip", "~> 5.0.0"
 
 # ユーザー管理
 gem "activeadmin"
-
+gem "rails-i18n"
 #aws
 gem "aws-sdk", "~> 2.3"
 
