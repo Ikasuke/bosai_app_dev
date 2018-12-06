@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require "sidekiq/web"
 
 Rails.application.routes.draw do
   #activeadmin
@@ -6,6 +7,9 @@ Rails.application.routes.draw do
   #devise
   devise_for :users
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
+  #sidekiq
+  mount Sidekiq::Web, at: "/sidekiq"
 
   ## no model
   root "start#index"

@@ -37,7 +37,7 @@
 #
 
 class User < ApplicationRecord
-  # #devise
+  ## devise
   # Include default devise modules. Others available are:
   # :omniauthable
   devise :database_authenticatable, :registerable,
@@ -104,5 +104,10 @@ class User < ApplicationRecord
   # likeitems
   has_many :likeitems, dependent: :destroy
 
+
+  # Sidekiq
+   def send_devise_notification(notification, *args)
+     devise_mailer.send(notification, self, *args).deliver_later
+   end 
 
 end
