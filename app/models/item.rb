@@ -47,9 +47,9 @@ class Item < ApplicationRecord
 ## search メソッド
 def self.search(search)
   if search
-  Item.where(['item_name LIKE ?', "%#{search}%"])
+  Item.where(['item_name LIKE ?', "%#{search}%"]).where(item_open_flag: 1)
   else
-  Item.all
+  Item.where(item_open_flag: 1)
   end
 end
 
