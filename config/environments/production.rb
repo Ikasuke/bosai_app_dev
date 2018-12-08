@@ -120,4 +120,7 @@ Rails.application.configure do
     password: Rails.application.credentials.dig(:production, :SMTP_PASSWORD),
 
   }
+
+  #Redis session  *まだ未検証
+  config.session_store :redis_store, servers: "redis://127.0.0.1:6379/0", expire_in: 1.day
 end
