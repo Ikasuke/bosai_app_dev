@@ -29,8 +29,9 @@ class Item < ApplicationRecord
 
   ## validation
   validates_attachment_content_type :picture, content_type: ['image/jpeg', 'image/gif', 'image/png']
-  #validates :name, presence: true # ,uniquness: { case_sensitive: false}
-
+  validates :item_name, presence: true 
+  validates :category_id, presence: true
+  
  ##enum
   enum item_open_flag: { 公開する: true, 公開しない: false}
 

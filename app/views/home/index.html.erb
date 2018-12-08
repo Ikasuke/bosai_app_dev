@@ -93,7 +93,11 @@
       <% else%>
       <div class="row">
            <% @items.each do |item| %>
-             <% delta_t = ((item.item_expiry - Time.now)/(3600*24)).ceil %>
+             <% if item.item_expiry.blank? %>
+                <% delta_t = 100000 %>
+             <%else%>
+                <% delta_t = ((item.item_expiry - Time.now)/(3600*24)).ceil %>
+             <%end%>
              <% if delta_t < 8 %>
               
              <div class="item col-lg-3 col-md-4 col-sm-4">
@@ -125,7 +129,11 @@
       <% else%>
       <div class="row">
            <% @items.each do |item| %>
-             <% delta_t = ((item.item_expiry - Time.now)/(3600*24)).ceil %>
+             <% if item.item_expiry.blank? %>
+                <% delta_t = 100000 %>
+             <%else%>
+                <% delta_t = ((item.item_expiry - Time.now)/(3600*24)).ceil %>
+             <%end%>
              <% if delta_t > 7 && delta_t < 31 %>   <!-- 8 - 30 -->
               
              <div class="item col-lg-3 col-md-4 col-sm-4">
@@ -157,7 +165,11 @@
       <% else%>
       <div class="row">
            <% @items.each do |item| %>
-             <% delta_t = ((item.item_expiry - Time.now)/(3600*24)).ceil %>
+             <% if item.item_expiry.blank? %>
+                <% delta_t = 100000 %>
+             <%else%>
+                <% delta_t = ((item.item_expiry - Time.now)/(3600*24)).ceil %>
+             <%end%>
              <% if delta_t > 30 && delta_t < 91 %>    <!-- 31 - 90 -->
               
              <div class="item col-lg-3 col-md-4 col-sm-4">
