@@ -58,17 +58,19 @@ gem "jquery-ui-rails"
 gem "devise"
 # gem 'redis'
 # gem 'redis-rails'
-# gem 'sidekiq'
-gem "sinatra"
 
 # 画像アップローダ
 gem "paperclip", "~> 5.0.0"
 
 # ユーザー管理
 gem "activeadmin"
-
+gem "rails-i18n"
 #aws
 gem "aws-sdk", "~> 2.3"
+
+#非同期処理
+gem "sidekiq"
+gem "sinatra"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -95,6 +97,16 @@ group :development do
 
   # ストラクチャ情報
   gem "annotate"
+
+  #capistrano
+  gem "capistrano"
+  gem "capistrano-rbenv"
+  gem "capistrano-bundler"
+  gem "capistrano-rails"
+  gem "capistrano3-puma"
+  gem "capistrano-nginx"
+  gem "capistrano-sidekiq"
+  gem "capistrano-nodenv", "~> 1.0", ">= 1.0.1"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
