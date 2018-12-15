@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
-  APP_NAME = '防災アプリ'
+  APP_NAME = '防災ストッカー'   #防災アプリ
 
   def flash_message(message, klass)
     content_tag(:div, class: "alert alert-#{klass}") do

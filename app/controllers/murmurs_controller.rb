@@ -11,8 +11,24 @@ class MurmursController < ApplicationController
     else
       @remindmails = remindmails
     end
-
+    @allusers = User.all
     @murmurs = Murmur.all
+    @max_items = {}
+    @allusers.each do |a_user|
+      a_user.items.each_with_index do |item, index|
+        if index == 0
+          @max = item.likeitems.count
+          @max_item = item
+        end
+        if @max < item.likeitems.count
+          @max = item.likeitems.count
+          @max_item = item
+        end
+      end  # a_user.each end
+      @max_items.store(a_user.id, @max_item)
+    end
+
+    #  item.id item.likeitems.count
 
     @favorite_hash = Favorite.where(from_user_id: current_user.id).pluck(:id, :to_user_id).to_h   #ログインユーザーがお気に入りしたユーザーのデータ
   end   # index end
