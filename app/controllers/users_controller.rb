@@ -30,6 +30,6 @@ class UsersController < ApplicationController
 
   # strong_parameter :public_name, :area,
   def user_params
-    params.require(:user).permit(:public_name, :area1, :area2, :family, :avatar)
+    params.require(:user).permit(:public_name, :area1, :area2, :family, :avatar, :profile)
   end
 end

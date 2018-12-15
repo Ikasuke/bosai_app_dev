@@ -1,3 +1,4 @@
+# encoding: utf-8
 class MurmursController < ApplicationController
   def index
 
@@ -13,24 +14,32 @@ class MurmursController < ApplicationController
     end
     @allusers = User.all
     @murmurs = Murmur.all
+    # いいねが多いアイテムを表示させる
     @max_items = {}
     @allusers.each do |a_user|
       a_user.items.each_with_index do |item, index|
         if index == 0
-          @max = item.likeitems.count
-          @max_item = item
+          @max = -1
         end
-        if @max < item.likeitems.count
-          @max = item.likeitems.count
-          @max_item = item
-        end
+        if item.item_open_flag == "公開する"
+          if @max < item.likeitems.count
+            @max = item.likeitems.count
+            @max_item = item
+          end
+        end #if end
       end  # a_user.each end
-      @max_items.store(a_user.id, @max_item)
-    end
 
+      @max_items.store(a_user.id, @max_item)  #全て非公開もしくは何もアイテムを登録していないと、nilが入る
+    end # alluser.each end
     #  item.id item.likeitems.count
 
     @favorite_hash = Favorite.where(from_user_id: current_user.id).pluck(:id, :to_user_id).to_h   #ログインユーザーがお気に入りしたユーザーのデータ
+
+    ## お気に入りした人を表示する準備
+    @favorite_users = Array.new()
+    @user.favorites_of_from_user.each do |favorite|
+      @favorite_users.push(favorite.to_user)
+    end
   end   # index end
 
   def create
@@ -49,10 +58,10 @@ class MurmursController < ApplicationController
 
   def region
     @max_items = {}
-    if params[:area2] == "全地域" then
+    if params[:area2] == "全地域"
       @allusers = User.where(area1: params[:area1])
     else
-    @allusers = User.where(area1: params[:area1], area2: params[:area2])
+      @allusers = User.where(area1: params[:area1], area2: params[:area2])
     end #if end
     @allusers.each do |a_user|
       a_user.items.each_with_index do |item, index|

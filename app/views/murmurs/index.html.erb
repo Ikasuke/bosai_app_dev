@@ -6,20 +6,49 @@
 <!-- タブボタン部分 -->
 <ul class="nav nav-tabs row">
         <li class="nav-item">
-          <a href="#tab1" class="nav-link active" data-toggle="tab">つぶやく</a>
+          <a href="#tab1" class="nav-link active" data-toggle="tab">地域の人々</a>
         </li>
         <li class="nav-item">
-          <a href="#tab2" class="nav-link" data-toggle="tab">地域の人々</a>
+          <a href="#tab2" class="nav-link" data-toggle="tab">お気に入りの人</a>
         </li>
         <li class="nav-item">
-          <a href="#tab3" class="nav-link" data-toggle="tab">お気に入り</a>
+          <a href="#tab3" class="nav-link" data-toggle="tab">つぶやく</a>
         </li>
       </ul>
 
 <!-- タブ内容部分 -->
 　<div class="tab-content row">
     <div id="tab1" class="tab-pane active container">   
-　   
+      <%= form_with(url: '/murmur/region') do |form|%>
+        <div class = "form-group search">
+          <%= form.label :都道府県から検索 %>
+          <%= form.select :area1, [@user.area1],{} ,{ class: "form-control" }  %>
+        </div>
+　      <div class = "form-group search">
+          <%= form.label :詳細なエリアから検索 %>
+          <%= form.select :area2, [@user.area2],{} ,{ class: "form-control" }  %>
+        </div>
+        <%= form.submit "検索", :class=>"btn btn-info" %>
+        <% end %>  <!-- form end -->
+     
+      <hr>
+      <div class="" id="region_search_tab1">
+          <%= render partial: 'region_search', locals: {allusers: @allusers, max_items: @max_items, favorite_hash: @favorite_hash, tab: "tab1"} %>   <!-- 検索結果が表示される -->
+      </div>
+   </div> <!-- tab1 -->
+
+   <div id="tab2" class="tab-pane container">
+      <p> いいねしたアイテムが表示されます </p>
+       <p> 表示されない場合は、ページを更新してください </p>
+      <hr>
+    <div class="" id="region_search_tab2">
+          <%= render partial: 'region_search', locals: {allusers: @favorite_users, max_items: @max_items, favorite_hash: @favorite_hash, tab: "tab2"} %>   <!-- 検索結果が表示される -->
+      </div>
+
+
+   </div>  <!-- tab2 end-->
+   <div id="tab3" class="tab-pane container">
+      　   
 　     <div class="row">
       <div class="col-lg-2 col-md-2 col-sm-2">  <!-- プロフィール画像部-->
                <div class= "card p-3">
@@ -88,34 +117,6 @@
             </div> <!-- お気に入りボタン　row -->
         <hr>
       <% end %>
-      
-
-   </div> <!-- tab1 -->
-
-   <div id="tab2" class="tab-pane container">
-  
-        <%= form_with(url: '/murmur/region') do |form|%>
-        <div class = "form-group search">
-          <%= form.label :都道府県から検索 %>
-          <%= form.select :area1, [@user.area1],{} ,{ class: "form-control" }  %>
-        </div>
-　      <div class = "form-group search">
-          <%= form.label :詳細なエリアから検索 %>
-          <%= form.select :area2, [@user.area2],{} ,{ class: "form-control" }  %>
-        </div>
-        <%= form.submit "検索", :class=>"btn btn-info" %>
-        <% end %>  <!-- form end -->
-     
-      <hr>
-     
-      <div class="" id="region_search_tab2">
-          <%= render partial: 'region_search', locals: {allusers: @allusers, max_items: @max_items} %>   <!-- 検索結果が表示される -->
-      </div>
-
-
-   </div>  <!-- tab2 end-->
-   <div id="tab3" class="tab-pane container">
-      
    </div>  <!-- tab3 end-->
  
 　</div>  <!-- tab-content -->
