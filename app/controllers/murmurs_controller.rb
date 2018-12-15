@@ -48,8 +48,29 @@ class MurmursController < ApplicationController
   end #create end
 
   def region
-    @region_user = User.where(area1: params[:area1], area2: params[:area2])
-  end
+    @max_items = {}
+    if params[:area2] == "全地域" then
+      @allusers = User.where(area1: params[:area1])
+    else
+    @allusers = User.where(area1: params[:area1], area2: params[:area2])
+    end #if end
+    @allusers.each do |a_user|
+      a_user.items.each_with_index do |item, index|
+        if index == 0
+          @max = item.likeitems.count
+          @max_item = item
+        end
+        if @max < item.likeitems.count
+          @max = item.likeitems.count
+          @max_item = item
+        end
+      end  # a_user.each end
+      @max_items.store(a_user.id, @max_item)
+    end
+    respond_to do |format|
+      format.js
+    end
+  end #region end
 
   private
 
