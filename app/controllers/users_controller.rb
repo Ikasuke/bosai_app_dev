@@ -26,6 +26,10 @@ class UsersController < ApplicationController
   def area
   end
 
+  def show
+    @user = User.find(params[:id])
+  end
+
   private
 
   # strong_parameter :public_name, :area,

@@ -1,5 +1,101 @@
 <div class="items container">
+<div class="row">
+    <div class="col-md-3">
+<!--name-->       
+　    
+      <p>グッズ名:<%= @item.item_name%>
 
-<%= @item.item_name %>
+<!-- picture-->
+        <div class="preview col-md-10 col-sm-10 col-xs-6">
+        <%= image_tag @item.picture.url, class: "card-img-top"%>
+        </div>
+    </div>  <!-- col-md-3-->
+    <div class="col-md-6">
+     <table class="table table-borderless">   
+               <tr><td></td><td></td></tr>
+ <!-- category-->
+                <tr>
+                  <td>カテゴリー</td>
+                  <td><%= @item.category.category_name %> </td>
+                </tr>
+<!--public_memo-->    
+                <tr>
+                  <td>memo</td>
+                  <td>
+                     <div class="public_memo_explain">
+                         <p><%= @item.item_public_memo %></p>
+                    </div>
+                  </td>
+                </tr>
+     </table>
+    </div>  <!-- col-md-4 -->
+    <div class="col-md-3">
+      
+<br>
+
+<!-- イイネボタン、いいね数、コメント数表示部の始まり-->   
+                <div  class="goodbtn_item<%= @item.id %> goodbtn_part">
+                   <% if @like_hash.has_value?(@item.id)%>
+                     <%= button_to likeitem_path(@like_hash.key(@item.id)), method: :delete, class: 'off-btn',remote: true do %>
+                     取り消す
+                     <% end %>
+                   <% else %>
+     　               <%= form_with model: Likeitem.new do |form|%>
+                        <%= form.hidden_field :item_id, :value => @item.id %>
+                        <%= form.hidden_field :user_id, :value => current_user.id %>
+                        <%= form.submit "いいね", :class=>"good-btn" %>
+                      <% end %>       
+                   <% end %>
+                </div> <!-- いいねボタン -->
+            <div class="count_region"> <!-- いいね数、コメント数-->
+                  <span class="count_part">
+                      いいね:<span class="count_item<%= @item.id %>"><%= @item.likeitems.count %></span>件/
+                      コメント数:<span class="comment_num<%= @item.id %>" ><%= @item.comments.count %></span>件
+                  </span>
+            </div> <!-- いいね数、コメント数　end-->
+
+  <br><br><br> 
+    
+  <%= link_to "戻る", items_path, class: 'btn btn-default gray' %>
+ 
+ </div> <!--col-md-3 -->
+ </div>   <!-- row -->
+
+</div>  <!-- items container -->
+
+<br>
+
+<div class="items container">
+    <nav class = "navbar bg-warning navbar-dark box-header row">
+        <a class = "navbar-brand">コメント</a>
+      </nav>
+ <!-- コメント欄始まり  * tab0とする-->        
+           <div class="row"> <!--コメント欄 -->    
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 comments_box" id="tab0_comments_box_<%= @item.id %>" >
+              <!-- comment/index をjs で呼び出して表示  -->
+              </div>   
+           </div> <!-- row-->
+  <!-- コメント欄終わり -->
+       <!-- コメント記入部-->
+               <%= form_with model: Comment.new do |form|%>
+                 <div class="row">
+                    <div class="col-md-10">
+                      <div class="field form-group">
+                              <%= form.text_area :comment_detail,placeholder: 'コメントを記入してください',class:'form-control'%>
+                      </div>  <!-- field box_comment_detail-->
+                      <%= form.hidden_field :item_id, :value => @item.id %>
+                    </div>
+                    <div class="col-md-2">
+                       <%= form.submit "コメント", :class=>"btn btn-info",:name=> "tab0_commit_id#{@item.id}" %>
+                    </div>   <!-- col-md-2 -->
+                 </div>  <!-- コメント記入部 row　end-->
+               <% end %>  <!-- form_with Commnet  -->
+
+  </div>   <!-- items container end-->
 
 </div>
+
+
+<% content_for :sidebar_left do %>
+ <%= render partial: 'layouts/sidebar', locals: {user: @item.user, remindmails: nil} %>
+<% end %>

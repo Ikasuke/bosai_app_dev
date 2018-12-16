@@ -3,12 +3,16 @@
     <div class= 'container'>
         <nav class = "navbar bg-warning navbar-dark box-header row ">
           <a class = "navbar-brand" href="/user/profile">プロフィール</a>
+          <% if user == current_user %>
           <p><%= link_to '編集', user_profile_path %></p>
+          <% else %>
+          <p><%= link_to '詳細', user_path %></p>
+          <% end %>
         </nav>
    <div class='row'>
         <div class="col-md-12">
              <div class= "card p-4">
-                   <%= image_tag current_user.avatar.url, class: "card-img-top rounded-circle"%>
+                   <%= image_tag user.avatar.url, class: "card-img-top rounded-circle"%>
              </div>
         </div>
    <div class="col-md-12">
