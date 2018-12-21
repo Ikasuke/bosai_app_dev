@@ -76,6 +76,9 @@ class MurmursController < ApplicationController
       end  # a_user.each end
       @max_items.store(a_user.id, @max_item)
     end
+
+    @favorite_hash = Favorite.where(from_user_id: current_user.id).pluck(:id, :to_user_id).to_h   #ログインユーザーがお気に入りしたユーザーのデータ
+
     respond_to do |format|
       format.js
     end

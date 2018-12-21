@@ -1,5 +1,5 @@
-// 地域検索結果を表示させる処理 id=region_search_tab2の表示を変更
+// 地域検索結果を表示させる処理 id=region_search_tab1の表示を変更
 
-$("#region_search_tab1").html( "<%= escape_javascript(render partial: 'region_search', locals: {allusers: @allusers, max_items: @max_items}) %>" );
+$("#region_search_tab1").html( "<%= escape_javascript(render partial: 'region_search', locals: {allusers: @allusers, max_items: @max_items, favorite_hash: @favorite_hash, tab: "tab1"}) %>" );
 console.log("region_search.js.erb");
 

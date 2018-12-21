@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   get "home", to: "home#index"
   get "adminhome", to: "home#adminhome"
   get "user/area", to: "users#area"
-
+  get "info", to: "info#index"
   ## user model
   get "user/profile", to: "users#profile"
   resources :users

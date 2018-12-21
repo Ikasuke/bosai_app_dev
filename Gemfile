@@ -46,6 +46,9 @@ gem "tether-rails"
 gem "bootstrap4-datetime-picker-rails"
 gem "momentjs-rails", ">= 2.9.0"
 
+#icons
+gem 'font-awesome-rails'
+
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem "turbolinks", "~> 5"
 
