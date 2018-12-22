@@ -27,6 +27,7 @@ class UsersController < ApplicationController
   end
 
   def show
+    #params[:id]はグッズのid
     @user = Item.find(params[:id]).user
   end
 
