@@ -32,7 +32,6 @@ class ItemsController < ApplicationController
     else
       redirect_to item_url     #自分のじゃないので、showへ
     end
-    ReminderMailer.remind(current_user.email, @item).deliver
   end #edit end
 
   def create

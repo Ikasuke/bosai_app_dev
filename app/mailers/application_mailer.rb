@@ -3,6 +3,6 @@
 
 class ApplicationMailer < ActionMailer::Base
   default from: "防災ストッカー <info@hoge.com>"  # <info@hoge.com>を入れないと555 5.5.2errorになる
-  #reply_to: ""
+  #reply_to: "info@hoge.com"
   layout "mailer"
 end
