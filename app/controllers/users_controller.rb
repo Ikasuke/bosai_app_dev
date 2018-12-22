@@ -26,10 +26,15 @@ class UsersController < ApplicationController
   def area
   end
 
+  def show
+    #params[:id]はグッズのid
+    @user = Item.find(params[:id]).user
+  end
+
   private
 
   # strong_parameter :public_name, :area,
   def user_params
-    params.require(:user).permit(:public_name, :area1, :area2, :family, :avatar)
+    params.require(:user).permit(:public_name, :area1, :area2, :family, :avatar, :profile)
   end
 end

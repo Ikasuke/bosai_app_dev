@@ -5,7 +5,7 @@
     
         console.log(box_id);
   
-         $.get('comments.html', {
+         $.get('/comments.html', {
             item_id: item_id, tab: tab
             }, function(data){
             document.getElementById(box_id).innerHTML = data

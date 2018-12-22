@@ -1,3 +1,4 @@
+# encoding: utf-8
 # frozen_string_literal: true
 # == Schema Information
 #
@@ -21,18 +22,20 @@
 #
 
 class Item < ApplicationRecord
-
-
   has_attached_file :picture,
-  styles: { medium: '300x300>', thumb: '100x100>' },
-  default_url: 'http://localhost:3000/noimage.jpg'
+                    styles: {medium: "300x300>", thumb: "100x100>"},
+                    default_url: "http://localhost:3000/noimage.jpg"
 
   ## validation
-  validates_attachment_content_type :picture, content_type: ['image/jpeg', 'image/gif', 'image/png']
-  #validates :name, presence: true # ,uniquness: { case_sensitive: false}
+  validates_attachment_content_type :picture, content_type: ["image/jpeg", "image/gif", "image/png"]
+  validates :item_name, presence: true
+  validates :category_id, presence: true
 
- ##enum
-  enum item_open_flag: { 公開する: true, 公開しない: false}
+  ##enum
+  enum item_open_flag: {公開する: true, 公開しない: false}
+
+  ##scope　　最新の登録が前に来るように
+  scope :neworder, -> { order(created_at: :desc) }
 
   # #リレーション
   # user
@@ -44,16 +47,12 @@ class Item < ApplicationRecord
   # likeitems
   has_many :likeitems, dependent: :destroy
 
-## search メソッド
-def self.search(search)
-  if search
-  Item.where(['item_name LIKE ?', "%#{search}%"])
-  else
-  Item.all
+  ## search メソッド
+  def self.search(search)
+    if search
+      Item.where(["item_name LIKE ?", "%#{search}%"]).where(item_open_flag: 1)
+    else
+      Item.where(item_open_flag: 1)
+    end
   end
-end
-
-
-
-
 end

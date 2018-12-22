@@ -1,7 +1,9 @@
+# encoding: utf-8
 class ItemsController < ApplicationController
   before_action :set_item, only: [:edit, :update, :destroy, :show]
 
   def show #他人のも観れる
+    @like_hash = Likeitem.where(user_id: current_user.id).pluck(:id, :item_id).to_h
   end
 
   def new
@@ -28,7 +30,7 @@ class ItemsController < ApplicationController
       @category_selects = category_selects
       render :layout => "item_new.html.erb"
     else
-      redirect_to item_url     #自分の出ないので、showへ
+      redirect_to item_url     #自分のじゃないので、showへ
     end
   end #edit end
 
@@ -89,12 +91,13 @@ class ItemsController < ApplicationController
     @category_selects = category_selects
     # # item情報
     @items = Item.search(params[:search])
-
     @like_hash = Likeitem.where(user_id: current_user.id).pluck(:id, :item_id).to_h
     ## いいねしたアイテムを表示する準備
     @item_like = Array.new()
     @user.likeitems.each do |likeitem|
-      @item_like.push(likeitem.item)
+      if likeitem.item.item_open_flag == "公開する"
+        @item_like.push(likeitem.item)
+      end
     end
   end
 
@@ -108,7 +111,7 @@ class ItemsController < ApplicationController
 
     #カテゴリから探す場合
     if params[:category_id]
-      @items = Item.where(category_id: params[:category_id])
+      @items = Item.where(category_id: params[:category_id]).where(item_open_flag: 1)
       @tab = "tab2"
     end
 

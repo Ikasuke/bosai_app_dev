@@ -44,10 +44,13 @@
             prevCentury: '前世紀',
             nextCentury: '次世紀'
         },
+       
         format: 'YYYY/MM/DD',
         locale: 'ja',
-        showClose: true
+        showClose: true        
     });
+
+
 
     $('.form_pic').on('change',function(e){
         var file = e.target.files[0], 

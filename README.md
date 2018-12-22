@@ -32,4 +32,4 @@ Things you may want to cover:
 
 *日程
  http://minna-de-gantt.com/gantt/main/?cid=o6bU6IYtQ9
- pw:bosaiapp
+

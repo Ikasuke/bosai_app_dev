@@ -1,3 +1,4 @@
+# encoding: utf-8
 # frozen_string_literal: true
 
 # == Schema Information
@@ -37,7 +38,7 @@
 #
 
 class User < ApplicationRecord
-  # #devise
+  ## devise
   # Include default devise modules. Others available are:
   # :omniauthable
   devise :database_authenticatable, :registerable,
@@ -45,14 +46,19 @@ class User < ApplicationRecord
          :confirmable, :lockable, :timeoutable
 
   has_attached_file :avatar,
-                    styles: { medium: '300x300>', thumb: '100x100>' },
-                    default_url: 'http://localhost:3000/rocket.jpg'
+                    styles: {medium: "300x300>", thumb: "100x100>"},
+                    default_url: "http://localhost:3000/rocket.jpg"
 
   ## validation
-  validates_attachment_content_type :avatar, content_type: ['image/jpeg', 'image/gif', 'image/png']
-  validates :name, presence: true # ,uniquness: { case_sensitive: false}
+  validates_attachment_content_type :avatar, content_type: ["image/jpeg", "image/gif", "image/png"]
+  # nameは存在していること、ユニークであること、ローマ字であること、Eメールと名前が同一でないこと
+  validates :name, presence: true, uniqueness: {case_sensitive: false} # 大文字小文字の差を無視して同一を禁止
   validates_format_of :name, with: /^[a-zA-Z0-9_¥.]*$/, multiline: true
   validate :validate_name
+  # emailは存在していること、ユニークであること
+  validates :email, presence: true, uniqueness: true
+  # passwordは6文字以上であること
+  validates :encrypted_password, length: {minimum: 6}
 
   def validate_name
     errors.add(:name, :invalid) if User.where(email: name).exists?
@@ -77,13 +83,13 @@ class User < ApplicationRecord
     login = conditions.delete(:login)
 
     where(conditions.to_hash).where(
-      ['lower(name) = :value OR lower(email) = :value',
-       { value: login.downcase }]
+      ["lower(name) = :value OR lower(email) = :value",
+       {value: login.downcase}]
     ).first
   end
 
   # #管理者権限
-  enum role: { user: 0, admin: 1 }
+  enum role: {user: 0, admin: 1}
 
   # #リレーション
   # items
@@ -96,11 +102,16 @@ class User < ApplicationRecord
   has_many :murmurs, dependent: :destroy
   # favorites
   # favoriteをuserと２つ　つなげるしくみ
-  has_many :favorites_of_from_user, class_name: 'Favorite', foreign_key: 'from_user_id', dependent: :destroy
-  has_many :favorites_of_to_user, class_name: 'Favorite', foreign_key: 'to_user_id', dependent: :destroy
+  has_many :favorites_of_from_user, class_name: "Favorite", foreign_key: "from_user_id", dependent: :destroy
+  has_many :favorites_of_to_user, class_name: "Favorite", foreign_key: "to_user_id", dependent: :destroy
   # 自己結合するしくみ
-  has_many :friends_of_from_user, through: :favorites_of_from_user, source: 'to_user'
-  has_many :friends_of_to_user, through: :favorites_of_to_user, source: 'from_user'
+  has_many :friends_of_from_user, through: :favorites_of_from_user, source: "to_user"
+  has_many :friends_of_to_user, through: :favorites_of_to_user, source: "from_user"
   # likeitems
   has_many :likeitems, dependent: :destroy
+
+  # Sidekiq
+  def send_devise_notification(notification, *args)
+    devise_mailer.send(notification, self, *args).deliver_later
+  end
 end
