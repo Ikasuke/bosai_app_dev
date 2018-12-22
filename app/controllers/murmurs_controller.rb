@@ -17,18 +17,22 @@ class MurmursController < ApplicationController
     # いいねが多いアイテムを表示させる
     @max_items = {}
     @allusers.each do |a_user|
-      a_user.items.each_with_index do |item, index|
-        if index == 0
-          @max = -1
-        end
-        if item.item_open_flag == "公開する"
-          if @max < item.likeitems.count
-            @max = item.likeitems.count
-            @max_item = item
+      if a_user.items.empty?
+        @max_item = nil # グッズを持っていないユーザーにはnil
+      else
+        a_user.items.each_with_index do |item, index|
+          if index == 0
+            @max = -1
+            @max_item = nil   #とりあえずnilが入る
           end
-        end #if end
-      end  # a_user.each end
-
+          if item.item_open_flag == "公開する"
+            if @max < item.likeitems.count
+              @max = item.likeitems.count
+              @max_item = item   # 公開しているものがあれば、その中でいいねが多いものが入る
+            end
+          end #if end
+        end  # a_user.each end
+      end  # if nil? end
       @max_items.store(a_user.id, @max_item)  #全て非公開もしくは何もアイテムを登録していないと、nilが入る
     end # alluser.each end
     #  item.id item.likeitems.count
