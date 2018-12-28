@@ -7,7 +7,7 @@
   <!-- タブボタン部分 -->
 <ul class="nav nav-tabs">
   <li class="nav-item">
-    <a href="#tab1" class="nav-link active" data-toggle="tab">全て</a>
+    <a href="#tab1" class="nav-link active" data-toggle="tab">登録順</a>
   </li>
   <li class="nav-item">
     <a href="#tab2" class="nav-link" data-toggle="tab">カテゴリー別</a>
@@ -26,29 +26,13 @@
        <div class="row" >
          <% if @items.nil? %>
          <% else%>
-           <% @items.each do |item| %>
-               <div class="item col-lg-3 col-md-4 col-sm-4">
-                <%= link_to edit_item_path(item) do %>
-                   <div class= " p-3 pic_frame">
-                      <%= image_tag item.picture.url, class: "item_pic"%>
-                   </div> <!-- pic_frame-->
-                <% end %> <!-- link_to end -->
-                 <table class="table">
-                   <tr><td><%= "名前"%></td> <td><%= item.item_name %></td></tr>
-                   <tr><td><%= "数量"%></td> <td><%= item.item_volume %></td></tr>
-                   <% if item.item_expiry.blank? %>
-                   <tr><td><%= "期限"%></td> <td> なし </td></tr>
-                   <% else %>
-                   <tr><td><%= "期限"%></td> <td><%= item.item_expiry.strftime('%Y年%m月%d日') %></td></tr>
-                   <% end %>  <!-- if item.expiry end-->
-                 </table>
-               </div> <!-- item-->
-            <% end %> <!-- @items.each end-->
+            <% @items.each do |item| %>
+           <%= render partial: 'item_table', locals: {item: item} %> 
+           <% end %> <!-- @items.each end-->
          <% end %>  <!-- if end -->
         </div> <!-- row -->
      </div>   <!-- tab1 -->
      <div id="tab2" class="tab-pane">
-        
         <% if @items.nil? %>
         <% else%>
         <% @categories.each do |category| %>
@@ -59,22 +43,7 @@
         <div class="row">
           <% @items.each do |item| %>
                 <% if item.category_id == category.id %>  
-                <div class="item col-lg-3 col-md-4 col-sm-4">
-                    <%= link_to edit_item_path(item) do %>
-                       <div class= " p-3 pic_frame">
-                          <%= image_tag item.picture.url, class: "item_pic"%>
-                       </div> <!-- pic_frame-->
-                    <% end %> <!-- link_to end -->
-                     <table class="table">
-                       <tr><td><%= "名前"%></td> <td><%= item.item_name %></td></tr>
-                       <tr><td><%= "数量"%></td> <td><%= item.item_volume %></td></tr>
-                       <% if item.item_expiry.blank? %>
-                       <tr><td><%= "期限"%></td> <td> なし </td></tr>
-                       <% else %>
-                       <tr><td><%= "期限"%></td> <td><%= item.item_expiry.strftime('%Y年%m月%d日') %></td></tr>
-                       <% end %>  <!-- if item.expiry end-->
-                     </table>
-                   </div> <!-- item-->
+                 <%= render partial: 'item_table', locals: {item: item} %> 
                 <% else %>
                 <% end %>
           <% end %> <!-- @items.each end-->
@@ -83,9 +52,28 @@
           <% end %>  <!-- if end -->
        
      </div>  <!-- tab2-->
-
      <div id="tab3" class="tab-pane">  <!-- 期限近いもの -->
-<!--1週間以内 -->      
+<!--期限切れ -->      
+      <div class="row" >
+          <label class="control-label">▪️期限切れ </label>
+          </div>  <!-- row  -->
+      <% if @items.nil? %>
+      <% else%>
+      <div class="row">
+           <% @items.each do |item| %>
+             <% if item.item_expiry.blank? %>
+                <% delta_t = 100000 %>
+             <%else%>
+                <% delta_t = ((item.item_expiry - Time.now)/(3600*24)).ceil %>
+             <%end%>
+             <% if delta_t < 0 %>
+               <%= render partial: 'item_table', locals: {item: item} %> 
+             <% end %>  <!-- if delta_t end-->  
+           <% end %>  <!-- @items -->
+         </div>  <!-- row --> 
+      <% end %> <!--if end -->
+      
+<!--7日以内 -->      
       <div class="row" >
           <label class="control-label">▪️1週間以内 </label>
           </div>  <!-- row  -->
@@ -99,23 +87,7 @@
                 <% delta_t = ((item.item_expiry - Time.now)/(3600*24)).ceil %>
              <%end%>
              <% if delta_t < 8 %>
-              
-             <div class="item col-lg-3 col-md-4 col-sm-4">
-                <%= link_to edit_item_path(item) do %>
-                   <div class= " p-3 pic_frame">
-                      <%= image_tag item.picture.url, class: "item_pic"%>
-                   </div> <!-- pic_frame-->
-                <% end %> <!-- link_to end -->
-                     <table class="table">
-                       <tr><td><%= "名前"%></td> <td><%= item.item_name %></td></tr>
-                       <tr><td><%= "数量"%></td> <td><%= item.item_volume %></td></tr>
-                       <% if item.item_expiry.blank? %>
-                       <tr><td><%= "期限"%></td> <td> なし </td></tr>
-                       <% else %>
-                       <tr><td><%= "期限"%></td> <td><%= item.item_expiry.strftime('%Y年%m月%d日') %></td></tr>
-                       <% end %>  <!-- if item.expiry end-->
-                     </table>
-                   </div> <!-- item-->
+              <%= render partial: 'item_table', locals: {item: item} %> 
              <% end %>  <!-- if delta_t end-->  
            <% end %>  <!-- @items -->
          </div>  <!-- row --> 
@@ -134,29 +106,13 @@
              <%else%>
                 <% delta_t = ((item.item_expiry - Time.now)/(3600*24)).ceil %>
              <%end%>
-             <% if delta_t > 7 && delta_t < 31 %>   <!-- 8 - 30 -->
-              
-             <div class="item col-lg-3 col-md-4 col-sm-4">
-                <%= link_to edit_item_path(item) do %>
-                   <div class= " p-3 pic_frame">
-                      <%= image_tag item.picture.url, class: "item_pic"%>
-                   </div> <!-- pic_frame-->
-                <% end %> <!-- link_to end -->
-                     <table class="table">
-                       <tr><td><%= "名前"%></td> <td><%= item.item_name %></td></tr>
-                       <tr><td><%= "数量"%></td> <td><%= item.item_volume %></td></tr>
-                       <% if item.item_expiry.blank? %>
-                       <tr><td><%= "期限"%></td> <td> なし </td></tr>
-                       <% else %>
-                       <tr><td><%= "期限"%></td> <td><%= item.item_expiry.strftime('%Y年%m月%d日') %></td></tr>
-                       <% end %>  <!-- if item.expiry end-->
-                     </table>
-                   </div> <!-- item-->
+             <% if delta_t > 7 && delta_t < 31 %>    <!-- 8 - 30 -->
+              <%= render partial: 'item_table', locals: {item: item} %> 
              <% end %>  <!-- if delta_t end-->  
            <% end %>  <!-- @items -->
          </div>  <!-- row --> 
       <% end %> <!--if end -->
-      
+
 <!--3ヶ月以内 -->      
       <div class="row" >
           <label class="control-label">▪️3ヵ月以内 </label>
@@ -171,23 +127,7 @@
                 <% delta_t = ((item.item_expiry - Time.now)/(3600*24)).ceil %>
              <%end%>
              <% if delta_t > 30 && delta_t < 91 %>    <!-- 31 - 90 -->
-              
-             <div class="item col-lg-3 col-md-4 col-sm-4">
-                <%= link_to edit_item_path(item) do %>
-                   <div class= " p-3 pic_frame">
-                      <%= image_tag item.picture.url, class: "item_pic"%>
-                   </div> <!-- pic_frame-->
-                <% end %> <!-- link_to end -->
-                     <table class="table">
-                       <tr><td><%= "名前"%></td> <td><%= item.item_name %></td></tr>
-                       <tr><td><%= "数量"%></td> <td><%= item.item_volume %></td></tr>
-                       <% if item.item_expiry.blank? %>
-                       <tr><td><%= "期限"%></td> <td> なし </td></tr>
-                       <% else %>
-                       <tr><td><%= "期限"%></td> <td><%= item.item_expiry.strftime('%Y年%m月%d日') %></td></tr>
-                       <% end %>  <!-- if item.expiry end-->
-                     </table>
-                   </div> <!-- item-->
+              <%= render partial: 'item_table', locals: {item: item} %> 
              <% end %>  <!-- if delta_t end-->  
            <% end %>  <!-- @items -->
          </div>  <!-- row --> 

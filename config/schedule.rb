@@ -25,7 +25,7 @@ set :output, "log/crontab.log"
 set :environment, :development
 
 # 毎日10:00
-every 1.day, at: "10:00 am" do
+every 1.day, at: "11:00 am" do
   # rake タスクの実行
   rake "periodic_task:remind"
 end

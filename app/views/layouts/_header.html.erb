@@ -2,8 +2,11 @@
   <a class = "navbar-brand" href="/"><%=ApplicationHelper::APP_NAME %></a>
     <% if user_signed_in? %>
        <ul class="nav justfy-content-end">
-
-       
+            <% if current_user.role == "admin" %>
+            <li class="nav-item">
+             <%= link_to "アドミンページ", adminhome_path, class: "nav-link text-secondary"%>
+            </li>
+            <% end %>
             <li class="nav-item">
               <%= link_to "ログイン情報編集", edit_user_registration_path, class: "nav-link text-secondary"%>
             </li>
@@ -16,7 +19,8 @@
 </nav>
 <br>
 
-<table class="table table-bordered table-hover" id = "service" align="center">
+<% if user_signed_in? %>
+ <table class="table table-bordered table-hover" id = "service" align="center">
   <tr>
    <td><%= link_to"グッズ管理", home_path %> </td>
    <td><%= link_to"グッズ登録", new_item_path %></td>
@@ -24,4 +28,15 @@
    <td><%= link_to"みんなのグッズ",items_path %></td>
    <td><%= link_to"つながり",murmurs_path %></td>
   </tr>
-</table>
+ </table>
+<% else %>
+ <table class="table table-bordered table-hover" id="service_no_login" align="center">
+  <tr>
+     <td> <%= link_to"トップ", root_path %> </td>
+     <td> 防災情報 </td>
+  </tr>
+ </table>   
+<% end %>
+
+
+ 
