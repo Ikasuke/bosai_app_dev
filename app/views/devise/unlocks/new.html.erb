@@ -1,15 +1,15 @@
-<h2>Resend unlock instructions</h2>
+<h2>アカウント凍結解除メールの再送信をする</h2>
 
 <%= form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f| %>
   <%= devise_error_messages! %>
 
   <div class="form-group">
-    <%= f.label :email %><br />
+    <%= f.label :メールアドレス %><br />
     <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control col-md-5 col-sm", placeholder: "Enter email" %>
   </div>
 
   <div class="actions pb-5">
-    <%= f.submit "Resend unlock instructions" %>
+    <%= f.submit "アカウント凍結解除メールの再送信" %>
   </div>
 <% end %>
 
