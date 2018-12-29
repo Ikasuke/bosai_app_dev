@@ -18,12 +18,38 @@
    <div class="col-md-12">
       <table class="table table-striped table-condensed ">
       
-      <tr><td>名前:</td></tr>
-      <tr><td><%= user.public_name %></td></tr>
+      <tr><td>ニックネーム:</td></tr>
+      <tr><td>
+       <% if user.public_name.blank? %>
+        <span class="yet_blank"> ニックネームを記入してください <span>
+       <% else %>
+         <%= user.public_name %>
+       <% end %>
+      </td></tr>
       <tr><td>エリア:</td></tr> 
-      <tr><td><%= user.area1 %> / <%= user.area2 %></td></tr>
+      <tr><td>
+       <% if user.area1.blank? %>
+         <span class="yet_blank"> エリアを記入してください<span>
+       <% else %>
+         <%= user.area1 %> / <%= user.area2 %>
+       <% end %>
+      </td></tr>
       <tr><td>家族構成:</td></tr>
-      <tr><td><%= user.family %></td></tr>
+      <tr><td>
+       <% if user.family.blank? %>
+        <span class="yet_blank"> 家族構成を記入してください <span>
+       <% else %>
+          <%= user.family %>
+       <% end %>
+      </td></tr>
+      <tr><td>自己紹介:</td></tr>
+      <tr><td>
+        <% if user.profile.blank? %>
+         <span class="yet_blank"> 自己紹介を記入してください</span>
+       <% else %>
+         <p style="font-size: 12px;"> <%= user.profile %> </p>
+       <% end %>
+      </td></tr>
       <% if remindmails.nil? %>
       <% else%>
         <% remindmails.each_with_index do |remindmail, i| %>

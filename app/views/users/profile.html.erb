@@ -6,23 +6,16 @@
      </nav>
 
     <!--  公開用プロフィールの編集 -->
-     <h5 class="form-group" align="left">プロフィール1(公開情報)</h5>
-     <hr>
-     <%= form_with(model:@user ,local: true) do |form| %>
-        <!--  @userのエラーがあるか確認。あった場合、@user.errors.full_messagesをすべて出力 -->
-        <% if @user.errors.any? %>
-             <div id="error_explanation">
-                <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
-                <ul>
-                  <% user.errors.full_messages.each do |message| %>
-                       <li><%= message %></li>
-                  <% end %>
-                </ul>
-             </div>
-       <% end %>
-
-     <div class="col-md-9">
-
+   <div class="row" style="background-color: #fffff7; border-bottom: 1px solid #f0c020;" >
+     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+       <br>
+       <h5 class="form-group" align="left">プロフィール1(公開情報)</h5>
+       <p align="left"> プロフィール1の情報は他のユーザーが見ることができます</p>
+      </div>
+   </div>
+   <div class="row">
+      <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 ">
+       <%= form_with(model:@user ,local: true) do |form| %>    
           <!-- avatar-->
           <div class = "py-2">
                <%= image_tag current_user.avatar.url, class: "border rounded-circle" %>
@@ -32,74 +25,168 @@
               <%= form.file_field :avatar %>
           </div>
           <!--  名前、エリア、家族構成 -->
-          <div class="field form-group">
-                <%= form.label :"公開用名前(公開されます)" %>
+          <% if @u_error_details.key?(:public_name) %>  <!-- errorが生じた場合にerror表示にする -->
+              <div class ="error_state">
+                <%= @u_error_details[:public_name][0].values[1] %><%= @u_error_messages[:public_name][0]%>
+              </div>
+              <div class="field form-group">
+                <%= form.label :"ニックネーム" %>
+                <%= form.text_field :public_name, class: "form-control", style: "background-color: #ffA0A0;" %>
+              </div>
+          <%else%>
+              <div class="field form-group">
+                <%= form.label :"ニックネーム" %>
                 <%= form.text_field :public_name, class: "form-control" %>
-          </div>
+              </div>
+          <% end %>
           <div class="field form-group">
-                <%= form.label :"都道府県(公開されます)" %>
+                <%= form.label :"都道府県" %>
                 <%= form.select :area1, [@user.area1],{} ,{ class: "form-control" }  %>
           </div>
           <div class="field form-group">
-                <%= form.label :"地域(公開されます)" %>
+                <%= form.label :"地域" %>
                 <%= form.select :area2, [@user.area2],{} ,{ class: "form-control" }  %>
           </div>
-          <div class="field form-group">
-                <%= form.label :"家族構成(公開されます)" %>
+           <% if @u_error_details.key?(:family) %>  <!-- errorが生じた場合にerror表示にする -->
+                <div class ="error_state">
+                   <%= @u_error_details[:family][0].values[1] %><%= @u_error_messages[:family][0]%>
+                </div>
+              <div class="field form-group">
+                <%= form.label :"家族構成(100文字以内)" %>
+                <%= form.text_field :family, class: "form-control", style: "background-color: #ffA0A0;"  %>
+              </div>
+           <% else %>
+                <div class="field form-group">
+                <%= form.label :"家族構成(100文字以内)" %>
                 <%= form.text_field :family, class: "form-control"  %>
+             </div>
+           <% end %>
+           <% if @u_error_details.key?(:profile) %>  <!-- errorが生じた場合にerror表示にする -->
+                <div class ="error_state">
+                   <%= @u_error_details[:profile][0].values[1] %><%= @u_error_messages[:profile][0]%>
+                </div>
+                <div class="field form-group">
+                  <%= form.label :"自己紹介(5000文字以内)" %>
+                  <%= form.text_area :profile, class: "form-control", style: "background-color: #ffA0A0;"  %>
+                </div>   
+            <% else %>
+                <div class="field form-group">
+                  <%= form.label :"自己紹介(5000文字以内)" %>
+                  <%= form.text_area :profile, class: "form-control"  %>
+                </div>
+            <% end %>
+          <div class="actions">
+             <%= form.submit "プロフィール1を更新する",:class=>"btn btn-primary" %>
+             <%= link_to"ホームに戻る", home_path,:class=> 'btn gray'  %>
           </div>
-          
-            <div class="field form-group">
-                <%= form.label :"自己紹介(公開されます)" %>
-                <%= form.text_area :profile, class: "form-control"  %>
-          </div>
-     </div>  <!-- col-md-9 end -->
-
-      <div class="actions">
-      <%= form.submit "更新する",:class=>"btn btn-primary" %>
-       <%= link_to"戻る", home_path,:class=> 'btn gray'  %>
-      </div>
-      <% end %>  <!--  form_with end -->
-       <hr>
+        <% end %>  <!--  form_with end -->
+      </div>  <!-- col end -->
+    </div> <!-- row -->
+    <br>
     <!--  公開用プロフィールの編集end -->
 
     <!--  送信用メールアドレスの編集 -->
-      <h5 class="form-group" align="left">プロフィール2(期限送信用メールアドレス)</h5>
-      <hr>
-     <div class="col-md-9">
-       <% if @remindmails.nil? %>
-          <!-- 何もしない -->
-       <% else %>
-           <% @remindmails.each_with_index do |remindmail, i| %>
-               <%= form_with(model:remindmail ,local: true) do |form| %>
-                 <div class="field form-inline">
-                   <span class="form-group">
-                       <%= form.label :"メールアドレス#{i+1} " %>
-                       <%= form.text_field :remind_email, class: "form-control" %>
-                   </span>
-                   <span class="actions">
-                       <%= form.submit "更新する",:class=>"btn btn-primary" %>
-                       <%= link_to '消去する', remindmail, method: :delete, data: { confirm: '削除します。よろしいですか?' }, class: 'btn red' %>
-                   </span>
-                 </div>
-
-               <% end %>  <!--  remindmail form_with -->
-           <% end %>   <!--  remindmails.each end -->
-       <% end %>   <!--  if end -->
+    <div class="row" style="background-color: #fffff7; border-bottom: 1px solid #f0c020; border-top: 1px solid #f0c020;" >
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
        <br>
+       <h5 class="form-group" align="left">プロフィール2(期限送信用メールアドレス)</h5>
+       <p align="left">   プロフィール2の情報は他のユーザーが見ることはありません</p>
+      </div>
+    </div>
+  <div class="row">
+     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+       <br>
+       <h6 align="left" class="mail_part"> ログイン用メールアドレスの使用 </h6> 
+       <% if @remindmails.nil? %>
+             <p align="left" style="color: #ffA0A0;"> 使用していません </p>
+               <div align="left">
+                 <%= form_with model: Remindmail.new do |form|%>
+                  <%= form.hidden_field :remind_email, :value => @user.email %>
+                  <%= form.submit "ログイン用メールアドレスを使用する",:class=>"btn btn-success" %>
+                 <% end %>
+                 <br>
+               </div>
+       <% else %>
+　          <% if @loginmail == true %>
+              <p align="left" style="color: #60a0ff;"> 使用しています </p>
+              <span align="left"><%= @user.email %>&emsp;&emsp;
+               <%= link_to '取りやめる', remindmail_path(@loginmail_id), method: :delete, class: 'btn red' %>
+               </span>
+            <% else %>
+               <p align="left" style="color: #ffA0A0;"> 使用していません </p>
+               <div align="left">
+                 <%= form_with model: Remindmail.new do |form|%>
+                  <%= form.hidden_field :remind_email, :value => @user.email %>
+                  <%= form.submit "ログイン用メールアドレスを使用する",:class=>"btn btn-success" %>
+                 <% end %>
+                 <br>
+               </div>
+            <% end %> <!-- if @login end -->
+            <hr> 
+            <h6 align="left" class="mail_part"> 他のメールアドレス使用 </h6>
+            <br>
+            <% i = 0 %>
+            <% @remindmails.each do |remindmail| %>
+              <% if remindmail.remind_email == @user.email %>
+              <% else %>        
+               <%= form_with(model:remindmail ,local: true) do |form| %>
+                <% if @mail_error_state == "#{remindmail.id}" %>  <!-- errorが生じた場合にerror表示にする -->
+                    <div class ="error_state">
+                        メールアドレス<%= @mail_error_messages[:remind_email][0]%>
+                    </div>
+                    <div class="field form-inline">
+                       <span class="form-group">
+                       <%= form.label :"メールアドレス#{i+1} " %>&emsp;
+                       <%= form.text_field :remind_email, class: "form-control",style: "background-color: #ffA0A0;" %>&emsp;
+                      </span>
+                      <span class="actions">
+                         <%= form.submit "更新する",:class=>"btn btn-primary" %>&emsp;
+                         <%= link_to '消去する', remindmail, method: :delete, data: { confirm: '削除します。よろしいですか?' }, class: 'btn red' %>
+                      </span>
+                    </div>
+                 <% else %>
+                    <div class="field form-inline">
+                       <span class="form-group">
+                       <%= form.label :"メールアドレス#{i+1} " %>&emsp;
+                       <%= form.text_field :remind_email, class: "form-control"%>&emsp;
+                      </span>
+                      <span class="actions">
+                         <%= form.submit "更新する",:class=>"btn btn-primary" %>&emsp;
+                         <%= link_to '消去する', remindmail, method: :delete, data: { confirm: '削除します。よろしいですか?' }, class: 'btn red' %>
+                      </span>
+                    </div>
+                 <% end %>  <!-- if error end -->
+                 <br>
+               <% end %>  <!--  remindmail form_with -->
+                <% i = i+1 %>
+              <% end %> <!-- if remindmail == @user.email end -->
+           <% end %>   <!--  remindmails.each end -->
+       <% end %>   <!--  if  remidnmails.nil? end -->
+       <br><br>
        <%= form_with model: Remindmail.new do |form|%>
-        <div class="field form-inline">
-          <div class="form-group">
-             <%= form.label :"新規メールアドレス" %>
-             <%= form.text_field :remind_email, placeholder: 'メール入力',class:"form-control" %>
-          </div>
+         <% if @mail_error_state == "create" %>  <!-- errorが生じた場合にerror表示にする -->
+              <div class ="error_state">
+                メールアドレス<%= @mail_error_messages[:remind_email][0]%>
+              </div>
+              <div class="field form-inline">
+               <div class="form-group">
+                 <%= form.label :"新規メールアドレス" %>
+                 <%= form.text_field :remind_email, placeholder: 'メール入力',class:"form-control", style: "background-color: #ffA0A0;" %>
+               </div>
+          <%else%>
+             <div class="field form-inline">
+              <div class="form-group">
+                 <%= form.label :"新規メールアドレス" %>
+                 <%= form.text_field :remind_email, placeholder: 'メール入力',class:"form-control" %>
+              </div>
+          <% end %>
           <div class="actions">
              <%= form.submit "作成する",:class=>"btn btn-success" %>
           </div>
         </div>  <!-- form inline -->
-             <%= link_to"戻る", home_path,:class=> 'btn gray'  %>
-         
+        <br>
+        <%= link_to"ホームに戻る", home_path,:class=> 'btn gray'  %>
        <% end %>   <!--  form_with new end -->
      </div> <!-- col-md-9 div -->
-
+   </div> <!-- row end -->
 </div>  <!-- profile_edit end-->
