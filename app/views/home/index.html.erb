@@ -16,7 +16,7 @@
     <a href="#tab3" class="nav-link" data-toggle="tab">期限近い</a>
   </li>
   <li class="nav-item">
-    <a href="#tab4" class="nav-link" data-toggle="tab">コメント</a>
+    <a href="#tab4" class="nav-link" data-toggle="tab">新しいコメント (<%= @all_unread_counts%>件) </a>
   </li>
 </ul>
 
@@ -86,7 +86,7 @@
              <%else%>
                 <% delta_t = ((item.item_expiry - Time.now)/(3600*24)).ceil %>
              <%end%>
-             <% if delta_t < 8 %>
+             <% if delta_t > -1 &&  delta_t < 8 %>
               <%= render partial: 'item_table', locals: {item: item} %> 
              <% end %>  <!-- if delta_t end-->  
            <% end %>  <!-- @items -->
@@ -135,8 +135,22 @@
 
     </div>  <!-- tab3-->
       <div id="tab4" class="tab-pane">
-
-
+         <div class="row" >
+         <% if @items.nil? %>
+         <% else%>
+            <% @items.each do |item| %>
+              <% counts = 0 %>
+              <% item.comments.each do |comment| %>
+                <% if comment.read == "unread" %>
+                    <% counts = counts +1 %> 
+                <% end %> 
+              <% end %>
+              <% if counts > 0 %> 
+                 <%= render partial: 'item_table', locals: {item: item} %> 
+              <% end %>
+           <% end %> <!-- @items.each end-->
+         <% end %>  <!-- if end -->
+        </div> <!-- row -->
       </div>  <!-- tab4-->
 
     </div>  <!-- tab-content -->

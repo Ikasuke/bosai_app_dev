@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: comments
@@ -10,9 +9,14 @@
 #  updated_at     :datetime         not null
 #  item_id        :bigint(8)
 #  user_id        :bigint(8)
+#  read           :integer          default("unread"), not null
 #
 
 class Comment < ApplicationRecord
+
+  ## enum 既読かどうか
+  enum read: {unread: 0, already: 1}
+
   # #リレーション
   # user
   belongs_to :user

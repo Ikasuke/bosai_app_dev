@@ -1,8 +1,19 @@
 <!--  itemが必要   -->
-               <div class="item col-lg-3 col-md-4 col-sm-4">
-                <%= link_to edit_item_path(item) do %>
-                   <div class= " p-3 pic_frame">
+ <!-- 未読コメントの数を計算 -->
+   <% counts = 0 %>
+    <% item.comments.each do |comment|%>
+        <% if comment.read == "unread" %>
+           <% counts = counts +1 %> 
+        <% end %> 
+    <% end %>
+ <!--  計算終了 -->
+          <div class="item col-lg-3 col-md-4 col-sm-4">
+               <%= link_to edit_item_path(item) do %>
+                  <div class= " p-3 pic_frame">
                       <%= image_tag item.picture.url, class: "item_pic"%>
+                      <% if counts > 0 %>
+                      <p> <%= counts %> </p>
+                      <% end %>
                    </div> <!-- pic_frame-->
                 <% end %> <!-- link_to end -->
                  <table class="table">

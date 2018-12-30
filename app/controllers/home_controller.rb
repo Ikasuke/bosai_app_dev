@@ -18,6 +18,15 @@ class HomeController < ApplicationController
 
     @items = items
     @categories = Category.all
+
+    @all_unread_counts = 0
+    @items.each.each do |item|
+      item.comments.each do |comment|
+        if comment.read == "unread"
+          @all_unread_counts = @all_unread_counts + 1
+        end
+      end
+    end
   end #index end
 
   def adminhome

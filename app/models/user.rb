@@ -1,6 +1,5 @@
 # encoding: utf-8
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: users
@@ -35,6 +34,7 @@
 #  area1                  :string(255)      default(""), not null
 #  area2                  :string(255)
 #  family                 :string(255)
+#  profile                :text(65535)
 #
 
 class User < ApplicationRecord

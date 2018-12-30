@@ -17,6 +17,17 @@
                   <%= link_to edit_item_path(item) do %>
                      <div class= " p-3 pic_frame">
                         <%= image_tag item.picture.url, class: "item_pic"%>
+                        <% if current_user == item.user then %>
+                          <% counts = 0 %>
+                          <% item.comments.each do |comment|%>
+                             <% if comment.read == "unread" %>
+                                 <% counts = counts +1 %> 
+                             <% end %> 
+                          <% end %>
+                          <% if counts > 0 %>
+                            <p> <%= counts %> </p>
+                          <% end %> 
+                        <% end %> <!-- if current_user end -->
                      </div> <!-- pic_frame-->
                   <% end %> <!-- link_to end -->
              </div>

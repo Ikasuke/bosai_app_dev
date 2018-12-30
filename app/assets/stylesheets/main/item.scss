@@ -32,12 +32,12 @@
     border:solid 1px;
     height:150px;
  }
- // 写真部分に赤い丸
+ // 写真部分の右上に赤い丸
 .pic_frame p{
      position: absolute;
      color: #ffffff;
      background-color: #ff0000;
-     bottom:0;
+     top:0;
      right:0;
      margin: 0px;
      

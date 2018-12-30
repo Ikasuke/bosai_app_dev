@@ -92,31 +92,28 @@
     <nav class = "navbar bg-warning navbar-dark box-header row">
         <a class = "navbar-brand">コメント</a>
       </nav>
-<!-- コメント欄始まり-->
-     <div class="row">
-                  <% @item.comments.each do |comment| %>
-    <!-- 画像始まり-->    
-                  <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                       <div class= "p-3 com_frame">
-                             <%= image_tag comment.user.avatar.url, class: "com_pic rounded-circle"%>
-                       </div>
-                       <p> <%= comment.user.public_name %></p>
-                  </div>
-    <!-- 画像終わり-->    
-      <!-- 吹き出し始まり-->                
-                  <div class=" col-lg-9 col-md-9 col-sm-9 col-xs-9">
-                      <div class="comment">  
-                               <p><%= comment.comment_detail %></p>
-                               <div class="comment_time">
-                                   <p><%= comment.created_at.strftime('%Y/%m/%d-%H:%M') %>
-                                </div>
-                     </div>
-                  </div> 
-      <!-- 吹き出し終わり --> 
-                  <% end %>
-                  
-        </div> <!-- row comments --> 
+<!-- コメント欄始まり-->     
+           <div class="row"> <!--コメント欄 -->    
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 comments_box" id="tab4_comments_box_<%= @item.id %>" >
+              <!-- comment/index をjs で呼び出して表示  -->
+              </div>   
+           </div> <!-- row-->
   <!--コメント欄終わり -->  
+        <br>
+    <!-- コメント記入部-->
+               <%= form_with model: Comment.new do |form|%>
+                 <div class="row">
+                    <div class="col-md-10">
+                      <div class="field form-group">
+                              <%= form.text_area :comment_detail,placeholder: 'コメントを記入してください',class:'form-control'%>
+                      </div>  <!-- field box_comment_detail-->
+                      <%= form.hidden_field :item_id, :value => @item.id %>
+                    </div>
+                    <div class="col-md-2">
+                       <%= form.submit "コメント", :class=>"btn btn-info",:name=> "tab4_commit_id#{@item.id}" %>
+                    </div>   <!-- col-md-2 -->
+                 </div>  <!-- コメント記入部 row　end-->
+               <% end %>  <!-- form_with Commnet  -->
       
 
   </div>   <!-- row 2つめ -->
