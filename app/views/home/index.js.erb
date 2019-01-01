@@ -1,0 +1,15 @@
+
+if ("<%= params[:tab] %>" == 'tab1') {
+    $(".home_tab1").html( "<%= escape_javascript(render partial: 'tab1', locals: {items: @items}) %>" );
+$(".home_tab1_paginate").html( "&emsp;&emsp;<%= escape_javascript(paginate @items, :remote => true) %>" );
+}
+
+if ("<%= params[:tab] %>" == 'tab2') {
+    <% @categories.each do |category| %>
+        <% if params[:category_id] == "#{category.id}" %>
+               $(".tab2_category_<%= category.id %>").html( "<%= escape_javascript(render partial: 'tab2_category', locals: {items: @items_array[0]}) %>" );
+               $(".tab2_category_<%= category.id %>_paginate").html( "&emsp;&emsp;<%= escape_javascript(paginate @items_array[0], params: {:tab => "tab2",:category_id => category.id}, :remote => true) %>" );
+        <% end %>
+    <% end %>
+}
+

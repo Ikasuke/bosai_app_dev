@@ -79,7 +79,11 @@ gem "sinatra"
 gem "redis-rails"
 
 #バッチの定期処理 cron
-gem 'whenever', require: false
+gem "whenever", require: false
+
+# pageing
+gem "kaminari"
+gem "kaminari-bootstrap"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

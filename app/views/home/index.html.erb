@@ -23,34 +23,18 @@
     <br>
    <div class="tab-content">
      <div id="tab1" class="tab-pane active">
-       <div class="row" >
          <% if @items.nil? %>
          <% else%>
-            <% @items.each do |item| %>
-           <%= render partial: 'item_table', locals: {item: item} %> 
-           <% end %> <!-- @items.each end-->
+            <div class="home_tab1">
+             <%= render partial: 'tab1', locals: {items: @items} %>
+            </div> 
          <% end %>  <!-- if end -->
-        </div> <!-- row -->
+        <div class = "row home_tab1_paginate">
+           &emsp;&emsp;<%= paginate @items,params: {:tab => "tab1"}, :remote => true %>
+        </div>
      </div>   <!-- tab1 -->
-     <div id="tab2" class="tab-pane">
-        <% if @items.nil? %>
-        <% else%>
-        <% @categories.each do |category| %>
-        <div class="row" >
-        <label class="control-label">▪️<%= category.category_name %> </label>
-        </div>  <!-- row category名 -->
-        <br>
-        <div class="row">
-          <% @items.each do |item| %>
-                <% if item.category_id == category.id %>  
-                 <%= render partial: 'item_table', locals: {item: item} %> 
-                <% else %>
-                <% end %>
-          <% end %> <!-- @items.each end-->
-        </div>   <!-- row item -->
-         <% end %>   <!-- @categories end-->
-          <% end %>  <!-- if end -->
-       
+     <div id="tab2" class="tab-pane home_tab2">
+          <%= render partial: 'tab2', locals: {items_array: @items_array,categories: @categories} %>
      </div>  <!-- tab2-->
      <div id="tab3" class="tab-pane">  <!-- 期限近いもの -->
 <!--期限切れ -->      
