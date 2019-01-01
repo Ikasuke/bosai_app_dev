@@ -15,6 +15,13 @@ class ItemsController < ApplicationController
       category_selects.push(category_select)
     end
     @category_selects = category_selects
+    if params[:i_error_messages].nil?
+      @i_error_details = {key: "no_error"}   #ダミーのkeyとvalueを入れておく エラー防止
+    else
+      #validationのエラー表示用
+      @i_error_messages = params[:i_error_messages]   # エラーのメッセージ
+      @i_error_details = params[:i_error_details]     #エラーが表示された部分が格納
+    end
     render :layout => "item_new.html.erb"
   end
 
@@ -28,6 +35,13 @@ class ItemsController < ApplicationController
         category_selects.push(category_select)
       end
       @category_selects = category_selects
+      if params[:i_error_messages].nil?
+        @i_error_details = {key: "no_error"}   #ダミーのkeyとvalueを入れておく エラー防止
+      else
+        #validationのエラー表示用
+        @i_error_messages = params[:i_error_messages]   # エラーのメッセージ
+        @i_error_details = params[:i_error_details]     #エラーが表示された部分が格納
+      end
       render :layout => "item_new.html.erb"
     else
       redirect_to item_url     #自分のじゃないので、showへ
@@ -39,10 +53,10 @@ class ItemsController < ApplicationController
     @item.user_id = current_user.id
     respond_to do |format|
       if @item.save
-        format.html { redirect_to home_url, notice: "item was successfully created." }
+        format.html { redirect_to home_url, notice: "防災アイテムを正常に登録できました" }
         #format.json { render :show, status: :created, location: @category }
       else
-        format.html { redirect_to home_url }
+        format.html { redirect_to new_item_path(i_error_messages: @item.errors.messages, i_error_details: @item.errors.details), flash: {error: "作成できませんでした"} }
         #format.json { render json: @category.errors, status: :unprocessable_entity }
       end  #if end
     end    # respond_to end
@@ -51,10 +65,10 @@ class ItemsController < ApplicationController
   def update
     respond_to do |format|
       if @item.update(item_params)
-        format.html { redirect_to home_url, notice: " item was successfully updated." }
+        format.html { redirect_to home_url, notice: " アップデートできました" }
         #format.json { render :show, status: :ok, location: @to_do_item }
       else
-        format.html { redirect_to home_url }
+        format.html { redirect_to edit_item_path(i_error_messages: @item.errors.messages, i_error_details: @item.errors.details), flash: {error: "更新できませんでした"} }
         #format.json { render json: @to_do_item.errors, status: :unprocessable_entity }
       end
     end
@@ -63,7 +77,7 @@ class ItemsController < ApplicationController
   def destroy
     @item.destroy
     respond_to do |format|
-      format.html { redirect_to home_url, notice: "To do item was successfully destroyed." }
+      format.html { redirect_to home_url, notice: "削除しました." }
       #format.json { head :no_content }
     end
   end # destroy end

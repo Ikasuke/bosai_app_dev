@@ -51,7 +51,7 @@ class User < ApplicationRecord
 
   ## validation
   validates_attachment_content_type :avatar, content_type: ["image/jpeg", "image/gif", "image/png"]
-  # nameは存在していること、ユニークであること、ローマ字であること、Eメールと名前が同一でないこと
+  # nameは存在していること、ユニークであること、ローマ字であること、Eメールと名前が同一でないこと、25文字以内であること
   validates :name, presence: true, uniqueness: {case_sensitive: false}, length: {maximum: 25} # 大文字小文字の差を無視して同一を禁止
   validates_format_of :name, with: /^[a-zA-Z0-9_¥.]*$/, multiline: true
   validate :validate_name

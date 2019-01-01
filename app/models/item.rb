@@ -28,8 +28,17 @@ class Item < ApplicationRecord
 
   ## validation
   validates_attachment_content_type :picture, content_type: ["image/jpeg", "image/gif", "image/png"]
-  validates :item_name, presence: true
+  #item_nameは空でないこと、長さが50文字以内であること
+  validates :item_name, presence: true, length: {maximum: 50}
+  #category_idは空でないこと=>必須選択
   validates :category_id, presence: true
+  #item_volumeは長さが50文字以内であること
+  validates :item_volume, length: {maximum: 50}
+  #item_expiry 特になし
+  #item_public_memo 10000文字以内であること
+  validates :item_public_memo, length: {maximum: 10000}
+  #item_private_memo 10000文字以内であること
+  validates :item_private_memo, length: {maximum: 10000}
 
   ##enum
   enum item_open_flag: {公開する: true, 公開しない: false}
