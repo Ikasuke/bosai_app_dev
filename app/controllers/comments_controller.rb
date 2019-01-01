@@ -10,21 +10,22 @@ class CommentsController < ApplicationController
         end  # if end
       end
     end # if end
-
+    if params[:c_errors_messages]
+      @c_errors_messages = params[:c_errors_messages]
+    end
     render :layout => false
   end
 
   def create
     @comment = Comment.new(comment_params)
     @comment.user_id = current_user.id
-
     #item_id = @comment.item.id    いらないはず
     @commit_name = params.keys[3]
     respond_to do |format|
       if @comment.save
         format.js
       else
-        format.html { redirect_to home_url }
+        format.js
       end  #if end
     end    # respond_to end
   end

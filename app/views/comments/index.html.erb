@@ -19,5 +19,11 @@
                     </div>
                  </div> 
      <!-- 吹き出し終わり --> 
-                 <% end %>  
+                 <% end %> 
                 </div> <!-- row comments -->
+                 <div class ="row comment_error">
+                <% if @c_errors_messages.blank? %>
+                <% else %>
+                  コメント<%= @c_errors_messages %>
+                <% end %>
+                 </div>

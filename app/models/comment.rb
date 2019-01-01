@@ -14,6 +14,10 @@
 
 class Comment < ApplicationRecord
 
+  ## validation
+  #item_nameは空でないこと、長さが1000文字以内であること
+  validates :comment_detail, presence: true, length: {maximum: 1000}
+
   ## enum 既読かどうか
   enum read: {unread: 0, already: 1}
 
