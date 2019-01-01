@@ -55,4 +55,27 @@ class Item < ApplicationRecord
       Item.where(item_open_flag: 1)
     end
   end
-end
+
+  # deadlineメソッド　グッズの消費期限が所定なものをだす
+  def self.deadline(date1, date2)
+    if date1
+      if date2
+        from = Time.now + 24 * 3600 * date1
+        to = Time.now + 24 * 3600 * date2
+        Item.where(item_expiry: from..to)
+      else
+        from = Time.now + 24 * 3600 * date1
+        Item.where("item_expiry >= ?", from)
+      end
+    else
+      if date2
+        to = Time.now + 24 * 3600 * date2
+        Item.where("item_expiry <= ?", to)
+      end
+    end
+  end
+  # scope　commentsがunread なものを探す
+  scope :unread, -> {
+          joins(:comments).where("comments.read = ?", 0)
+        }
+end #class end

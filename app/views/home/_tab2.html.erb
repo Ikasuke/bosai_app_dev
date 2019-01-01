@@ -6,7 +6,7 @@
          </div>  <!-- row category名 -->
          <br>
          <div class="row tab2_category_<%= categories[i].id %>">
-                <%= render partial: 'tab2_category', locals: {items: items} %> 
+                <%= render partial: 'items', locals: {items: items} %> 
          </div>   <!-- row item -->
       <% end %>  <!-- if end -->
        <div class = "row tab2_category_<%= categories[i].id %>_paginate">
