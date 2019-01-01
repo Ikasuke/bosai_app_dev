@@ -7,9 +7,11 @@
 <!-- プロフィール画像、グッズ画像、説明部の始まり-->   
           <div class="row">                 <!-- プロフィール画像、グッズ画像、説明を格納するrow -->
             <div class="col-lg-2 col-md-2 col-sm-2">  <!-- プロフィール画像部-->
-               <div class= "card p-3">
+               <%= link_to user_path(item.user.id) do %>
+                 <div class= "card p-3">
                   <%= image_tag item.user.avatar.url, class: "card-img-top rounded-circle"%>
-               </div>
+                 </div>
+               <% end %> <!-- link_to end -->
                <p style="font-size:14px;"><%= item.user.public_name %> </p>
                <p style="font-size:12px;"> <%= item.user.area1 %>/ <%= item.user.area2 %>  </p>
             </div>  

@@ -52,8 +52,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    #params[:id]はグッズのid
-    @user = Item.find(params[:id]).user
+    @user = User.find(params[:id])
   end
 
   private

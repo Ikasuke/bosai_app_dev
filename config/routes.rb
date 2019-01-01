@@ -28,7 +28,6 @@ Rails.application.routes.draw do
 
   ##item model
   resources :items
-  post "item/reading_table", to: "items#reading_table"  #グッズ検索でコントローラに検索params(:search)をコントローラへ送る
 
   ##category model
   resources :categories

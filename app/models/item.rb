@@ -87,4 +87,9 @@ class Item < ApplicationRecord
   scope :unread, -> {
           joins(:comments).where("comments.read = ?", 0)
         }
+
+  #scope likeitem のuser_idが特定のものを探す
+  scope :like_item, -> user_id {
+          joins(:likeitems).where("likeitems.user_id = ?", user_id).where(item_open_flag: 1)
+        }
 end #class end

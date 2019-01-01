@@ -2,6 +2,8 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: [:edit, :update, :destroy, :show]
 
+  PER = 2
+
   def show #他人のも観れる
     @like_hash = Likeitem.where(user_id: current_user.id).pluck(:id, :item_id).to_h
   end
@@ -103,38 +105,33 @@ class ItemsController < ApplicationController
       category_selects.push(category_select)
     end
     @category_selects = category_selects
-    # # item情報
-    @items = Item.search(params[:search])
-    @like_hash = Likeitem.where(user_id: current_user.id).pluck(:id, :item_id).to_h
-    ## いいねしたアイテムを表示する準備
-    @item_like = Array.new()
-    @user.likeitems.each do |likeitem|
-      if likeitem.item.item_open_flag == "公開する"
-        @item_like.push(likeitem.item)
+    # # item情報 tab1=> params[:search] tab2=> params[:category_id]
+    if params[:tab].nil?
+      @items = Item.search(params[:search]).page(params[:page]).per(PER).neworder
+    else
+      if params[:tab] == "tab1"
+        @items = Item.search(params[:search]).page(params[:page]).per(PER).neworder
+      end
+      if params[:tab] == "tab2"
+        if params[:category_id].nil?
+          @items = Item.search(params[:search]).page(params[:page]).per(PER).neworder
+        else
+          @items = Item.where(category_id: params[:category_id]).where(item_open_flag: 1).page(params[:page]).per(PER).neworder
+        end
       end
     end
-  end
-
-  def reading_table #検索結果を表示させる
-
-    #グッズから探す場合
-    if params[:search]
-      @items = Item.search(params[:search])
-      @tab = "tab1"
-    end
-
-    #カテゴリから探す場合
-    if params[:category_id]
-      @items = Item.where(category_id: params[:category_id]).where(item_open_flag: 1)
-      @tab = "tab2"
-    end
-
     @like_hash = Likeitem.where(user_id: current_user.id).pluck(:id, :item_id).to_h
-
-    respond_to do |format|
-      format.js    # reading_table.js.erbを処理させる
+    ## いいねしたアイテムを表示する準備
+    if params[:tab] == "tab3"
+      @items_like = Item.like_item(current_user.id).page(params[:page]).per(PER).neworder
+    else
+      @items_like = Item.like_item(current_user.id).page(1).per(PER).neworder
     end
-  end
+    respond_to do |format|
+      format.html
+      format.js
+    end
+  end # index end
 
   private
 

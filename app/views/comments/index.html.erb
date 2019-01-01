@@ -3,9 +3,11 @@
                  <% @item.comments.each do |comment| %>
    <!-- 画像始まり-->    
                  <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                    <%= link_to user_path(comment.user.id) do %>
                       <div class= "p-3 com_frame">
                             <%= image_tag comment.user.avatar.url, class: "com_pic rounded-circle"%>
                       </div>
+                    <% end %>
                       <p> <%= comment.user.public_name %></p>
                  </div>
    <!-- 画像終わり-->    

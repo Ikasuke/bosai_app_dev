@@ -6,7 +6,7 @@
           <% if user == current_user %>
           <p><%= link_to '編集', user_profile_path %></p>
           <% else %>
-          <p><%= link_to '詳細', user_path %></p>
+          <p><%= link_to '詳細', user_path(id:user.id) %></p>
           <% end %>
         </nav>
    <div class='row'>
