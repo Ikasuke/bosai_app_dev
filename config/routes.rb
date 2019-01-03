@@ -40,7 +40,6 @@ Rails.application.routes.draw do
 
   ##murmur model
   resources :murmurs
-  post "murmur/region", to: "murmurs#region"
 
   ##favorite model
   resources :favorites

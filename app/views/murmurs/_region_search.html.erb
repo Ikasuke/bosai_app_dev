@@ -1,5 +1,9 @@
-<!-- partial  地域の人々検索結果 @allusers, @max_items,@favorite_hashが必要 -->
- <div class="row"><div class="container">  
+<!-- partial  地域の人々検索結果 @allusers, @max_items,@favorite_hash @new_murmursが必要 -->
+ <div class="row">
+  <%if tab == "tab1" %>
+   <p style="font-size:20px;"> &emsp;&emsp;<%= @area %> を表示しています</p>
+   <% end %>
+   <div class="container">  
        <% allusers.each do |a_user| %>
         <div class="row">
          <div class="col-lg-3 col-md-3 col-sm-3">  <!-- プロフィール画像部-->
@@ -15,7 +19,17 @@
                
                 <p style="font-size:14px;"> 登録グッズ数: <%= a_user.items.count  %>  </p>
                 <p style="font-size:14px;"> お気に入られ: <%= a_user.favorites_of_to_user.count  %>  </p>
-                 <p class="profile_explain"> <%= a_user.profile %>  </p>
+                <p style="font-size:14px; text-align:left; margin:0;"> 最近の発信:  </p>
+                
+                <% if new_murmurs[a_user.id].nil? %>
+                  <div div class="murmur"  style="color: #a0a0a0;">  
+                    <%= simple_format("ありません") %>  
+                  </div>
+                 <%else %>
+                  <div div class="murmur">  
+                    <%= simple_format(new_murmurs[a_user.id].murmur_detail) %>  
+                  </div>
+                 <% end %>
          </div>
          <!-- いいねが多いアイテムを紹介する -->
          <div class="col-lg-3 col-md-3 col-sm-3">

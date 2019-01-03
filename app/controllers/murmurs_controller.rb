@@ -1,7 +1,9 @@
 # encoding: utf-8
 class MurmursController < ApplicationController
-  def index
+  PER = 4
 
+  def index
+    ## sidebar
     # #ログインユーザー情報
     @user = current_user
     #リマインドメールを表示するために登録されているものを呼び出す。なければ表示しない
@@ -12,11 +14,47 @@ class MurmursController < ApplicationController
     else
       @remindmails = remindmails
     end
-    @allusers = User.all
-    @murmurs = Murmur.all
-    # いいねが多いアイテムを表示させる
+    ## main つながり部
+    # 最近発信した順に全てのユーザーを並べる
+    @users_sort_late = {}
+    User.all.each do |user|
+      latest = user.murmurs.maximum(:created_at)
+      if latest.nil?
+        @users_sort_late.store(user, 0)
+      else
+        @users_sort_late.store(user, latest.to_i)
+      end
+    end
+    @users_sort_late = @users_sort_late.sort_by { |k, v| v }.reverse.to_h  #発信した順に並んだハッシュ{user, 発信日}
+    #tab1  最近発信した順に並べる
+    if params[:area1].nil?
+      @area = "日本全域"
+      @allusers = Kaminari.paginate_array(@users_sort_late.keys).page(params[:page]).per(PER)
+    else # params[:area1]がある
+      @area = "#{params[:area1]}/#{params[:area2]}"
+      if params[:area2] == "全地域"
+        @users_area1 = Array.new()
+        @users_sort_late.keys.each do |user|
+          if user.area1 == params[:area1]
+            @users_area1.push(user)
+          end
+        end
+        @allusers = Kaminari.paginate_array(@users_area1).page(params[:page]).per(PER)
+      else
+        @users_area2 = Array.new()
+        @users_sort_late.keys.each do |user|
+          if user.area1 == params[:area1] && user.area2 == params[:area2]
+            @users_area2.push(user)
+          end
+        end
+        @allusers = Kaminari.paginate_array(@users_area2).page(params[:page]).per(PER)
+      end #if end
+    end
+    # いいねが多いアイテムを表示させる　最新のつぶやきを表示させる
     @max_items = {}
+    @new_murmurs = {}
     @allusers.each do |a_user|
+      ## いいねが多いアイテムを入れる処理
       if a_user.items.empty?
         @max_item = nil # グッズを持っていないユーザーにはnil
       else
@@ -34,15 +72,39 @@ class MurmursController < ApplicationController
         end  # a_user.each end
       end  # if nil? end
       @max_items.store(a_user.id, @max_item)  #全て非公開もしくは何もアイテムを登録していないと、nilが入る
+      ##最新の呟きを入れる処理
+      if a_user.murmurs.empty?
+        @new_murmur = nil
+      else
+        @new_murmur = a_user.murmurs.last
+      end
+      @new_murmurs.store(a_user.id, @new_murmur)
     end # alluser.each end
-    #  item.id item.likeitems.count
 
     @favorite_hash = Favorite.where(from_user_id: current_user.id).pluck(:id, :to_user_id).to_h   #ログインユーザーがお気に入りしたユーザーのデータ
 
-    ## お気に入りした人を表示する準備
-    @favorite_users = Array.new()
-    @user.favorites_of_from_user.each do |favorite|
-      @favorite_users.push(favorite.to_user)
+    # tab2 お気に入りした人を表示する準備 最近発信した順に並んでいる
+    @favorites = Array.new()
+
+    @users_sort_late.keys.each do |user_s|
+      user_s.favorites_of_to_user.each do |favorite|
+        if favorite.from_user == current_user
+          @favorites.push(favorite.to_user)
+        end
+      end
+    end
+    if params[:tab] == "tab2"
+      @favorite_users = Kaminari.paginate_array(@favorites).page(params[:page]).per(PER)
+    else
+      @favorite_users = Kaminari.paginate_array(@favorites).page(1).per(PER)
+    end
+
+    #tab3 自らの発信をみる
+    @murmurs = @user.murmurs.page(params[:page]).per(PER).order(created_at: :desc)
+    @all_murmurs_count = @user.murmurs.count
+    respond_to do |format|
+      format.html
+      format.js
     end
   end   # index end
 
@@ -59,34 +121,6 @@ class MurmursController < ApplicationController
       end  #if end
     end    # respond_to end
   end #create end
-
-  def region
-    @max_items = {}
-    if params[:area2] == "全地域"
-      @allusers = User.where(area1: params[:area1])
-    else
-      @allusers = User.where(area1: params[:area1], area2: params[:area2])
-    end #if end
-    @allusers.each do |a_user|
-      a_user.items.each_with_index do |item, index|
-        if index == 0
-          @max = item.likeitems.count
-          @max_item = item
-        end
-        if @max < item.likeitems.count
-          @max = item.likeitems.count
-          @max_item = item
-        end
-      end  # a_user.each end
-      @max_items.store(a_user.id, @max_item)
-    end
-
-    @favorite_hash = Favorite.where(from_user_id: current_user.id).pluck(:id, :to_user_id).to_h   #ログインユーザーがお気に入りしたユーザーのデータ
-
-    respond_to do |format|
-      format.js
-    end
-  end #region end
 
   private
 
