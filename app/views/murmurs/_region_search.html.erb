@@ -7,9 +7,19 @@
        <% allusers.each do |a_user| %>
         <div class="row">
          <div class="col-lg-3 col-md-3 col-sm-3">  <!-- プロフィール画像部-->
-            <div class= "card p-3">
-                <%= image_tag a_user.avatar.url, class: "card-img-top rounded-circle"%>
-            </div>
+           <% if a_user.id == current_user.id %>
+                <%= link_to home_path do %>
+                  <div class= "card p-3">
+                    <%= image_tag a_user.avatar.url, class: "card-img-top rounded-circle"%>
+                  </div>
+                <% end %> <!-- link_to end -->
+               <% else %>
+               <%= link_to user_path(a_user.id) do %>
+                 <div class= "card p-3">
+                  <%= image_tag a_user.avatar.url, class: "card-img-top rounded-circle"%>
+                 </div>
+               <% end %> <!-- link_to end -->
+               <% end %> <!-- if current.user? end -->
             <div>
                  <p style="font-size:14px;"><%= a_user.public_name %> </p>
                  <p style="font-size:14px;"><%= a_user.area1 %>/ <%= a_user.area2 %>  </p>
@@ -29,6 +39,7 @@
                   <div div class="murmur">  
                     <%= simple_format(new_murmurs[a_user.id].murmur_detail) %>  
                   </div>
+                  <p style="font-size:10px; text-align: left;"> <%= new_murmurs[a_user.id].created_at.strftime('%Y/%m/%d-%H:%M') %> </p>
                  <% end %>
          </div>
          <!-- いいねが多いアイテムを紹介する -->

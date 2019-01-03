@@ -72,6 +72,12 @@ class UsersController < ApplicationController
         @items_array.push(items_c)
       end
     end
+
+    if params[:tab] == "other_murmurs"
+      @murmurs = @user.murmurs.page(params[:page]).per(PER).neworder
+    else
+      @murmurs = @user.murmurs.page(1).per(PER).neworder
+    end
     respond_to do |format|
       format.html
       format.js

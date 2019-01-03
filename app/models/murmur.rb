@@ -15,4 +15,7 @@ class Murmur < ApplicationRecord
   # #リレーション
   # user
   belongs_to :user
+
+  ##scope　　最新の登録が前に来るように
+  scope :neworder, -> { order(created_at: :desc) }
 end

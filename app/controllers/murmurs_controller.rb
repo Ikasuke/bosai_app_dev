@@ -113,7 +113,7 @@ class MurmursController < ApplicationController
     @murmur.user_id = current_user.id
     respond_to do |format|
       if @murmur.save
-        format.html { redirect_to murmurs_url, notice: "murmur was successfully created." }
+        format.html { redirect_to murmurs_url, notice: "発信できました" }
         #format.json { render :show, status: :created, location: @category }
       else
         format.html { redirect_to murmurs_url }
