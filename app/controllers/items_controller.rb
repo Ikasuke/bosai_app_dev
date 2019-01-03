@@ -2,7 +2,7 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: [:edit, :update, :destroy, :show]
 
-  PER = 2
+  PER = 10
 
   def show #他人のも観れる
     @like_hash = Likeitem.where(user_id: current_user.id).pluck(:id, :item_id).to_h

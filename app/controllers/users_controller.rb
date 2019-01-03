@@ -1,5 +1,7 @@
 # encoding: utf-8
 class UsersController < ApplicationController
+  PER = 2
+
   def profile
     @user = current_user
     # リマインドメールを表示するために登録されているものを呼び出す。なければ新規登録のみ表示する。
@@ -51,9 +53,30 @@ class UsersController < ApplicationController
   def area
   end
 
-  def show
+  def show # カテゴリーごとに別れたアイテムを表示する
     @user = User.find(params[:id])
-  end
+    ## カテゴリー
+    @categories = Category.all
+    @items_array = Array.new()
+    # グッズを表示するために登録されているものを呼び出す
+    if params[:category_id] #この時、paginateが押された
+      @categories.each do |category| #押されたpaginateのカテゴリだけpaginate
+        if params[:category_id] == "#{category.id}"
+          items_c = @user.items.where(category_id: category.id).where(item_open_flag: 1).page(params[:page]).per(PER).neworder
+          @items_array.push(items_c)
+        end
+      end
+    else #paginateが押されないと１ページ目を表示
+      @categories.each do |category|
+        items_c = @user.items.where(category_id: category.id).where(item_open_flag: 1).page(1).per(PER).neworder
+        @items_array.push(items_c)
+      end
+    end
+    respond_to do |format|
+      format.html
+      format.js
+    end
+  end # show end
 
   private
 

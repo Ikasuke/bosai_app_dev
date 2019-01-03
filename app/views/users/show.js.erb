@@ -1,0 +1,3 @@
+
+$(".other_items_<%= params[:category_id] %>").html( "<%= escape_javascript(render partial: 'other_items', locals: {items: @items_array[0]}) %>" );
+    $(".other_items_<%= params[:category_id] %>_paginate").html( "&emsp;&emsp;<%= escape_javascript(paginate @items_array[0],params: {:category_id => params[:category_id]}, :remote => true) %>" );

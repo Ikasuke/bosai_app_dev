@@ -54,7 +54,7 @@
     height:100%;
   }
   
-  .public_memo_explain p {
+  .public_memo_explain p{
     text-align: left;
     border-radius: 0px;
     border: solid 1px;
@@ -63,4 +63,28 @@
     word-break: break-all;
     font-size: 12px;
   }
+  
 
+  .other_public_memo_explain p{
+    font-size: 12px;
+    word-break: break-all;
+    height: 80px;
+    line-height: 20px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .other_public_memo_explain p::before{
+    position: absolute;
+    background-color: #ffffff;
+    content: "...";
+    bottom: 0px;
+    right: 0px;
+}
+.other_public_memo_explain p::after{
+    position: absolute;
+    background-color: #ffffff;
+    content: "";
+   height:100%;
+   width: 100%;
+}

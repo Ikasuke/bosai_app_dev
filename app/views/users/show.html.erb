@@ -1,27 +1,13 @@
-<!--  プロフィール  -->
-<div class="profile_edit container">
-     <!-- プロフィールのヘッダ -->
-     <nav class = "navbar bg-warning navbar-dark box-header row">
-       <a class = "navbar-brand">プロフィール</a>
-     </nav>
+<div class="items container ">
+  <nav class = "navbar bg-warning navbar-dark box-header row">
+    <a class = "navbar-brand" href="/"><%= @user.public_name %>さんの防災グッズ</a>
+  </nav>
+    <br>
+     <div class="other_items_display">
+          <%= render partial: 'other_items_display', locals: {items_array: @items_array,categories: @categories} %>
+     </div>  <!-- tab2-->
+</div>  <!-- items container -->
 
- <!--  公開用プロフィールの編集 -->
-    <div class="col-md-9">
-
-          <!-- avatar-->
-          <div class = "py-2">
-               <%= image_tag @user.avatar.url, class: "border rounded-circle" %>
-           </div>
-            <!--  名前、エリア、家族構成 -->
-          
-               <p>名前</p>
-               <p> <%= @user.public_name %>
-               <p>エリア</p>
-               <p> <%= @user.area1 %> / <%= @user.area2 %>
-               <p> 家族構成 <p>
-             <p> <%= @user.family %>
-                <p> 自己紹介<p>
-             <p> <%= @user.profile %>
-        
-
-</div>
+<% content_for :sidebar_left do %>
+ <%= render partial: 'layouts/sidebar', locals: {user: @user, remindmails: nil} %>
+<% end %>
