@@ -16,6 +16,8 @@ class Murmur < ApplicationRecord
   # user
   belongs_to :user
 
+ #validate 空でないこと、長さが3000以内であること
+ validates :murmur_detail, presence: true, length: {maximum: 3000}
   ##scope　　最新の登録が前に来るように
   scope :neworder, -> { order(created_at: :desc) }
 end

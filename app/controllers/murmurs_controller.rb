@@ -116,7 +116,7 @@ class MurmursController < ApplicationController
         format.html { redirect_to murmurs_url, notice: "発信できました" }
         #format.json { render :show, status: :created, location: @category }
       else
-        format.html { redirect_to murmurs_url }
+        format.js
         #format.json { render json: @category.errors, status: :unprocessable_entity }
       end  #if end
     end    # respond_to end

@@ -1,6 +1,6 @@
 <div class="items container ">
         <nav class = "navbar bg-warning navbar-dark box-header row">
-          <a class = "navbar-brand" href="/">つながり</a>
+          <a class = "navbar-brand" style="color:#ffffff;">つながり</a>
         </nav>
 
 <!-- タブボタン部分 -->
@@ -68,7 +68,8 @@
         <%= form_with model: Murmur.new do |form|%>
                  <div class="row">
                     <div class="col-md-9">
-                      <div class="field form-group">
+                      <div class="m_errors_messages" style="color:#ff0000;"></div>
+                      <div class="field form-group murmur_write">
                               <%= form.text_area :murmur_detail,placeholder: '発信する',class:'form-control'%>
                       </div>  <!-- field box_comment_detail-->
                       

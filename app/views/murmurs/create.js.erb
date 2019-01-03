@@ -1,0 +1,6 @@
+
+<% if @murmur.errors.nil? %>
+       
+<% else %>
+ $('.m_errors_messages').html("発信情報<%= @murmur.errors.messages[:murmur_detail][0] %>");
+<% end %>

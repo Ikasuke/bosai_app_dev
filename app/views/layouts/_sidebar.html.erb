@@ -1,12 +1,14 @@
 
 <div class= 'profile'>
     <div class= 'container'>
-        <nav class = "navbar bg-warning navbar-dark box-header row ">
-          <a class = "navbar-brand" href="/user/profile">プロフィール</a>
           <% if user == current_user %>
-          <p><%= link_to '編集', user_profile_path %></p>
+           <nav class = "navbar bg-warning navbar-dark box-header row ">
+             <a class = "navbar-brand" style="color: #ffffff;">プロフィール</a>
+             <p><%= link_to '編集', user_profile_path %></p>
           <% else %>
-          <p><%= link_to 'ユーザーページ', user_path(id:user.id), style: "font-size: 12px;" %></p>
+           <nav class = "navbar bg-info navbar-dark box-header row ">
+             <a class = "navbar-brand" style="color: #ffffff;">プロフィール</a>
+             <p><%= link_to 'ユーザーページ', user_path(id:user.id), style: "font-size: 12px; color:#ffffff;" %></p>
           <% end %>
         </nav>
    <div class='row'>
