@@ -2,7 +2,7 @@
 
 class StartController < ApplicationController
   skip_before_action :authenticate_user!
-  layout 'startpage'
+  layout "startpage"
 
   def index
     @user = if current_user.nil?
@@ -12,6 +12,6 @@ class StartController < ApplicationController
             end
   end
 
-  def test
+  def start_info
   end
 end
