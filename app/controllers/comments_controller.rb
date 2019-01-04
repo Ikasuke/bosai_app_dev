@@ -19,7 +19,13 @@ class CommentsController < ApplicationController
   def create
     @comment = Comment.new(comment_params)
     @comment.user_id = current_user.id
-    #item_id = @comment.item.id    いらないはず
+    if @comment.comment_detail.blank?
+      if @comment.comment_picture.blank?
+      else
+        @comment.comment_detail = "(画像のみ)"
+      end
+    end
+
     @commit_name = params.keys[3]
     respond_to do |format|
       if @comment.save
@@ -34,6 +40,6 @@ class CommentsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def comment_params
-    params.require(:comment).permit(:comment_detail, :item_id)
+    params.require(:comment).permit(:comment_detail, :item_id, :comment_picture)
   end
 end  #class end

@@ -71,7 +71,7 @@
                        <div class="m_errors_messages" style="color:#ff0000;"></div>
                         <div class="field form-group murmur_write" style="margin:0;">
                               <%= form.text_area :murmur_detail,placeholder: '発信する',class:'form-control'%>
-                        </div>  <!-- field box_comment_detail-->
+                        </div>  <!-- field -->
                     <!-- picture-->       
                        <div class="img_field" onClick="$('#file').click()" >  <!-- アイコン表示 jqueryでクリックされるとfiel_fieldに入る -->
                            <i class="fa fa-image fa-2x"></i>
@@ -87,6 +87,7 @@
                                </div>
                           </div>
                         </div>
+                        <!-- picture end -->
                     </div> <!-- col end -->
                     <div class="col-md-3">
                        <%= form.submit "発信", :class=>"btn btn-info" %>
