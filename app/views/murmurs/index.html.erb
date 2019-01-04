@@ -68,12 +68,26 @@
         <%= form_with model: Murmur.new do |form|%>
                  <div class="row">
                     <div class="col-md-9">
-                      <div class="m_errors_messages" style="color:#ff0000;"></div>
-                      <div class="field form-group murmur_write">
+                       <div class="m_errors_messages" style="color:#ff0000;"></div>
+                        <div class="field form-group murmur_write" style="margin:0;">
                               <%= form.text_area :murmur_detail,placeholder: '発信する',class:'form-control'%>
-                      </div>  <!-- field box_comment_detail-->
-                      
-                    </div>
+                        </div>  <!-- field box_comment_detail-->
+                    <!-- picture-->       
+                       <div class="img_field" onClick="$('#file').click()" >  <!-- アイコン表示 jqueryでクリックされるとfiel_fieldに入る -->
+                           <i class="fa fa-image fa-2x"></i>
+                       </div>
+                        <div class = "form-group">
+                           <%= form.file_field :murmur_picture, class: 'form_pic', style: "display:none;", id: "file" %>
+                        </div>  <!-- form-group -->
+                        <div class="row">
+                          <div class="col-lg-4 col-md-4 col-sm-4">
+                              <br>
+                               <div class = "preview">
+                                  <%= image_tag '' ,class:"card-img-top" %>
+                               </div>
+                          </div>
+                        </div>
+                    </div> <!-- col end -->
                     <div class="col-md-3">
                        <%= form.submit "発信", :class=>"btn btn-info" %>
                     </div>   <!-- col-md-2 -->

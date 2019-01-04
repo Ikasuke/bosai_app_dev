@@ -10,7 +10,13 @@
               </div> <!-- col end-->
               <div class="col-lg-10 col-md-10 col-sm-10">
                      <div class="comment">  
-                             <p> <%= simple_format(murmur.murmur_detail) %> </p>
+                           <% if murmur.murmur_picture_file_name.nil? %>
+                           <% else %>
+                              <div class= " p-3 pic_frame">
+                                  <%= image_tag murmur.murmur_picture.url, class: "item_pic"%>
+                              </div>
+                           <% end %>
+                              <p> <%= simple_format(murmur.murmur_detail) %> </p>
                               <div class="comment_time">
                                   <p><%= murmur.created_at.strftime('%Y/%m/%d-%H:%M') %> </p>
                                </div>

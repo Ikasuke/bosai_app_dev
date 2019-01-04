@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_29_230609) do
+ActiveRecord::Schema.define(version: 2019_01_04_030242) do
 
   create_table "categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -69,6 +69,10 @@ ActiveRecord::Schema.define(version: 2018_12_29_230609) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
+    t.string "murmur_picture_file_name"
+    t.string "murmur_picture_content_type"
+    t.integer "murmur_picture_file_size"
+    t.datetime "murmur_picture_updated_at"
     t.index ["user_id"], name: "index_murmurs_on_user_id"
   end
 

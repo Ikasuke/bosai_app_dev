@@ -111,6 +111,12 @@ class MurmursController < ApplicationController
   def create
     @murmur = Murmur.new(murmur_params)
     @murmur.user_id = current_user.id
+    if @murmur.murmur_detail.blank?
+      if @murmur.murmur_picture.blank?
+      else
+        @murmur.murmur_detail = "(画像のみ)"
+      end
+    end
     respond_to do |format|
       if @murmur.save
         format.html { redirect_to murmurs_url, notice: "発信できました" }
@@ -126,6 +132,6 @@ class MurmursController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def murmur_params
-    params.require(:murmur).permit(:murmur_detail)
+    params.require(:murmur).permit(:murmur_detail, :murmur_picture)
   end
 end # class end

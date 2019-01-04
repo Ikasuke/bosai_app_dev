@@ -37,6 +37,12 @@
                   </div>
                  <%else %>
                   <div div class="murmur">  
+                       <% if new_murmurs[a_user.id].murmur_picture_file_name.nil? %>
+                       <% else %>
+                          <div class= "p-3">
+                              <%= image_tag new_murmurs[a_user.id].murmur_picture.url, class: "murmur_pic"%>
+                          </div>
+                       <% end %>
                     <%= simple_format(new_murmurs[a_user.id].murmur_detail) %>  
                   </div>
                   <p style="font-size:10px; text-align: left;"> <%= new_murmurs[a_user.id].created_at.strftime('%Y/%m/%d-%H:%M') %> </p>
