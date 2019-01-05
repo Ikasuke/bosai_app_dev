@@ -9,14 +9,17 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   #sidekiq
-  mount Sidekiq::Web, at: "/sidekiq"
+  authenticate :user, -> (u) { u.admin? } do
+    mount Sidekiq::Web, at: "/sidekiq"
+  end
 
   ## no model
   root "start#index"
   get "home", to: "home#index"
   get "adminhome", to: "home#adminhome"
   get "user/area", to: "users#area"
-
+  get "info", to: "info#index"
+  get "start_info", to: "start#start_info"
   ## user model
   get "user/profile", to: "users#profile"
   resources :users
@@ -26,7 +29,6 @@ Rails.application.routes.draw do
 
   ##item model
   resources :items
-  post "item/reading_table", to: "items#reading_table"  #グッズ検索でコントローラに検索params(:search)をコントローラへ送る
 
   ##category model
   resources :categories
@@ -39,7 +41,6 @@ Rails.application.routes.draw do
 
   ##murmur model
   resources :murmurs
-  post "murmur/region", to: "murmurs#region"
 
   ##favorite model
   resources :favorites

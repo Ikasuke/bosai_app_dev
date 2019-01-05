@@ -26,7 +26,7 @@
 
 
    $(document).on('turbolinks:load', function () {
-    $('#datetimepicker1').datetimepicker({
+    $('#datetimepicker1').datetimepicker({       
         dayViewHeaderFormat: 'YYYY年 MMMM',
         tooltips: {
             close: '閉じる',
@@ -44,10 +44,13 @@
             prevCentury: '前世紀',
             nextCentury: '次世紀'
         },
+       
         format: 'YYYY/MM/DD',
         locale: 'ja',
-        showClose: true
+        showClose: true        
     });
+
+
 
     $('.form_pic').on('change',function(e){
         var file = e.target.files[0], 

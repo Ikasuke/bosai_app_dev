@@ -5,8 +5,16 @@
     <div class="col-md-3">
 <!--name-->       
 　    <div class="field ">
-       <%= form.label :"名前" %>
-       <%= form.text_field :item_name%>
+       <% if @i_error_details.key?(:item_name) %>
+          <div class ="error_state">
+            名前<%= @i_error_messages[:item_name][0]%>
+          </div>
+          <%= form.label :"名前" %>
+          <%= form.text_field :item_name,  style: "background-color: #ffA0A0;" %>
+        <% else %>
+          <%= form.label :"名前" %>
+          <%= form.text_field :item_name%>
+        <% end %>
       </div> <!-- field-->
 
 <!-- picture-->
@@ -28,16 +36,34 @@
  <!-- category-->
                 <tr>
                   <td>カテゴリー</td>
-                  <td><%= form.select :category_id, @category_selects,{:prompt => "category?"}, {:class => "btn category_tab"} %></td>
+                  <td>
+                 <% if @i_error_details.key?(:category_id) %>
+              <div class ="error_state">
+                カテゴリー<%= @i_error_messages[:category_id][0]%>
+              </div>
+              <%= form.select :category_id, @category_selects,{:prompt => "category?"}, {:class => "btn category_tab"}%>
+            <%else%>
+              <%= form.select :category_id, @category_selects,{:prompt => "category?"}, {:class => "btn category_tab"}%>
+            <% end %>
+                  </td>
                 </tr>
  <!--数量--> 
                
                 <tr>
                   <td>  <%= form.label :"数量" %></td>
                   <td>
-                      <div class="field ">
-                        <%= form.text_field :item_volume%>
-                      </div>
+                        <% if @i_error_details.key?(:item_volume) %>
+                            <div class ="error_state">
+                             数量<%= @i_error_messages[:item_volume][0]%>
+                            </div>
+                            <div class="field">
+                              <%= form.text_field :item_volume, style: "background-color: #ffA0A0;"%>
+                            </div>
+                        <% else %>
+                            <div class="field">
+                             <%= form.text_field :item_volume%>
+                             </div>
+                        <% end %>
                   </td>
                 </tr>
                 
@@ -50,7 +76,7 @@
                             <%= form.text_field(:item_expiry, placeholder: '期限',
                                class: "form-control datetimepicker-input", data: {target:"#datetimepicker1"}) %>
                            <span class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
-                             <span class="input-group-text"><i class="fas fa-calendar-plus"></i></span>
+                             <span class="input-group-text"><i class="fa fa-calendar-plus"></i></span>
                            </span>
                        </span>
                      </div>
@@ -92,31 +118,44 @@
     <nav class = "navbar bg-warning navbar-dark box-header row">
         <a class = "navbar-brand">コメント</a>
       </nav>
-<!-- コメント欄始まり-->
-     <div class="row">
-                  <% @item.comments.each do |comment| %>
-    <!-- 画像始まり-->    
-                  <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                       <div class= "p-3 com_frame">
-                             <%= image_tag comment.user.avatar.url, class: "com_pic rounded-circle"%>
-                       </div>
-                       <p> <%= comment.user.public_name %></p>
-                  </div>
-    <!-- 画像終わり-->    
-      <!-- 吹き出し始まり-->                
-                  <div class=" col-lg-9 col-md-9 col-sm-9 col-xs-9">
-                      <div class="comment">  
-                               <p><%= comment.comment_detail %></p>
-                               <div class="comment_time">
-                                   <p><%= comment.created_at.strftime('%Y/%m/%d-%H:%M') %>
-                                </div>
-                     </div>
-                  </div> 
-      <!-- 吹き出し終わり --> 
-                  <% end %>
-                  
-        </div> <!-- row comments --> 
+<!-- コメント欄始まり-->     
+           <div class="row"> <!--コメント欄 -->    
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 comments_box" id="tab4_comments_box_<%= @item.id %>" >
+              <!-- comment/index をjs で呼び出して表示  -->
+              </div>   
+           </div> <!-- row-->
   <!--コメント欄終わり -->  
+        <br>
+    <!-- コメント記入部-->
+               <%= form_with model: Comment.new do |form|%>
+                 <div class="row">
+                    <div class="col-md-10">
+                      <div class="field form-group" style="margin:0;">
+                              <%= form.text_area :comment_detail,placeholder: 'コメントを記入してください',class:'form-control'%>
+                      </div>  <!-- field box_comment_detail-->
+                      <%= form.hidden_field :item_id, :value => @item.id %>
+                      <!-- picture-->       
+                       <div class="img_field" onClick='$("#file_<%= @item.id %>").click()' >  <!-- アイコン表示 jqueryでクリックされるとfiel_fieldに入る -->
+                           <i class="fa fa-image fa-2x"></i>
+                       </div>
+                        <div class = "form-group">
+                           <%= form.file_field :comment_picture, class: "item_#{@item.id} form_pic_mc", style: "display:none;", id: "file_#{@item.id}" %>
+                        </div>  <!-- form-group -->
+                        <div class="row">
+                          <div class="col-lg-4 col-md-4 col-sm-4">
+                              <br>
+                               <div id= "preview_<%= @item.id %>">
+                                  <%= image_tag '' ,class:"card-img-top" %>
+                               </div>
+                          </div>
+                        </div>
+                        <!-- picture end -->
+                    </div>
+                    <div class="col-md-2">
+                       <%= form.submit "コメント", :class=>"btn btn-info",:name=> "tab4_commit_id#{@item.id}" %>
+                    </div>   <!-- col-md-2 -->
+                 </div>  <!-- コメント記入部 row　end-->
+               <% end %>  <!-- form_with Commnet  -->
       
 
   </div>   <!-- row 2つめ -->

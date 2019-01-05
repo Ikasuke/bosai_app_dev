@@ -13,7 +13,7 @@ set :repo_url, "https://github.com/Ikasuke/bosai_app_dev.git"
 
 # base
 set :application, "RailsSampleApp"
-set :branch, "aws_setup2"
+set :branch, "production"
 set :user, "admin"
 set :deploy_to, "/opt/#{fetch(:application)}"
 set :rbenv_ruby, File.read(".ruby-version").strip
@@ -65,8 +65,8 @@ namespace :deploy do
   desc "Make sure local git is in sync with remote."
   task :check_revision do
     on roles(:app) do
-      unless `git rev-parse HEAD` == `git rev-parse Ikasuke/aws_setup2`
-        puts "WARNING: HEAD is not the same as Ikasuke/aws_setup2"
+      unless `git rev-parse HEAD` == `git rev-parse Ikasuke/production`
+        puts "WARNING: HEAD is not the same as Ikasuke/production"
         puts "Run `git push` to sync changes."
         exit
       end

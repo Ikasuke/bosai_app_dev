@@ -1,0 +1,95 @@
+<!-- partial  地域の人々検索結果 @allusers, @max_items,@favorite_hash @new_murmursが必要 -->
+ <div class="row">
+  <%if tab == "tab1" %>
+   <p style="font-size:20px;"> &emsp;&emsp;<%= @area %> を表示しています</p>
+   <% end %>
+   <div class="container">  
+       <% allusers.each do |a_user| %>
+        <div class="row">
+         <div class="col-lg-3 col-md-3 col-sm-3">  <!-- プロフィール画像部-->
+           <% if a_user.id == current_user.id %>
+                <%= link_to home_path do %>
+                  <div class= "card p-3">
+                    <%= image_tag a_user.avatar.url, class: "card-img-top rounded-circle"%>
+                  </div>
+                <% end %> <!-- link_to end -->
+               <% else %>
+               <%= link_to user_path(a_user.id) do %>
+                 <div class= "card p-3">
+                  <%= image_tag a_user.avatar.url, class: "card-img-top rounded-circle"%>
+                 </div>
+               <% end %> <!-- link_to end -->
+               <% end %> <!-- if current.user? end -->
+            <div>
+                 <p style="font-size:14px;"><%= a_user.public_name %> </p>
+                 <p style="font-size:14px;"><%= a_user.area1 %>/ <%= a_user.area2 %>  </p>
+            </div>
+         </div>
+         <div class="col-lg-6 col-md-6 col-sm-6"> 
+               
+                <p style="font-size:14px;"> 登録グッズ数: <%= a_user.items.count  %>  </p>
+                <p style="font-size:14px;"> お気に入られ: <%= a_user.favorites_of_to_user.count  %>  </p>
+                <p style="font-size:14px; text-align:left; margin:0;"> 最近の発信:  </p>
+                
+                <% if new_murmurs[a_user.id].nil? %>
+                  <div div class="murmur"  style="color: #a0a0a0;">  
+                    <%= simple_format("ありません") %>  
+                  </div>
+                 <%else %>
+                  <div div class="murmur">  
+                       <% if new_murmurs[a_user.id].murmur_picture_file_name.nil? %>
+                       <% else %>
+                          <div class= "p-3">
+                              <%= image_tag new_murmurs[a_user.id].murmur_picture.url, class: "murmur_pic"%>
+                          </div>
+                       <% end %>
+                    <%= simple_format(new_murmurs[a_user.id].murmur_detail) %>  
+                  </div>
+                  <p style="font-size:10px; text-align: left;"> <%= new_murmurs[a_user.id].created_at.strftime('%Y/%m/%d-%H:%M') %> </p>
+                 <% end %>
+         </div>
+         <!-- いいねが多いアイテムを紹介する -->
+         <div class="col-lg-3 col-md-3 col-sm-3">
+         <% if max_items[a_user.id].nil? %>
+        <%else %>
+                 <%= link_to edit_item_path(max_items[a_user.id]) do %>
+                     <div class= " p-3 pic_frame">
+                        <%= image_tag max_items[a_user.id].picture.url, class: "item_pic"%>
+                     </div> <!-- pic_frame-->
+                  <% end %> <!-- link_to end -->
+            <div>
+                 <p style="font-size:14px;"><%= max_items[a_user.id].item_name %>/いいね:<%= max_items[a_user.id].likeitems.count %>件 </p>
+            </div>
+         <% end %> <!-- nil? end -->
+         </div>  <!-- col end -->
+        </div>  <!-- row end -->
+
+　       <div class="row"> <!-- お気に入りボタン　row-->
+           
+            <div class= "col-lg-2 col-md-3 col-sm-3"> <!-- favoriteボタン--> 
+                <div  class="favorite_btn_<%= a_user.id %> goodbtn_part">
+                   <% if favorite_hash.has_value?(a_user.id)%>
+                     <%= button_to favorite_path(favorite_hash.key(a_user.id)), method: :delete, class: 'off-btn',remote: true do %>
+                     取り消す
+                     <% end %>
+                   <% else %>
+     　               <%= form_with model: Favorite.new do |form|%>
+                        <%= form.hidden_field :to_user_id, :value => a_user.id %>
+                        <%= form.hidden_field :from_user_id, :value => current_user.id %>
+                        <%= form.submit "お気に入り", :class=>"good-btn" %>
+                      <% end %>       
+                   <% end %>
+                </div>
+            </div>  <!-- favorite ボタン col end -->
+               <div class="col-lg-8 col-md-7 col-sm-7 count_region"> <!-- いいね数、コメント数-->
+                  <span class="count_part">
+                      お気に入り:<span class="count_favorite<%= a_user.id %>"><%= a_user.favorites_of_to_user.count %></span>件
+                </span>                
+               </div> <!-- いいね数、コメント数　end-->
+            </div> <!-- お気に入りボタン　row -->
+
+
+        <hr>
+      <% end%> <!-- each end -->
+     </div> <!--container-->
+     </div>  <!--row -->

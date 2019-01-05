@@ -1,0 +1,19 @@
+<!--  itemが必要   -->
+          <div class="item col-lg-3 col-md-4 col-sm-4">
+               <%= link_to edit_item_path(item) do %>
+                  <div class= " p-3 pic_frame">
+                      <%= image_tag item.picture.url, class: "item_pic"%>
+                   </div> <!-- pic_frame-->
+                <% end %> <!-- link_to end -->
+                 <table class="table">
+                   <tr><td><%= "名前"%></td> <td><%= item.item_name %></td></tr>
+                   <tr><td><%= "memo"%></td> <td>
+                                               <div class="other_public_memo_explain">
+                                                 <%= simple_format(item.item_public_memo) %>
+                                                </div>
+                                              </td></tr>
+                   <tr><td><%= "いいね"%></td> <td><%= item.likeitems.count %>件</td></tr>                           
+                  
+                 </table>
+               </div> <!-- item-->
+            

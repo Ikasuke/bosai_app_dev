@@ -1,0 +1,165 @@
+<div class="items container">
+
+<%= form_with(model: @item, local: true) do |form| %>
+<div class="row">
+    <div class="col-md-3">
+<!--name-->       
+　    <div class="field ">
+       <% if @i_error_details.key?(:item_name) %>
+          <div class ="error_state">
+            名前<%= @i_error_messages[:item_name][0]%>
+          </div>
+          <%= form.label :"名前" %>
+          <%= form.text_field :item_name,  style: "background-color: #ffA0A0;" %>
+        <% else %>
+          <%= form.label :"名前" %>
+          <%= form.text_field :item_name%>
+        <% end %>
+      </div> <!-- field-->
+
+<!-- picture-->
+        <div class="preview col-md-10 col-sm-10 col-xs-6">
+        <%= image_tag @item.picture.url, class: "card-img-top"%>
+        </div>
+      <div class = "form-group">
+        <%= form.label :画像を選択 %><br />
+        <%= form.file_field :picture, class: 'form_pic' %>
+     </div>  <!-- form-group-->
+    </div>  <!-- col-md-3-->
+    <div class="col-md-4">
+     <table class="table table-borderless">   
+        <!-- 登録日 -->      
+                <tr>
+                  <td>登録日</td>
+                  <td>  <%= @item.created_at.strftime('%Y年%m月%d日')  %></td>
+                </tr>
+ <!-- category-->
+                <tr>
+                  <td>カテゴリー</td>
+                  <td>
+                 <% if @i_error_details.key?(:category_id) %>
+              <div class ="error_state">
+                カテゴリー<%= @i_error_messages[:category_id][0]%>
+              </div>
+              <%= form.select :category_id, @category_selects,{:prompt => "category?"}, {:class => "btn category_tab"}%>
+            <%else%>
+              <%= form.select :category_id, @category_selects,{:prompt => "category?"}, {:class => "btn category_tab"}%>
+            <% end %>
+                  </td>
+                </tr>
+ <!--数量--> 
+               
+                <tr>
+                  <td>  <%= form.label :"数量" %></td>
+                  <td>
+                        <% if @i_error_details.key?(:item_volume) %>
+                            <div class ="error_state">
+                             数量<%= @i_error_messages[:item_volume][0]%>
+                            </div>
+                            <div class="field">
+                              <%= form.text_field :item_volume, style: "background-color: #ffA0A0;"%>
+                            </div>
+                        <% else %>
+                            <div class="field">
+                             <%= form.text_field :item_volume%>
+                             </div>
+                        <% end %>
+                  </td>
+                </tr>
+                
+<!--期限-->
+                <tr>
+                 <td>期限</td>
+                 <td>
+                      <% if @e_check.nil? %>
+                      <% else %>
+                           <div id = <%=@e_check %> ></div>
+                      <% end %>
+                       <%= check_box :expiry_check,"check_val",class:"expiry_check" %>
+　                      <%= label_tag :expiry_check, "期限を入力する"%>
+                       <div id="expiry_parts" style="display:none;" >
+                       <%= form.date_select :expiry_parts, { default: { year: @expiry_d[0], month:@expiry_d[1], day: @expiry_d[2] }}, class: 'form-control' %>
+                     </div>
+                    
+                   </td>
+                 </tr>
+     </table>
+    </div>  <!-- col-md-4 -->
+    <div class="col-md-5">
+        <br>
+ <!--public_memo-->    
+  <div class="field form-group">
+     <%= form.label :"公開用memo" %>
+     <%= form.text_area :item_public_memo,class:'form-control'%>
+   </div>
+ <!--private_memo-->    
+ <div class="field form-group">
+     <%= form.label :"非公開memo" %>
+     <%= form.text_area :item_private_memo,class:'form-control'%>
+   </div>
+ 
+ <div class="field">
+     <%= form.label :"公開する" %>
+     <%= form.check_box :item_open_flag, {},  "公開する", "公開しない"%>
+ </div>
+ 
+ <%= form.submit "更新する", :class=>"btn btn-info" %>
+  <%= link_to 'Destroy', @item, method: :delete, data: { confirm: '削除します。よろしいですか?' }, class: 'btn red' %>
+  <%= link_to "戻る", home_path, class: 'btn btn-default gray' %>
+ 
+ </div> <!--col-md-5 -->
+ </div>   <!-- row -->
+<% end %>  <!--  form_with end -->
+
+</div>  <!-- items container -->
+
+<br>
+
+<div class="items container">
+    <nav class = "navbar bg-warning navbar-dark box-header row">
+        <a class = "navbar-brand">コメント</a>
+      </nav>
+<!-- コメント欄始まり-->     
+           <div class="row"> <!--コメント欄 -->    
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 comments_box" id="tab4_comments_box_<%= @item.id %>" >
+              <!-- comment/index をjs で呼び出して表示  -->
+              </div>   
+           </div> <!-- row-->
+  <!--コメント欄終わり -->  
+        <br>
+    <!-- コメント記入部-->
+               <%= form_with model: Comment.new do |form|%>
+                 <div class="row">
+                    <div class="col-md-10">
+                      <div class="field form-group" style="margin:0;">
+                              <%= form.text_area :comment_detail,placeholder: 'コメントを記入してください',class:'form-control'%>
+                      </div>  <!-- field box_comment_detail-->
+                      <%= form.hidden_field :item_id, :value => @item.id %>
+                      <!-- picture-->       
+                       <div class="img_field" onClick='$("#file_<%= @item.id %>").click()' >  <!-- アイコン表示 jqueryでクリックされるとfiel_fieldに入る -->
+                           <i class="fa fa-image fa-2x"></i>
+                       </div>
+                        <div class = "form-group">
+                           <%= form.file_field :comment_picture, class: "item_#{@item.id} form_pic_mc", style: "display:none;", id: "file_#{@item.id}" %>
+                        </div>  <!-- form-group -->
+                        <div class="row">
+                          <div class="col-lg-4 col-md-4 col-sm-4">
+                              <br>
+                               <div id= "preview_<%= @item.id %>">
+                                  <%= image_tag '' ,class:"card-img-top" %>
+                               </div>
+                          </div>
+                        </div>
+                        <!-- picture end -->
+                    </div>
+                    <div class="col-md-2">
+                       <%= form.submit "コメント", :class=>"btn btn-info",:name=> "tab4_commit_id#{@item.id}" %>
+                    </div>   <!-- col-md-2 -->
+                 </div>  <!-- コメント記入部 row　end-->
+               <% end %>  <!-- form_with Commnet  -->
+      
+
+  </div>   <!-- row 2つめ -->
+
+</div>
+

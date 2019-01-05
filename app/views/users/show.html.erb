@@ -1,0 +1,34 @@
+<div class="items container ">
+  <nav class = "navbar bg-info navbar-dark box-header row">
+    <a class = "navbar-brand" style="color:#ffffff;"><%= @user.public_name %>さんの防災について</a>
+  </nav>
+   <!-- タブボタン部分 -->
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a href="#tab1" class="nav-link active" data-toggle="tab">防災グッズ</a>
+  </li>
+  <li class="nav-item">
+    <a href="#tab2" class="nav-link" data-toggle="tab">発信履歴</a>
+  </li>
+</ul>
+    <br>
+    <div class="tab-content">
+     <div id="tab1" class="tab-pane active">
+       <div class="other_items_display">
+          <%= render partial: 'other_items_display', locals: {items_array: @items_array,categories: @categories} %>
+       </div>  
+     </div>   <!-- tab1 -->
+      <div id="tab2" class="tab-pane">
+        <div class="other_murmurs">
+         <%= render partial: 'other_murmurs', locals: {murmurs: @murmurs} %>
+        </div>
+        <div class = "row other_murmurs_paginate">
+           &emsp;&emsp;<%= paginate @murmurs, params: {:tab => "other_murmurs"}, :remote => true %>
+        </div> 
+     </div>  <!-- tab2-->
+    </div> <!-- tab-content end -->
+</div>  <!-- items container -->
+
+<% content_for :sidebar_left do %>
+ <%= render partial: 'layouts/sidebar', locals: {user: @user, remindmails: nil} %>
+<% end %>

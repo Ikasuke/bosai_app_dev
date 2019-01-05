@@ -6,8 +6,16 @@
 <!--name-->    
    <br>
        <div class="field">
+        <% if @i_error_details.key?(:item_name) %>
+          <div class ="error_state">
+            名前<%= @i_error_messages[:item_name][0]%>
+          </div>
+          <%= form.label :"名前" %>
+          <%= form.text_field :item_name,  style: "background-color: #ffA0A0;" %>
+        <% else %>
           <%= form.label :"名前" %>
           <%= form.text_field :item_name%>
+        <% end %>
        </div>  <!-- field box_name-->
 <!-- picture-->       
           <div class = "preview col-md-10 col-sm-10 col-xs-6">
@@ -29,16 +37,34 @@
 <!-- category-->
         <tr>
           <td>カテゴリー</td>
-          <td><%= form.select :category_id, @category_selects,{:prompt => "category?"}, {:class => "btn category_tab"} %></td>
+          <td>
+            <% if @i_error_details.key?(:category_id) %>
+              <div class ="error_state">
+                カテゴリー<%= @i_error_messages[:category_id][0]%>
+              </div>
+              <%= form.select :category_id, @category_selects,{:prompt => "category?"}, {:class => "btn category_tab"}%>
+            <%else%>
+              <%= form.select :category_id, @category_selects,{:prompt => "category?"}, {:class => "btn category_tab"}%>
+            <% end %>
+          </td>
         </tr>
 <!--数量--> 
       
          <tr>
           <td>  <%= form.label :"数量" %></td>
           <td>
+            <% if @i_error_details.key?(:item_volume) %>
+              <div class ="error_state">
+                数量<%= @i_error_messages[:item_volume][0]%>
+              </div>
               <div class="field">
+                <%= form.text_field :item_volume, style: "background-color: #ffA0A0;"%>
+              </div>
+            <% else %>
+               <div class="field">
                 <%= form.text_field :item_volume%>
               </div>
+            <% end %>
           </td>
          </tr>
 <!--期限-->

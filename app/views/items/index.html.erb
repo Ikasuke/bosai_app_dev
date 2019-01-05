@@ -1,6 +1,6 @@
 <div class="items container ">
         <nav class = "navbar bg-warning navbar-dark box-header row">
-          <a class = "navbar-brand" href="/">みんなのグッズ</a>
+          <a class = "navbar-brand" style="color:#ffffff;">みんなのグッズ</a>
         </nav>
 
 <!-- タブボタン部分 -->
@@ -14,72 +14,58 @@
         <li class="nav-item">
           <a href="#tab3" class="nav-link" data-toggle="tab">いいねグッズ</a>
         </li>
-        <li class="nav-item">
-          <a href="#tab4" class="nav-link" data-toggle="tab">エリアから探す (移動予定)</a>
-        </li>
       </ul>
 
 <br>
 <!-- タブ内容部分 -->
 <div class="tab-content row">
     <div id="tab1" class="tab-pane active container">   
-        <%= form_with(url: '/item/reading_table') do |form|%>
+        <%= form_with(url: '/items',method: 'get') do |form|%>
         <div class = "form-group search">
           <%= form.label :グッズを検索 %>
           <%= form.text_field :search,class:'search_field' %>
+         <%= form.hidden_field :tab, :value => 'tab1' %>
       </div>
       <%= form.submit "検索", :class=>"btn btn-info" %>
       <% end %>
       <div class="reading_table" id="reading_table_tab1">
           <%= render partial: 'reading_table', locals: {items: @items, like_hash: @like_hash, tab: "tab1"} %>   <!-- 検索結果が表示される -->
       </div>
-  
+    <div class = "row reading_table_tab1_pagenate">
+           &emsp;&emsp;<%= paginate @items,params: {:tab => "tab1"}, :remote => true %>
+        </div>
    </div> <!-- tab1 -->
 
    <div id="tab2" class="tab-pane container">
-    <%= form_with(url: '/item/reading_table') do |form|%>
+    <%= form_with(url: '/items',method: 'get') do |form|%>
       <div class = "form-group search">
         <%= form.label :カテゴリから検索 %>
         <%= form.select :category_id, @category_selects,{:prompt => "category?"}, {:class => "btn category_tab"} %>
+        <%= form.hidden_field :tab, :value => 'tab2' %>
     </div>
     <%= form.submit "検索", :class=>"btn btn-info" %>
     <% end %>
     <div class="reading_table" id="reading_table_tab2">
       <%= render partial: 'reading_table', locals: {items: @items, like_hash: @like_hash, tab: "tab2"} %>   <!-- 検索結果が表示される -->
     </div>
-
+    <div class = "row reading_table_tab2_pagenate">
+           &emsp;&emsp;<%= paginate @items,params: {:tab => "tab2"}, :remote => true %>
+        </div>
 
    </div>  <!-- tab2 end-->
    <div id="tab3" class="tab-pane container">
        <p> いいねしたアイテムが表示されます </p>
        <p> 表示されない場合は、ページを更新してください </p>
         <div class="reading_table" id="reading_table_tab3">
-      <%= render partial: 'reading_table', locals: {items: @item_like, like_hash: @like_hash, tab: "tab3"} %>  
-    </div>
+           <%= render partial: 'reading_table', locals: {items: @items_like, like_hash: @like_hash, tab: "tab3"} %>  
+        </div>
+        <div class = "row reading_table_tab3_pagenate">
+           &emsp;&emsp;<%= paginate @items_like,params: {:tab => "tab3"}, :remote => true %>
+        </div>
 
 
    </div>  <!-- tab3 end-->
-   <div id="tab4" class="tab-pane countainer">
-    <%= form_with(url: '/item/reading_table') do |form|%>
-      <div class = "form-group search">
-        <%= form.label :都道府県から検索 %>
-         <%= form.select :area1, ["選択してください"],{} ,{ class: "form-control" }  %>
-     </div>
-　     <div class = "form-group search">
-        <%= form.label :詳細なエリアから検索 %>
-         <%= form.select :area2, ["選択してください"],{} ,{ class: "form-control" }  %>
-     </div>
-    <%= form.submit "検索", :class=>"btn btn-info" %>
-    <% end %>
-    <div class="reading_table" id="reading_table_tab4">
-      <%= render partial: 'reading_table', locals: {items: @items, like_hash: @like_hash, tab: "tab4"} %>   <!-- 検索結果が表示される -->
-    </div>
-     
- 
-   
-   
-   </div>  <!-- tab4-->
-
+  
 </div>  <!-- tab-content -->
 </div>  <!-- items container-->
 
