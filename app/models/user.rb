@@ -62,9 +62,8 @@ class User < ApplicationRecord
             length: {maximum: 255, too_log: "長すぎます"}
   # passwordは6文字以上であること
   #=>config/initializers/devise.rb に書いてある
-  # public_nameはユニークであること　30文字以内であること
+  # public_nameは30文字以内であること
   validates :public_name,
-            uniqueness: true,
             length: {maximum: 30, too_log: "長すぎます。ニックネーム"}
   # familyは100文字以内であること
   validates :family,
