@@ -1,0 +1,12 @@
+
+<% if params[:category_id].nil? %>
+<% else %>
+$(".other_items_<%= params[:category_id] %>").html( "<%= escape_javascript(render partial: 'other_items', locals: {items: @items_array[0]}) %>" );
+    $(".other_items_<%= params[:category_id] %>_paginate").html( "&emsp;&emsp;<%= escape_javascript(paginate @items_array[0],params: {:category_id => params[:category_id]}, :remote => true) %>" );
+<% end %>
+
+<% if params[:tab] == "other_murmurs" %>
+    $(".other_murmurs").html( "<%= escape_javascript( render partial: 'other_murmurs', locals: {murmurs: @murmurs}) %>" );
+    $(".other_murmurs_paginate").html( "&emsp;&emsp;<%= escape_javascript(paginate @murmurs, params: {:tab => "other_murmurs"}, :remote => true) %>" );
+
+<% end %>

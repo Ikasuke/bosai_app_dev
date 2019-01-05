@@ -1,0 +1,110 @@
+<div class="items container">
+    
+<%= form_with model: Item.new do |form|%>    
+ <div class="row">
+     <div class="col-md-3">
+<!--name-->    
+   <br>
+       <div class="field">
+        <% if @i_error_details.key?(:item_name) %>
+          <div class ="error_state">
+            名前<%= @i_error_messages[:item_name][0]%>
+          </div>
+          <%= form.label :"名前" %>
+          <%= form.text_field :item_name,  style: "background-color: #ffA0A0;" %>
+        <% else %>
+          <%= form.label :"名前" %>
+          <%= form.text_field :item_name%>
+        <% end %>
+       </div>  <!-- field box_name-->
+<!-- picture-->       
+          <div class = "preview col-md-10 col-sm-10 col-xs-6">
+             <%= image_tag '/noimage.jpg' ,class:"card-img-top" %>
+          </div>
+        
+          <div class = "form-group">
+               <%= form.label :画像を選択 %><br />
+              <%= form.file_field :picture, class: 'form_pic' %>
+          </div>  <!-- form-group -->
+     </div>  <!-- col-md-3-->
+     <div class="col-md-4">
+　    <table class="table table-borderless">   
+<!-- 登録日 -->      
+        <tr>
+          <td>登録日</td>
+          <td> <%= Time.now.strftime('%Y年%m月%d日') %>(本日)</td>
+        </tr>
+<!-- category-->
+        <tr>
+          <td>カテゴリー</td>
+          <td>
+            <% if @i_error_details.key?(:category_id) %>
+              <div class ="error_state">
+                カテゴリー<%= @i_error_messages[:category_id][0]%>
+              </div>
+              <%= form.select :category_id, @category_selects,{:prompt => "category?"}, {:class => "btn category_tab"}%>
+            <%else%>
+              <%= form.select :category_id, @category_selects,{:prompt => "category?"}, {:class => "btn category_tab"}%>
+            <% end %>
+          </td>
+        </tr>
+<!--数量--> 
+      
+         <tr>
+          <td>  <%= form.label :"数量" %></td>
+          <td>
+            <% if @i_error_details.key?(:item_volume) %>
+              <div class ="error_state">
+                数量<%= @i_error_messages[:item_volume][0]%>
+              </div>
+              <div class="field">
+                <%= form.text_field :item_volume, style: "background-color: #ffA0A0;"%>
+              </div>
+            <% else %>
+               <div class="field">
+                <%= form.text_field :item_volume%>
+              </div>
+            <% end %>
+          </td>
+         </tr>
+<!--期限-->
+        <tr>
+          <td>期限</td>
+          <td>
+            <%= check_box :expiry_check,"check_val",class:"expiry_check" %>
+　          <%= label_tag :expiry_check, "期限を入力する"%>
+            <div id="expiry_parts" style="display:none;" >
+              <%= form.date_select :expiry_parts, {}, class: 'form-control' %>
+              </div>
+          </td>
+        </tr>
+      </table>
+     </div>  <!-- col-md-4 -->
+     <div class="col-md-5">
+       <br>
+<!--public_memo-->    
+ <div class="field form-group">
+    <%= form.label :"公開用memo" %>
+    <%= form.text_area :item_public_memo,class:'form-control'%>
+  </div>
+<!--private_memo-->    
+<div class="field form-group">
+    <%= form.label :"非公開memo" %>
+    <%= form.text_area :item_private_memo,class:'form-control'%>
+  </div>
+
+<div class="field">
+    <%= form.label :"公開する" %>
+    <%= form.check_box :item_open_flag, {},  "公開する", "公開しない"%>
+</div>
+
+<%= form.submit "登録する", :class=>"btn btn-info" %>
+
+</div> <!--col-md-5 -->
+</div>   <!-- row -->
+
+
+
+<% end %>  <!--  form_with end -->
+
+</div>  <!-- container -->

@@ -47,7 +47,7 @@ gem "bootstrap4-datetime-picker-rails"
 gem "momentjs-rails", ">= 2.9.0"
 
 #icons
-gem 'font-awesome-rails'
+gem "font-awesome-rails"
 
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem "turbolinks", "~> 5"
@@ -77,6 +77,16 @@ gem "sinatra"
 
 #session 管理
 gem "redis-rails"
+
+#バッチの定期処理 cron
+gem "whenever", require: false
+
+# pageing
+gem "kaminari"
+gem "kaminari-bootstrap"
+
+# detect browser
+gem "browser", "~> 2.2.0"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -116,6 +126,8 @@ group :development do
   gem "capistrano-nginx"
   gem "capistrano-sidekiq"
   gem "capistrano-nodenv", "~> 1.0", ">= 1.0.1"
+  # メールをブラウザで確認　
+  #gem "letter_opener"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

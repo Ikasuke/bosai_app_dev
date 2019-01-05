@@ -1,0 +1,14 @@
+<h3>防災ストッカーからのお知らせ</h3>
+
+ <% delta_t = ((@item.item_expiry - Time.now) / (3600 * 24)).ceil %>
+<% if delta_t == 0 then %>
+ <p> <%= @item.created_at.strftime('%Y年%m月%d日') %>に登録された<%= @item.item_name %>が本日期限となります。 <p>
+<% else %>
+<p><%= @item.created_at.strftime('%Y年%m月%d日') %>に登録された<%= @item.item_name %>が<%= @item.item_expiry.strftime('%Y年%m月%d日')%>に期限を迎えます。</p>
+<p> 残り  <%= delta_t %> 日 <p>
+<% end %> 
+
+
+
+
+<p> <%= "詳細はこちら" %>

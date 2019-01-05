@@ -67,6 +67,7 @@ Rails.application.configure do
   }
 
   # Action mailer
+  config.action_mailer.raise_delivery_errors = true  #メール送信失敗のときに発火する
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     address: "smtp.gmail.com",
