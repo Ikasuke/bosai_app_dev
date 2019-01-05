@@ -1,7 +1,7 @@
 # encoding: utf-8
 class ItemsController < ApplicationController
   before_action :set_item, only: [:edit, :update, :destroy, :show]
-
+  before_action :detect_browser
   PER = 10
 
   def show #他人のも観れる
@@ -44,6 +44,13 @@ class ItemsController < ApplicationController
         @i_error_messages = params[:i_error_messages]   # エラーのメッセージ
         @i_error_details = params[:i_error_details]     #エラーが表示された部分が格納
       end
+      if @item.item_expiry.nil?
+        @expiry_d = [Date.today.strftime("%Y").to_i, Date.today.strftime("%m").to_i, Date.today.strftime("%d").to_i]
+      else
+        @e_check = "check_ok"
+        @expiry_d = [@item.item_expiry.strftime("%Y").to_i, @item.item_expiry.strftime("%m").to_i, @item.item_expiry.strftime("%d").to_i]
+      end
+
       render :layout => "item_new.html.erb"
     else
       redirect_to item_url     #自分のじゃないので、showへ
@@ -53,6 +60,17 @@ class ItemsController < ApplicationController
   def create
     @item = Item.new(item_params)
     @item.user_id = current_user.id
+    # smart用の処理
+    if params[:expiry_check].nil?
+      #普通
+    else # smart用
+      if params[:expiry_check]["check_val"] == "0"
+      else
+        expiry_string = params[:item]["expiry_parts(1i)"].to_s + "/" + params[:item]["expiry_parts(2i)"].to_s + "/" + params[:item]["expiry_parts(3i)"].to_s
+        item_expiry = expiry_string.to_datetime
+        @item.item_expiry = item_expiry
+      end
+    end
     respond_to do |format|
       if @item.save
         format.html { redirect_to home_url, notice: "防災アイテムを正常に登録できました" }
@@ -65,6 +83,18 @@ class ItemsController < ApplicationController
   end # create end
 
   def update
+    # smart用の処理
+    if params[:expiry_check].nil?
+      #普通
+    else # smart用
+      if params[:expiry_check]["check_val"] == "0"
+        @item.item_expiry = nil
+      else
+        expiry_string = params[:item]["expiry_parts(1i)"].to_s + "/" + params[:item]["expiry_parts(2i)"].to_s + "/" + params[:item]["expiry_parts(3i)"].to_s
+        item_expiry = expiry_string.to_datetime
+        @item.item_expiry = item_expiry  ##expiryの更新部分
+      end
+    end
     respond_to do |format|
       if @item.update(item_params)
         format.html { redirect_to home_url, notice: " アップデートできました" }
@@ -143,5 +173,11 @@ class ItemsController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def item_params
     params.require(:item).permit(:item_name, :picture, :item_volume, :item_expiry, :item_public_memo, :item_private_memo, :item_open_flag, :category_id)
+  end
+
+  def detect_browser
+    if browser.device.mobile? #browser.chrome?
+      request.variant = :smart
+    end
   end
 end # class end

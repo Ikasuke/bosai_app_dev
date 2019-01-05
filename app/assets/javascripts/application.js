@@ -26,7 +26,7 @@
 
 
    $(document).on('turbolinks:load', function () {
-    $('#datetimepicker1').datetimepicker({
+    $('#datetimepicker1').datetimepicker({       
         dayViewHeaderFormat: 'YYYY年 MMMM',
         tooltips: {
             close: '閉じる',
