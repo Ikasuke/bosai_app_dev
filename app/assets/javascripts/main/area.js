@@ -20,7 +20,7 @@ $(document).on('turbolinks:load', function () {
 
     // 都道府県を選択してから地域が選択できるように処理
       // user_area1がセレクトされると発火
-    $('#user_area1').on('change',function(e){  
+    $('#user_area1').on('change',function(e){ 
         $('#user_area2').empty();  // セレクトボックスをからにする　そうしないと発火するごとにセレクトボックスの中身が追加される
           var index = e.target.selectedOptions[0].id.slice(6);  // jsonに格納されているハッシュの番号が出てくる
           var area1 = e.target.value; // user_area1で選択した値 つまり選択した都道府県 
@@ -57,7 +57,7 @@ $(document).on('turbolinks:load', function () {
     });
 
     // 都道府県を選択してから地域が選択できるように処理
-      // user_area1がセレクトされると発火
+      // area1がセレクトされると発火
     $('#area1').on('change',function(e){  
         $('#area2').empty();  // セレクトボックスをからにする　そうしないと発火するごとにセレクトボックスの中身が追加される
           var index = e.target.selectedOptions[0].id.slice(6);  // jsonに格納されているハッシュの番号が出てくる

@@ -1,6 +1,5 @@
 # encoding: utf-8
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: users
@@ -35,6 +34,7 @@
 #  area1                  :string(255)      default(""), not null
 #  area2                  :string(255)
 #  family                 :string(255)
+#  profile                :text(65535)
 #
 
 class User < ApplicationRecord
@@ -51,14 +51,27 @@ class User < ApplicationRecord
 
   ## validation
   validates_attachment_content_type :avatar, content_type: ["image/jpeg", "image/gif", "image/png"]
-  # nameは存在していること、ユニークであること、ローマ字であること、Eメールと名前が同一でないこと
-  validates :name, presence: true, uniqueness: {case_sensitive: false} # 大文字小文字の差を無視して同一を禁止
+  # nameは存在していること、ユニークであること、ローマ字であること、Eメールと名前が同一でないこと、25文字以内であること
+  validates :name, presence: true, uniqueness: {case_sensitive: false}, length: {maximum: 25} # 大文字小文字の差を無視して同一を禁止
   validates_format_of :name, with: /^[a-zA-Z0-9_¥.]*$/, multiline: true
   validate :validate_name
-  # emailは存在していること、ユニークであること
-  validates :email, presence: true, uniqueness: true
+  # emailは存在していること、ユニークであること  config/initializers/devise.rb に (config.email_regexp = /\A[^@\s]+@[^@\s]+\z/)が書いてある
+  validates :email,
+            presence: true,
+            uniqueness: true,
+            length: {maximum: 255, too_log: "長すぎます"}
   # passwordは6文字以上であること
-  validates :encrypted_password, length: {minimum: 6}
+  #=>config/initializers/devise.rb に書いてある
+  # public_nameはユニークであること　30文字以内であること
+  validates :public_name,
+            uniqueness: true,
+            length: {maximum: 30, too_log: "長すぎます。ニックネーム"}
+  # familyは100文字以内であること
+  validates :family,
+            length: {maximum: 100, too_log: "長すぎます。家族構成"}
+  # profileは5000文字以内であること
+  validates :profile,
+            length: {maximum: 5000, too_log: "長すぎます。自己紹介"}
 
   def validate_name
     errors.add(:name, :invalid) if User.where(email: name).exists?

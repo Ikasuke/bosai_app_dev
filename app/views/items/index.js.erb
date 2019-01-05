@@ -1,0 +1,23 @@
+
+<% if params[:tab] == "tab1" %>
+     $("#reading_table_tab1").html( "<%= escape_javascript(render partial: 'reading_table', locals: {items: @items, like_hash: @like_hash, tab: "tab1"}) %>" );
+     $(".reading_table_tab1_pagenate").html( "&emsp;&emsp;<%= escape_javascript(paginate @items,params: {:tab => "tab1"}, :remote => true) %>" );
+<% end %>
+<% if params[:tab] == "tab2" %>
+    $("#reading_table_tab2").html( "<%= escape_javascript(render partial: 'reading_table', locals: {items: @items, like_hash: @like_hash, tab: "tab2"}) %>" );
+    $(".reading_table_tab2_pagenate").html( "&emsp;&emsp;<%= escape_javascript(paginate @items,params: {:tab => "tab2"}, :remote => true) %>" );
+<% end %>
+<% if params[:tab] == "tab3" %>
+    $("#reading_table_tab3").html( "<%= escape_javascript(render partial: 'reading_table', locals: {items: @items_like, like_hash: @like_hash, tab: "tab3"}) %>" );
+    $(".reading_table_tab3_pagenate").html( "&emsp;&emsp;<%= escape_javascript( paginate @items_like,params: {:tab => "tab3"}, :remote => true) %>" );
+<% end %>
+
+  // comments_box部を　呼び出す　
+$('.comments_box').each(function(i,elem){
+        $.get('comments.html', {
+            item_id: elem.id.slice(18), tab: elem.id.slice(0,4)
+            }, function(data){
+            elem.innerHTML = data
+        });
+    }); // each   
+

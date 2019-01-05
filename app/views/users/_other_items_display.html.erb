@@ -1,0 +1,17 @@
+ <% items_array.each_with_index do |items,i| %>
+       <% if items.nil? %>
+       <% else%>
+         <div class="row" >
+            <label class="control-label">▪️<%= categories[i].category_name %> </label>
+         </div>  <!-- row category名 -->
+         <br>
+         <div class="row other_items_<%= categories[i].id %>">
+                <%= render partial: 'other_items', locals: {items: items} %> 
+         </div>   <!-- row item -->
+      <% end %>  <!-- if end -->
+       <div class = "row other_items_<%= categories[i].id %>_paginate">
+           &emsp;&emsp;<%= paginate items, params: {:category_id => categories[i].id}, :remote => true %>
+                   </div> 
+            
+ <% end %> 
+ 

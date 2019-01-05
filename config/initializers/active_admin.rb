@@ -1,3 +1,4 @@
+# encoding: utf-8
 # frozen_string_literal: true
 
 ActiveAdmin.setup do |config|
@@ -6,7 +7,7 @@ ActiveAdmin.setup do |config|
   # Set the title that is displayed on the main layout
   # for each of the active admin pages.
   #
-  config.site_title = 'Bosai App Dev'
+  config.site_title = "防災ストッカー"
 
   # Set the link url for the title. For example, to take
   # users to your main site. Defaults to no link.
@@ -296,8 +297,8 @@ ActiveAdmin.setup do |config|
   config.comments = false
 
   config.clear_stylesheets!
-  config.register_stylesheet 'admin/active_admin.css'
+  config.register_stylesheet "admin/active_admin.css"
 
   config.clear_javascripts!
-  config.register_javascript 'admin/active_admin.js'
+  config.register_javascript "admin/active_admin.js"
 end

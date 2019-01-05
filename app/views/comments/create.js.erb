@@ -2,11 +2,15 @@
         var item_id = "<%= @comment.item.id %>";
         var tab = "<%= @commit_name%>".slice(0,4);
         var box_id = tab + "_comments_box_" + item_id
-    
+      <% if @comment.errors.nil? %>
+       
+      <% else %>
+       var c_errors_messages = "<%= @comment.errors.messages[:comment_detail][0] %>";
+      <% end %>
         console.log(box_id);
-  
+        console.log(c_errors_messages);
          $.get('/comments.html', {
-            item_id: item_id, tab: tab
+            item_id: item_id, tab: tab, c_errors_messages: c_errors_messages
             }, function(data){
             document.getElementById(box_id).innerHTML = data
         });

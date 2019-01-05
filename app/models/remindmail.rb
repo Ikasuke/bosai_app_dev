@@ -12,6 +12,11 @@
 #
 
 class Remindmail < ApplicationRecord
+  ##validation
+  # remind_email は空でないこと mailの形式であること 一人５個まで=>controllerで表現
+  VALID_EMAIL_REGEX = /\A[^@\s]+@[^@\s]+\z/
+  validates :remind_email, presence: true,
+                           format: {with: VALID_EMAIL_REGEX}
   # #リレーション
   # user
   belongs_to :user

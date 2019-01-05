@@ -18,10 +18,17 @@
 @import "bootstrap";
 @import "tempusdominus-bootstrap-4.css";
 
-
+/*  headerの tab    */
 #service{
    width: 1000px;
    text-align: center;
+   table-layout: fixed;
+}
+
+#service_no_login{
+  width: 600px;
+  text-align: center;
+  table-layout: fixed;
 }
 
 #left{

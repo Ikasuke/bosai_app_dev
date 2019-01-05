@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   get "adminhome", to: "home#adminhome"
   get "user/area", to: "users#area"
   get "info", to: "info#index"
+  get "start_info", to: "start#start_info"
   ## user model
   get "user/profile", to: "users#profile"
   resources :users
@@ -28,7 +29,6 @@ Rails.application.routes.draw do
 
   ##item model
   resources :items
-  post "item/reading_table", to: "items#reading_table"  #グッズ検索でコントローラに検索params(:search)をコントローラへ送る
 
   ##category model
   resources :categories
@@ -41,7 +41,6 @@ Rails.application.routes.draw do
 
   ##murmur model
   resources :murmurs
-  post "murmur/region", to: "murmurs#region"
 
   ##favorite model
   resources :favorites

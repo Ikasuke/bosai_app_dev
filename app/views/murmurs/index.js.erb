@@ -1,0 +1,15 @@
+
+<% if params[:tab] == "tab1" %>
+     $("#region_search_tab1").html( "<%= escape_javascript(render partial: 'region_search', locals: {allusers: @allusers, max_items: @max_items, favorite_hash: @favorite_hash, tab: "tab1", new_murmurs: @new_murmurs}) %>" );
+     $(".region_search_tab1_pagenate").html( "&emsp;&emsp;<%= escape_javascript(paginate @allusers,params: {:tab => "tab1"}, :remote => true) %>" );
+<% end %>
+
+<% if params[:tab] == "tab2" %>
+     $("#region_search_tab2").html( "<%= escape_javascript(render partial: 'region_search', locals: {allusers: @favorite_users, max_items: @max_items, favorite_hash: @favorite_hash, tab: "tab2", new_murmurs: @new_murmurs}) %>" );
+     $(".region_search_tab2_pagenate").html( "&emsp;&emsp;<%= escape_javascript(paginate @favorite_users,params: {:tab => "tab2"}, :remote => true) %>" );
+<% end %>
+
+<% if params[:tab] == "tab3" %>
+     $("#region_search_tab3").html( "<%= escape_javascript(render partial: 'tab3', locals: {murmurs: @murmurs, tab: "tab3"}) %>" );
+     $(".region_search_tab3_pagenate").html( "&emsp;&emsp;<%= escape_javascript(paginate @murmurs,params: {:tab => "tab3"}, :remote => true) %>" );
+<% end %>
