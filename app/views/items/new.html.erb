@@ -3,53 +3,55 @@
 <%= form_with model: Item.new do |form|%>    
  <div class="row">
      <div class="col-md-3">
-<!--name-->    
-   <br>
+       <br>
+<!-- category-->
+   <table class="table table-borderless">   
+        <tr>
+          <td>大分類</td>
+          <td>
+           
+             &emsp;
+            <span class="water" id="1_<%= @subcategories.to_json %>" >  <!-- アイコン表示 jqueryでクリックされるとfiel_fieldに入る -->
+                           <i class="water_icon fa fa-tint fa-2x"  id ="<%= @subcategories[1].to_json %>" style="color:#e0e0ff;"></i>
+                       </span>&emsp;
+            <span class="food" id="2_<%= @subcategories.to_json %>">  <!-- アイコン表示 jqueryでクリックされるとfiel_fieldに入る -->
+                          <i class="fa fa-cutlery fa-2x"  id ="<%= @subcategories[2].to_json %>" style="color:#e0e0e0;"></i>
+             </span>&emsp;
+            <span class="goods" id="3_<%= @subcategories.to_json %>">  <!-- アイコン表示 jqueryでクリックされるとfiel_fieldに入る -->
+                          <i class="fa fa-home fa-2x"  id ="<%= @subcategories[3].to_json %>" style="color:#fff080;"></i>
+             </span>&emsp;
+               </td>
+        </tr>
+
+<!-- subcategory-->
+        <tr>
+           <div id="subcategory_display" style="display:none;" >
+           <td>小分類</td>
+           <td> 
+          <%= form.select :subcategory_id,[],{:prompt => "選択してください"}, {:class => "btn category_tab"}%>
+          </td>
+           </div>
+        </tr>
+      
+<!--name-->   
+    <tr><td>名前</td>
+      <td> 
        <div class="field">
         <% if @i_error_details.key?(:item_name) %>
           <div class ="error_state">
             名前<%= @i_error_messages[:item_name][0]%>
           </div>
-          <%= form.label :"名前" %>
+         
           <%= form.text_field :item_name,  style: "background-color: #ffA0A0;" %>
         <% else %>
-          <%= form.label :"名前" %>
+        
           <%= form.text_field :item_name%>
         <% end %>
        </div>  <!-- field box_name-->
-<!-- picture-->       
-          <div class = "preview col-md-10 col-sm-10 col-xs-6">
-             <%= image_tag '/noimage.jpg' ,class:"card-img-top" %>
-          </div>
-        
-          <div class = "form-group">
-               <%= form.label :画像を選択 %><br />
-              <%= form.file_field :picture, class: 'form_pic' %>
-          </div>  <!-- form-group -->
-     </div>  <!-- col-md-3-->
-     <div class="col-md-4">
-　    <table class="table table-borderless">   
-<!-- 登録日 -->      
-        <tr>
-          <td>登録日</td>
-          <td> <%= Time.now.strftime('%Y年%m月%d日') %>(本日)</td>
-        </tr>
-<!-- category-->
-        <tr>
-          <td>カテゴリー</td>
-          <td>
-            <% if @i_error_details.key?(:category_id) %>
-              <div class ="error_state">
-                カテゴリー<%= @i_error_messages[:category_id][0]%>
-              </div>
-              <%= form.select :category_id, @category_selects,{:prompt => "category?"}, {:class => "btn category_tab"}%>
-            <%else%>
-              <%= form.select :category_id, @category_selects,{:prompt => "category?"}, {:class => "btn category_tab"}%>
-            <% end %>
-          </td>
-        </tr>
-<!--数量--> 
-      
+       </td>
+       </tr>
+       <!--数量--> 
+  
          <tr>
           <td>  <%= form.label :"数量" %></td>
           <td>
@@ -68,7 +70,8 @@
             <% end %>
           </td>
          </tr>
-<!--期限-->
+         <!--期限-->
+         
         <tr>
           <td>期限</td>
           <td>
@@ -83,6 +86,28 @@
                     </div>
           </td>
         </tr>
+      </table>
+    </div>  <!-- col-md-3-->
+    <br>
+     <div class="col-md-4">
+　    <table class="table table-borderless">   
+<!-- 登録日 -->      
+        <tr>
+          <td>登録日</td>
+          <td> <%= Time.now.strftime('%Y年%m月%d日') %>(本日)</td>
+        </tr>
+<!-- picture--> 
+        <tr><td></td>
+        <td>
+          <div class = "preview ">
+             <%= image_tag '/noimage.jpg' ,class:"card-img-top" %>
+          </div>
+          <div class = "form-group">
+               <%= form.label :画像を選択 %><br />
+              <%= form.file_field :picture, class: 'form_pic' %>
+          </div>  <!-- form-group -->
+          </td>
+         </tr>
       </table>
      </div>  <!-- col-md-4 -->
      <div class="col-md-5">

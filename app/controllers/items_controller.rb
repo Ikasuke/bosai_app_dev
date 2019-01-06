@@ -10,6 +10,7 @@ class ItemsController < ApplicationController
 
   def new
     ## @categoresを準備
+
     categories = Category.all
     category_selects = Array.new()      # 空
     categories.each do |category|
@@ -17,6 +18,16 @@ class ItemsController < ApplicationController
       category_selects.push(category_select)
     end
     @category_selects = category_selects
+
+    @subcategories = {}
+
+    categories.each do |category|
+      @subcate = Array.new()
+      category.subcategories.each do |sub_c|
+        @subcate.push([sub_c.subcategory_name, sub_c.id])
+      end
+      @subcategories.store(category.id, @subcate)
+    end
     @volume_selects = Array.new()
     101.times do |t|
       @volume_selects.push("#{t}")
@@ -64,6 +75,7 @@ class ItemsController < ApplicationController
   def create
     @item = Item.new(item_params)
     @item.user_id = current_user.id
+    @item.category_id = Subcategory.find(params[:item]["subcategory_id"]).category.id
     # smart用の処理
     if params[:expiry_check].nil?
       #普通
@@ -176,7 +188,7 @@ class ItemsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def item_params
-    params.require(:item).permit(:item_name, :picture, :item_volume, :item_expiry, :item_public_memo, :item_private_memo, :item_open_flag, :category_id)
+    params.require(:item).permit(:item_name, :picture, :item_volume, :item_expiry, :item_public_memo, :item_private_memo, :item_open_flag, :category_id, :subcategory_id)
   end
 
   def detect_browser
