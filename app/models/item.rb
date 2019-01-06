@@ -51,6 +51,8 @@ class Item < ApplicationRecord
   belongs_to :user
   # category
   belongs_to :category
+  # subcategory
+  belongs_to :subcategory
   # comments
   has_many :comments, dependent: :destroy
   # likeitems

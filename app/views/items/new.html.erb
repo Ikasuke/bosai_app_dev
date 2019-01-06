@@ -58,11 +58,12 @@
                 数量<%= @i_error_messages[:item_volume][0]%>
               </div>
               <div class="field">
-                <%= form.text_field :item_volume, style: "background-color: #ffA0A0;"%>
+                <%= form.select :item_volume, @volume_selects,{:prompt => "数量を選択して下さい"}, {:class => "btn category_tab"},style: "background-color: #ffA0A0;"%>
+          
               </div>
             <% else %>
                <div class="field">
-                <%= form.text_field :item_volume%>
+               <%= form.select :item_volume, @volume_selects,{:prompt => "数量を選択して下さい"}, {:class => "btn category_tab"}%>
               </div>
             <% end %>
           </td>

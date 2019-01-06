@@ -10,10 +10,10 @@
 #  category_name :string(255)      default(""), not null
 #
 
-class Category < ApplicationRecord
+class Subcategory < ApplicationRecord
   # #リレーション
   # items
   has_many :items, dependent: :destroy
-  # subcategories
-  has_many :subcategories, dependent: :destroy
+  #category
+  belongs_to :category
 end

@@ -17,6 +17,10 @@ class ItemsController < ApplicationController
       category_selects.push(category_select)
     end
     @category_selects = category_selects
+    @volume_selects = Array.new()
+    101.times do |t|
+      @volume_selects.push("#{t}")
+    end
     if params[:i_error_messages].nil?
       @i_error_details = {key: "no_error"}   #ダミーのkeyとvalueを入れておく エラー防止
     else
