@@ -1,13 +1,13 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
-# Table name: categories
+# Table name: subcategories
 #
-#  id            :bigint(8)        not null, primary key
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  category_name :string(255)      default(""), not null
+#  id               :bigint(8)        not null, primary key
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  subcategory_name :string(255)      default(""), not null
+#  category_id      :bigint(8)
 #
 
 class Subcategory < ApplicationRecord

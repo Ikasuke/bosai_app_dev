@@ -1,17 +1,54 @@
 $(document).on('turbolinks:load', function () {
     
+///////  edit 用処理　最初のカテゴリー表示 /////    
+ var category_id = $(".category_id").val();  // editの場合に使用　元々のcategory_idを格納
+ if(category_id ==1){   //waterを選択している
+    $('#category_display').html("水・飲料");
+        document.getElementById("category_display").style.display = "block";   //大項目を表示する
+        document.getElementsByClassName("water_icon")[0].style.color = "#4080ff";   // 大項目1を濃くする
+        document.getElementsByClassName("food_icon")[0].style.color = "#e0e0e0";         //大項目2を薄くする  
+        document.getElementsByClassName("goods_icon")[0].style.color = "#fff080";         //大項目3を薄くする  
+        //大項目１に準じた小項目をだす
+        var data = JSON.parse($(".water_icon")[0].id);
+      for(var i = 0; i < data.length; i++){    
+        $('#item_subcategory_id').append("<option value=" +data[i][1] + " >" +data[i][0]+  "</option>");  //都道府県を表示させる 
+       }
+ }
+  if(category_id ==2){
+    $('#category_display').html("食料品");
+    document.getElementById("category_display").style.display = "block";   //大項目を表示する
+    document.getElementsByClassName("food_icon")[0].style.color = "#808080";    //大項目2を濃くする 
+    document.getElementsByClassName("water_icon")[0].style.color = "#e0e0ff";         //大項目1を薄くする  
+    document.getElementsByClassName("goods_icon")[0].style.color = "#fff080";         //大項目3を薄くする
+     //大項目2に準じた小項目をだす
+    var data = JSON.parse($(".food_icon")[0].id);
+    for(var i = 0; i < data.length; i++){ 
+      $('#item_subcategory_id').append("<option value=" +data[i][1] + " >" +data[i][0]+  "</option>");  //都道府県を表示させる 
+  }
   
+   }
+  if(category_id ==3){
+        $('#category_display').html("防災グッズ");
+        document.getElementById("category_display").style.display = "block";   //大項目を表示する
+        document.getElementsByClassName("goods_icon")[0].style.color = "#f8c10e";        //大項目3を濃くする
+        document.getElementsByClassName("water_icon")[0].style.color = "#e0e0ff";         //大項目1を薄くする  
+        document.getElementsByClassName("food_icon")[0].style.color = "#e0e0e0";         //大項目2を薄くする 
+        //大項目３に準じた小項目をだす
+        var data = JSON.parse($(".goods_icon")[0].id);
+        for(var i = 0; i < data.length; i++){   
+          $('#item_subcategory_id').append("<option value=" +data[i][1] + " >" +data[i][0]+  "</option>");  //都道府県を表示させる 
+      }
+   }
 
+
+///// new & edit 大項目をクリックした場合の処理 //////   
     $('.water').on('click',function(e){ 
-        console.log("water");
-        var alldata = JSON.parse(e.currentTarget.id.slice(2)); //  選択していないid取得のためにデータを取得
-        var data2 =JSON.stringify(alldata[2]);    // 大項目２のid
-        var data3 = JSON.stringify(alldata[3]);   // 大項目3のid
         $('#item_subcategory_id').empty();  // 小項目のセレクトボックスを空にする
-        document.getElementById("subcategory_display").style.display = "block";   //小項目セレクトボックスを表示する
-        document.getElementById(e.target.id).style.color = "#4080ff";   // 大項目1を濃くする
-        document.getElementById(data2).style.color = "#e0e0e0";         //大項目2を薄くする  
-        document.getElementById(data3).style.color = "#fff080";         //大項目3を薄くする  
+        $('#category_display').html("水・飲料");
+        document.getElementById("category_display").style.display = "block";   //大項目を表示する
+        document.getElementsByClassName("water_icon")[0].style.color = "#4080ff";   // 大項目1を濃くする
+        document.getElementsByClassName("food_icon")[0].style.color = "#e0e0e0";         //大項目2を薄くする  
+        document.getElementsByClassName("goods_icon")[0].style.color = "#fff080";         //大項目3を薄くする  
         //大項目１に準じた小項目をだす
       var data = JSON.parse(e.target.id);
       for(var i = 0; i < data.length; i++){    
@@ -19,16 +56,13 @@ $(document).on('turbolinks:load', function () {
     }
 
     });
-    　  $('.food').on('click',function(e){ 
-        console.log("food");
-        var alldata = JSON.parse(e.currentTarget.id.slice(2)); //  選択していないid取得のためにデータを取得
-        var data1 =JSON.stringify(alldata[1]);    // 大項目1のid
-        var data3 = JSON.stringify(alldata[3]);   // 大項目3のid
+    $('.food').on('click',function(e){ 
         $('#item_subcategory_id').empty();
-        document.getElementById("subcategory_display").style.display = "block";   //小項目セレクトボックスを表示する
-        document.getElementById(e.target.id).style.color = "#808080";    //大項目2を濃くする 
-        document.getElementById(data1).style.color = "#e0e0ff";         //大項目1を薄くする  
-        document.getElementById(data3).style.color = "#fff080";         //大項目3を薄くする
+        $('#category_display').html("食料品");
+        document.getElementById("category_display").style.display = "block";   //大項目を表示する
+        document.getElementsByClassName("food_icon")[0].style.color = "#808080";    //大項目2を濃くする 
+        document.getElementsByClassName("water_icon")[0].style.color = "#e0e0ff";         //大項目1を薄くする  
+        document.getElementsByClassName("goods_icon")[0].style.color = "#fff080";         //大項目3を薄くする
          //大項目2に準じた小項目をだす
         var data = JSON.parse(e.target.id);
         for(var i = 0; i < data.length; i++){ 
@@ -36,16 +70,13 @@ $(document).on('turbolinks:load', function () {
       }
    
        }); 
-       　  $('.goods').on('click',function(e){ 
-        console.log("goods");
-        var alldata = JSON.parse(e.currentTarget.id.slice(2)); //  選択していないid取得のためにデータを取得
-        var data1 =JSON.stringify(alldata[1]);    // 大項目1のid
-        var data2 = JSON.stringify(alldata[2]);   // 大項目2のid
+    $('.goods').on('click',function(e){ 
         $('#item_subcategory_id').empty();
-        document.getElementById("subcategory_display").style.display = "block";   //小項目セレクトボックスを表示する
-        document.getElementById(e.target.id).style.color = "#f8c10e";        //大項目3を濃くする
-        document.getElementById(data1).style.color = "#e0e0ff";         //大項目1を薄くする  
-        document.getElementById(data2).style.color = "#e0e0e0";         //大項目2を薄くする 
+        $('#category_display').html("防災グッズ");
+        document.getElementById("category_display").style.display = "block";   //大項目を表示する
+        document.getElementsByClassName("goods_icon")[0].style.color = "#f8c10e";        //大項目3を濃くする
+        document.getElementsByClassName("water_icon")[0].style.color = "#e0e0ff";         //大項目1を薄くする  
+        document.getElementsByClassName("food_icon")[0].style.color = "#e0e0e0";         //大項目2を薄くする 
         //大項目３に準じた小項目をだす
         var data = JSON.parse(e.target.id);
         for(var i = 0; i < data.length; i++){   

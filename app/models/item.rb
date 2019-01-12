@@ -19,6 +19,7 @@
 #  picture_content_type :string(255)
 #  picture_file_size    :integer
 #  picture_updated_at   :datetime
+#  subcategory_id       :bigint(8)
 #
 
 class Item < ApplicationRecord
