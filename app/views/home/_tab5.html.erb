@@ -4,39 +4,39 @@
       <div class="row" >
           <label class="control-label">▪️期限切れ </label>
       </div>  <!-- row  -->
-       <div class="row tab3_dead_0">
+       <div class="row tab5_dead_0">
               <%= render partial: 'items', locals: {items: items_expiry_array[0]} %> 
        </div>  <!-- row -->
-       <div class = "row tab3_dead_0_paginate">
-           &emsp;&emsp;<%= paginate items_expiry_array[0], params: {:tab => "tab3",:dead => 0}, :remote => true %>
+       <div class = "row tab5_dead_0_paginate">
+           &emsp;&emsp;<%= paginate items_expiry_array[0], params: {:tab => "tab5",:dead => 0}, :remote => true %>
        </div> 
 <!--7日以内 -->      
       <div class="row" >
           <label class="control-label">▪️1週間以内 </label>
       </div>  <!-- row  -->
-      <div class="row tab3_dead_1">
+      <div class="row tab5_dead_1">
             <%= render partial: 'items', locals: {items: items_expiry_array[1]} %> 
        </div>  <!-- row --> 
-       <div class = "row tab3_dead_1_paginate">
-           &emsp;&emsp;<%= paginate items_expiry_array[1], params: {:tab => "tab3",:dead => 1}, :remote => true %>
+       <div class = "row tab5_dead_1_paginate">
+           &emsp;&emsp;<%= paginate items_expiry_array[1], params: {:tab => "tab5",:dead => 1}, :remote => true %>
        </div> 
 <!--1ヶ月以内 -->      
       <div class="row" >
           <label class="control-label">▪️1ヵ月以内 </label>
       </div>  <!-- row  -->
-      <div class="row tab3_dead_2">
+      <div class="row tab5_dead_2">
            <%= render partial: 'items', locals: {items: items_expiry_array[2]} %> 
        </div>  <!-- row --> 
-       <div class = "row tab3_dead_2_paginate">
-           &emsp;&emsp;<%= paginate items_expiry_array[2], params: {:tab => "tab3",:dead => 2}, :remote => true %>
+       <div class = "row tab5_dead_2_paginate">
+           &emsp;&emsp;<%= paginate items_expiry_array[2], params: {:tab => "tab5",:dead => 2}, :remote => true %>
        </div> 
 <!--3ヶ月以内 -->      
       <div class="row" >
           <label class="control-label">▪️3ヵ月以内 </label>
       </div>  <!-- row  -->
-      <div class="row tab3_dead_3">
+      <div class="row tab5_dead_3">
             <%= render partial: 'items', locals: {items: items_expiry_array[3]} %> 
        </div>  <!-- row --> 
-       <div class = "row tab3_dead_3_paginate">
-           &emsp;&emsp;<%= paginate items_expiry_array[3], params: {:tab => "tab3",:dead => 3}, :remote => true %>
+       <div class = "row tab5_dead_3_paginate">
+           &emsp;&emsp;<%= paginate items_expiry_array[3], params: {:tab => "tab5",:dead => 3}, :remote => true %>
        </div> 

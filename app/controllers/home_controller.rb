@@ -7,7 +7,7 @@ class HomeController < ApplicationController
   # kaminari paging 一ページあたりの表示数
   PER = 8  # tab1
   PER_2 = 4  # tab2
-  PER_3 = 4  # tab3
+  PER_3 = 4  # tab5
 
   def index
     @user = current_user
@@ -24,24 +24,28 @@ class HomeController < ApplicationController
 
     ## カテゴリー別tab(tab2)
     @categories = Category.all
-    @items_array = Array.new()
+    @item_cate_sort = {}
 
-    if params[:tab] == "tab2" #この時、tab2のpaginateが押された
-      @categories.each do |category| #押されたpaginateのカテゴリだけpaginate
-        if params[:category_id] == "#{category.id}"
-          items_c = current_user.items.where(category_id: category.id).page(params[:page]).per(PER_2).neworder
-          @items_array.push(items_c)
-        end
-      end
-    else #tab2のpaginateが押されない (他のタブを見ている、tab2の最初の状態を見ている => 1ページ目)
+    if params[:tab] == "tab_category" #この時、tab2~4のpaginateが押された
+      @items_array = Array.new()
+      #押されたpaginateのカテゴリだけpaginate
+      items_subcate = current_user.items.where(subcategory_id: params[:subcategory_id].to_i).page(params[:page]).per(PER_2).neworder
+      @items_array.push(items_subcate) #押されたpaginateのsubcateogryのitemのみ格納
+    else #tab2~4のpaginateが押されない (他のタブを見ている、tab2=4の最初の状態を見ている => 1ページ目)
       @categories.each do |category|
-        items_c = current_user.items.where(category_id: category.id).page(1).per(PER_2).neworder
-        @items_array.push(items_c)
+        @items_array = Array.new()
+        @subcategories = category.subcategories
+        @subcategories.each do |subcategory|
+          items_subcate = current_user.items.where(subcategory_id: subcategory.id).page(1).per(PER_2).neworder
+          @items_array.push(items_subcate)
+        end
+        @item_cate_sort.store(category.id, @items_array)   #  {1(category)=>[[(sub1のitem)],[(sub2のitem)]..],2(category)=>[[sub3],[sbu4]..],.. }が作られる
       end
-    end
-    ##tab3
+    end  #if end
+
+    ##tab5
     @items_expiry_array = Array.new()
-    if params[:tab] == "tab3" #この時、tab3のpaginateが押された
+    if params[:tab] == "tab5" #この時、tab5のpaginateが押された
       if params[:dead] == "0"
         @items_expiry_array[0] = @user.items.deadline(nil, -1).page(params[:page]).per(PER_3).neworder
       end
@@ -54,13 +58,13 @@ class HomeController < ApplicationController
       if params[:dead] == "3"
         @items_expiry_array[3] = @user.items.deadline(31, 90).page(params[:page]).per(PER_3).neworder
       end
-    else #tab3のpaginateが押されない (他のタブを見ている、tab3の最初の状態を見ている => 1ページ目)
+    else #tab5のpaginateが押されない (他のタブを見ている、tab5の最初の状態を見ている => 1ページ目)
       @items_expiry_array[0] = @user.items.deadline(nil, -1).page(1).per(PER_3).neworder
       @items_expiry_array[1] = @user.items.deadline(0, 7).page(1).per(PER_3).neworder
       @items_expiry_array[2] = @user.items.deadline(8, 30).page(1).per(PER_3).neworder
       @items_expiry_array[3] = @user.items.deadline(31, 90).page(1).per(PER_3).neworder
     end
-    # tab4
+    # tab6
     @items_unread = current_user.items.unread.uniq
     # コメント未読数を表示させる
     @all_unread_counts = 0
