@@ -212,7 +212,7 @@ class ItemsController < ApplicationController
   end
 
   def detect_browser
-    if browser.device.mobile? #browser.chrome?
+    if browser.device.mobile? #browser.chrome? #
       request.variant = :smart
     end
   end

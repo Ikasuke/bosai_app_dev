@@ -43,8 +43,20 @@
              </div>
             <div class="col-lg-7 col-md-6 col-sm-6"> <!--説明部  -->
               <table class="table">
-                  <tr><td>グッズ名:</td><td><%= item.item_name %> </td></tr>
-                  <tr><td>カテゴリ:</td><td><%= item.category.category_name %> </td></tr>
+                  <tr><td>名前:</td><td><%= item.item_name %> </td></tr>
+                  <tr><td>大分類:</td>
+                      <td>
+                          <% if item.category.id == 1 %>
+                              <i class="fa fa-tint fa-2x" style="color:#4080ff;"></i>
+                          <% elsif item.category.id == 2 %>
+                              <i class="fa fa-cutlery fa-2x" style="color:#808080;"></i>
+                          <% elsif item.category.id == 3 %>
+                              <i class="fa fa-home fa-2x" style="color:#f8c10e;"></i>
+                          <% end %>
+                            <%= item.category.category_name %> 
+                      </td>
+                  </tr>
+                  <tr><td>小分類:</td><td><%= item.subcategory.subcategory_name %> </td></tr>
               </table>      
                   <dev class="public_memo_explain">
                       <%= simple_format(item.item_public_memo) %>
@@ -77,12 +89,15 @@
             </div> <!-- いいね数、コメント数　end-->
           </div> <!-- イイネボタン、いいね数、コメント数表示部のend-->
   <!-- コメント欄始まり-->        
+       <% if item.comments.blank? %>
+       <% else %>
            <div class="row"> <!--コメント欄 -->    
               <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"></div>  <!-- 空欄-->
               <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 comments_box" id="<%= tab %>_comments_box_<%= item.id %>" >
               <!-- comment/index をjs で呼び出して表示  -->
               </div>   
            </div> <!-- row-->
+       <% end %>
   <!-- コメント欄終わり -->
           <br>
   <!-- コメント記入部始まり -->
@@ -96,14 +111,14 @@
                       <%= form.hidden_field :item_id, :value => item.id %>
                        <!-- picture-->       
                        <div class="img_field" onClick='$("#file_<%= item.id %>").click()' >  <!-- アイコン表示 jqueryでクリックされるとfiel_fieldに入る -->
-                           <i class="fa fa-image fa-2x"></i>
+                           <i class="fa fa-image fa-2x img_point"></i>
                        </div>
+                        <br>
                         <div class = "form-group">
                            <%= form.file_field :comment_picture, class: "item_#{item.id} form_pic_mc", style: "display:none;", id: "file_#{item.id}" %>
                         </div>  <!-- form-group -->
                         <div class="row">
                           <div class="col-lg-4 col-md-4 col-sm-4">
-                              <br>
                                <div id= "preview_<%= item.id %>">
                                   <%= image_tag '' ,class:"card-img-top" %>
                                </div>

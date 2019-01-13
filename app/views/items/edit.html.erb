@@ -107,7 +107,7 @@
            <div class="col-md-3"> 
             <p style="text-align:left; margin:0;"> &emsp;写真 </p>
 　           <div class="img_field" onClick="$('#file').click()" style="height:60px;" >  <!-- アイコン表示 jqueryでクリックされるとfiel_fieldに入る -->
-                   <i class="fa fa-image fa-3x"></i>
+                   <i class="fa fa-image fa-3x img_point"></i>
              </div>
            </div>
            <div class="col-md-4">
@@ -149,7 +149,7 @@
 </div>
 
 <%= form.submit "更新する", :class=>"btn btn-info" %>
-  <%= link_to 'Destroy', @item, method: :delete, data: { confirm: '削除します。よろしいですか?' }, class: 'btn red' %>
+  <%= link_to '削除する', @item, method: :delete, data: { confirm: '削除します。よろしいですか?' }, class: 'btn red' %>
   <%= link_to "戻る", home_path, class: 'btn btn-default gray' %>
 
 </div> <!--col-md-5 -->
