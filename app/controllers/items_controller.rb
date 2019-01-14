@@ -2,7 +2,7 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: [:edit, :update, :destroy, :show]
   before_action :detect_browser
-  PER = 10
+  PER = 4
 
   def show #他人のも観れる
     @like_hash = Likeitem.where(user_id: current_user.id).pluck(:id, :item_id).to_h
@@ -171,29 +171,67 @@ class ItemsController < ApplicationController
       category_selects.push(category_select)
     end
     @category_selects = category_selects
-    # # item情報 tab1=> params[:search] tab2=> params[:category_id]
+
+    @subcategories = {}
+
+    categories.each do |category|
+      @subcate = Array.new()
+      category.subcategories.each do |sub_c|
+        @subcate.push([sub_c.subcategory_name, sub_c.id])
+      end
+      @subcategories.store(category.id, @subcate)
+    end
+
+    # # item情報 tab1=> params[:category_id], params[:subcategory_id] tab2=> params[:category_id]
+    @select_subcategory = Array.new
     if params[:tab].nil?
-      @items = Item.search(params[:search]).page(params[:page]).per(PER).neworder
+      @items = Item.where(item_open_flag: 1).page(params[:page]).per(PER).neworder
+      @area1 = current_user.area1
+      @area2 = current_user.area2
+      @select_category_id = ""
     else
       if params[:tab] == "tab1"
-        @items = Item.search(params[:search]).page(params[:page]).per(PER).neworder
-      end
-      if params[:tab] == "tab2"
-        if params[:category_id].nil?
-          @items = Item.search(params[:search]).page(params[:page]).per(PER).neworder
-        else
-          @items = Item.where(category_id: params[:category_id]).where(item_open_flag: 1).page(params[:page]).per(PER).neworder
+        ### 地域検索
+        if params[:area1] == "全国" #area1が全国選択されている
+          @items = Item.where(item_open_flag: 1).page(params[:page]).per(PER).neworder
+          @area1 = params[:area1]
+          @area2 = "全地域"
+        else #area1が県を選択している
+          if params[:area2] == "全地域"
+            @items = Item.user_area1(params[:area1]).page(params[:page]).per(PER).neworder
+            @area1 = params[:area1]
+            @area2 = params[:area2]
+          else # area2が全地域以外
+            @items = Item.user_area1(params[:area1]).user_area2(params[:area2]).page(params[:page]).per(PER).neworder
+            @area1 = params[:area1]
+            @area2 = params[:area2]
+          end
+        end
+        ### カテゴリー検索
+        if params[:category_id].nil? # カテゴリは何も選択していない
+          @select_category_id = ""
+        else #何か選択した
+          if params[:subcategory_id].nil? # subcategoryが選択されていない
+            @items = @items.where(category_id: params[:category_id].to_i).where(item_open_flag: 1).page(params[:page]).per(PER).neworder
+            @select_category_id = params[:category_id]
+          elsif params[:subcategory_id].to_i == 0 # subcategoryが「全て」を選択した
+            @items = @items.where(category_id: params[:category_id].to_i).where(item_open_flag: 1).page(params[:page]).per(PER).neworder
+            @select_category_id = params[:category_id]
+            @select_subcategory = ["全て", "0"]
+          else
+            @items = @items.where(category_id: params[:category_id].to_i).where(subcategory_id: params[:subcategory_id].to_i).where(item_open_flag: 1).page(params[:page]).per(PER).neworder
+            @select_category_id = params[:category_id]
+            @select_subcategory = [Subcategory.find(params[:subcategory_id]).subcategory_name, params[:subcategory_id]]
+          end
         end
       end
     end
     @like_hash = Likeitem.where(user_id: current_user.id).pluck(:id, :item_id).to_h
-    ## いいねしたアイテムを表示する準備
-    if params[:tab] == "tab3"
-      @items_like = Item.like_item(current_user.id).page(params[:page]).per(PER).neworder
-    else
-      @items_like = Item.like_item(current_user.id).page(1).per(PER).neworder
-    end
-    respond_to do |format|   ## 一応jsを用意しているが、写真のプレビューが表示されない（jsが発火しない）ため全てlocalnにしてある
+    ## いいねしたアイテムを表示する準備 tab2
+
+    @items_like = Item.like_item(current_user.id).where(item_open_flag: 1).neworder
+
+    respond_to do |format| ## 一応jsを用意しているが、写真のプレビューが表示されない（jsが発火しない）ため全てlocalnにしてある
       format.html
       format.js
     end

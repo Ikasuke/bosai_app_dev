@@ -1,16 +1,13 @@
 // コメント投稿写真のプレビューが表示されない。(js.erbを使用するajaxにするとjsが発火しない問題)のためこちらは使用しない
-)
+
 <% if params[:tab] == "tab1" %>
      $("#reading_table_tab1").html( "<%= escape_javascript(render partial: 'reading_table', locals: {items: @items, like_hash: @like_hash, tab: "tab1"}) %>" );
      $(".reading_table_tab1_pagenate").html( "&emsp;&emsp;<%= escape_javascript(paginate @items,params: {:tab => "tab1"}, :remote => true) %>" );
 <% end %>
+
 <% if params[:tab] == "tab2" %>
-    $("#reading_table_tab2").html( "<%= escape_javascript(render partial: 'reading_table', locals: {items: @items, like_hash: @like_hash, tab: "tab2"}) %>" );
-    $(".reading_table_tab2_pagenate").html( "&emsp;&emsp;<%= escape_javascript(paginate @items,params: {:tab => "tab2"}, :remote => true) %>" );
-<% end %>
-<% if params[:tab] == "tab3" %>
-    $("#reading_table_tab3").html( "<%= escape_javascript(render partial: 'reading_table', locals: {items: @items_like, like_hash: @like_hash, tab: "tab3"}) %>" );
-    $(".reading_table_tab3_pagenate").html( "&emsp;&emsp;<%= escape_javascript( paginate @items_like,params: {:tab => "tab3"}, :remote => true) %>" );
+    $("#reading_table_tab2").html( "<%= escape_javascript(render partial: 'reading_table', locals: {items: @items_like, like_hash: @like_hash, tab: "tab2"}) %>" );
+    $(".reading_table_tab2_pagenate").html( "&emsp;&emsp;<%= escape_javascript( paginate @items_like,params: {:tab => "tab2"}, :remote => true) %>" );
 <% end %>
 
   // comments_box部を　呼び出す　

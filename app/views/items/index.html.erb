@@ -6,13 +6,10 @@
 <!-- タブボタン部分 -->
 <ul class="nav nav-tabs row">
         <li class="nav-item">
-          <a href="#tab1" class="nav-link active" data-toggle="tab">グッズから探す</a>
+          <a href="#tab1" class="nav-link active" data-toggle="tab">グッズを探す</a>
         </li>
         <li class="nav-item">
-          <a href="#tab2" class="nav-link" data-toggle="tab">カテゴリーから探す</a>
-        </li>
-        <li class="nav-item">
-          <a href="#tab3" class="nav-link" data-toggle="tab">いいねグッズ</a>
+          <a href="#tab2" class="nav-link" data-toggle="tab">いいねグッズ</a>
         </li>
       </ul>
 
@@ -21,9 +18,32 @@
 <div class="tab-content row">
     <div id="tab1" class="tab-pane active container">   
         <%= form_with(url: '/items',method: 'get',local: true) do |form|%>
+        <%= form.hidden_field :select_category_id, :value => @select_category_id , class: "select_category_id" %>
+          <div class = "form-group search">
+           <%= form.label :カテゴリから検索 %>
+             &emsp;
+            <span class="water_search" >  <!-- アイコン表示 jqueryでクリックされるとfiel_fieldに入る -->
+                           <i class="water_icon fa fa-tint fa-3x"  id ="<%= @subcategories[1].to_json %>" style="color:#e0e0ff;"></i>
+                       </span>&emsp;
+            <span class="food_search">  <!-- アイコン表示 jqueryでクリックされるとfiel_fieldに入る -->
+                          <i class="food_icon fa fa-cutlery fa-3x"  id ="<%= @subcategories[2].to_json %>" style="color:#e0e0e0;"></i>
+             </span>&emsp;
+            <span class="goods_search">  <!-- アイコン表示 jqueryでクリックされるとfiel_fieldに入る -->
+                          <i class="goods_icon fa fa-home fa-3x"  id ="<%= @subcategories[3].to_json %>" style="color:#fff080;"></i>
+             </span>&emsp;
+             <br><br>
+             <div id="category_display" style="display:none;" ></div>
+        <%= form.select :subcategory_id,[@select_subcategory],{}, {:class => "btn category_tab"}%>
+       <br>
         <div class = "form-group search">
-          <%= form.label :グッズを検索 %>
-          <%= form.text_field :search,class:'search_field' %>
+          <%= form.label :都道府県から検索 %>
+          <%= form.select :area1, [@area1],{} ,{ class: "form-control" }  %>
+        </div>
+　      <div class = "form-group search">
+          <%= form.label :詳細なエリアから検索 %>
+          <%= form.select :area2, [@area2],{} ,{ class: "form-control" }  %>
+        </div>
+
          <%= form.hidden_field :tab, :value => 'tab1' %>
       </div>
       <%= form.submit "検索", :class=>"btn btn-info" %>
@@ -37,34 +57,13 @@
    </div> <!-- tab1 -->
 
    <div id="tab2" class="tab-pane container">
-    <%= form_with(url: '/items',method: 'get',local: true) do |form|%>
-      <div class = "form-group search">
-        <%= form.label :カテゴリから検索 %>
-        <%= form.select :category_id, @category_selects,{:prompt => "category?"}, {:class => "btn category_tab"} %>
-        <%= form.hidden_field :tab, :value => 'tab2' %>
-    </div>
-    <%= form.submit "検索", :class=>"btn btn-info" %>
-    <% end %>
-    <div class="reading_table" id="reading_table_tab2">
-      <%= render partial: 'reading_table', locals: {items: @items, like_hash: @like_hash, tab: "tab2"} %>   <!-- 検索結果が表示される -->
-    </div>
-    <div class = "row reading_table_tab2_pagenate">
-           &emsp;&emsp;<%= paginate @items,params: {:tab => "tab2"}, :remote => false %>  <!-- trueにするとコメント画像の一時表示ができない（jsが発火しないため) -->
+       <p> いいねしたアイテムが表示されます </p>
+       <p> 表示されない場合は、ページを更新してください </p>
+        <div class="reading_table" id="reading_table_tab2">
+           <%= render partial: 'reading_table', locals: {items: @items_like, like_hash: @like_hash, tab: "tab2"} %>  
         </div>
 
    </div>  <!-- tab2 end-->
-   <div id="tab3" class="tab-pane container">
-       <p> いいねしたアイテムが表示されます </p>
-       <p> 表示されない場合は、ページを更新してください </p>
-        <div class="reading_table" id="reading_table_tab3">
-           <%= render partial: 'reading_table', locals: {items: @items_like, like_hash: @like_hash, tab: "tab3"} %>  
-        </div>
-        <div class = "row reading_table_tab3_pagenate">
-           &emsp;&emsp;<%= paginate @items_like,params: {:tab => "tab3"}, :remote => false  %> <!-- trueにするとコメント画像の一時表示ができない（jsが発火しないため) -->
-        </div>
-
-
-   </div>  <!-- tab3 end-->
   
 </div>  <!-- tab-content -->
 </div>  <!-- items container-->

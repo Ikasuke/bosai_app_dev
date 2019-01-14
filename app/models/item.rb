@@ -95,4 +95,12 @@ class Item < ApplicationRecord
   scope :like_item, -> user_id {
           joins(:likeitems).where("likeitems.user_id = ?", user_id).where(item_open_flag: 1)
         }
+  #scope userのarea1が特定のものを出す
+  scope :user_area1, -> area1 {
+          joins(:user).where("users.area1 = ?", area1).where(item_open_flag: 1)
+        }
+  #scope userのarea2が特定のものを出す
+  scope :user_area2, -> area2 {
+          joins(:user).where("users.area2 = ?", area2).where(item_open_flag: 1)
+        }
 end #class end
