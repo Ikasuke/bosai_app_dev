@@ -53,6 +53,9 @@ class UsersController < ApplicationController
   def area
   end
 
+  def area_city
+  end
+
   def show # カテゴリーごとに別れたアイテムを表示する
     @user = User.find(params[:id])
     ## カテゴリー
