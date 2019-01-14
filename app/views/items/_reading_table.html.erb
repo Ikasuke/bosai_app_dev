@@ -89,15 +89,12 @@
             </div> <!-- いいね数、コメント数　end-->
           </div> <!-- イイネボタン、いいね数、コメント数表示部のend-->
   <!-- コメント欄始まり-->        
-       <% if item.comments.blank? %>
-       <% else %>
            <div class="row"> <!--コメント欄 -->    
               <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"></div>  <!-- 空欄-->
               <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 comments_box" id="<%= tab %>_comments_box_<%= item.id %>" >
               <!-- comment/index をjs で呼び出して表示  -->
               </div>   
            </div> <!-- row-->
-       <% end %>
   <!-- コメント欄終わり -->
           <br>
   <!-- コメント記入部始まり -->
@@ -119,7 +116,7 @@
                         </div>  <!-- form-group -->
                         <div class="row">
                           <div class="col-lg-4 col-md-4 col-sm-4">
-                               <div id= "preview_<%= item.id %>">
+                               <div class= "preview_<%= item.id %>">
                                   <%= image_tag '' ,class:"card-img-top" %>
                                </div>
                           </div>

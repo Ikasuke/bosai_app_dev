@@ -20,7 +20,7 @@
 <!-- タブ内容部分 -->
 <div class="tab-content row">
     <div id="tab1" class="tab-pane active container">   
-        <%= form_with(url: '/items',method: 'get') do |form|%>
+        <%= form_with(url: '/items',method: 'get',local: true) do |form|%>
         <div class = "form-group search">
           <%= form.label :グッズを検索 %>
           <%= form.text_field :search,class:'search_field' %>
@@ -32,12 +32,12 @@
           <%= render partial: 'reading_table', locals: {items: @items, like_hash: @like_hash, tab: "tab1"} %>   <!-- 検索結果が表示される -->
       </div>
     <div class = "row reading_table_tab1_pagenate">
-           &emsp;&emsp;<%= paginate @items,params: {:tab => "tab1"}, :remote => true %>
+           &emsp;&emsp;<%= paginate @items,params: {:tab => "tab1"}, :remote => false %>  <!-- trueにするとコメント画像の一時表示ができない（jsが発火しないため) -->
         </div>
    </div> <!-- tab1 -->
 
    <div id="tab2" class="tab-pane container">
-    <%= form_with(url: '/items',method: 'get') do |form|%>
+    <%= form_with(url: '/items',method: 'get',local: true) do |form|%>
       <div class = "form-group search">
         <%= form.label :カテゴリから検索 %>
         <%= form.select :category_id, @category_selects,{:prompt => "category?"}, {:class => "btn category_tab"} %>
@@ -49,7 +49,7 @@
       <%= render partial: 'reading_table', locals: {items: @items, like_hash: @like_hash, tab: "tab2"} %>   <!-- 検索結果が表示される -->
     </div>
     <div class = "row reading_table_tab2_pagenate">
-           &emsp;&emsp;<%= paginate @items,params: {:tab => "tab2"}, :remote => true %>
+           &emsp;&emsp;<%= paginate @items,params: {:tab => "tab2"}, :remote => false %>  <!-- trueにするとコメント画像の一時表示ができない（jsが発火しないため) -->
         </div>
 
    </div>  <!-- tab2 end-->
@@ -60,7 +60,7 @@
            <%= render partial: 'reading_table', locals: {items: @items_like, like_hash: @like_hash, tab: "tab3"} %>  
         </div>
         <div class = "row reading_table_tab3_pagenate">
-           &emsp;&emsp;<%= paginate @items_like,params: {:tab => "tab3"}, :remote => true %>
+           &emsp;&emsp;<%= paginate @items_like,params: {:tab => "tab3"}, :remote => false  %> <!-- trueにするとコメント画像の一時表示ができない（jsが発火しないため) -->
         </div>
 
 

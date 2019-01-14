@@ -193,7 +193,7 @@ class ItemsController < ApplicationController
     else
       @items_like = Item.like_item(current_user.id).page(1).per(PER).neworder
     end
-    respond_to do |format|
+    respond_to do |format|   ## 一応jsを用意しているが、写真のプレビューが表示されない（jsが発火しない）ため全てlocalnにしてある
       format.html
       format.js
     end
