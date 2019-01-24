@@ -40,11 +40,18 @@
       </td></tr>
       <tr><td>家族構成:</td></tr>
       <tr><td>
-       <% if user.family.blank? %>
-        <span class="yet_blank"> 家族構成を記入してください <span>
-       <% else %>
-          <%= user.family %>
-       <% end %>
+         <% if user.senior > 0 %>
+          大人(65歳以上):&emsp;<%= user.senior %>人 <br>
+        <% end %>
+        <% if user.middle > 0 %>
+          大人(20歳〜64歳):&emsp;<%= user.middle %>人 <br>
+        <% end %>
+        <% if user.junior > 0 %>
+          子供(6歳〜19歳):&emsp;<%= user.junior %>人<br>
+        <% end %>
+        <% if user.infant > 0 %>
+          未就学児(0歳〜5歳):&emsp;<%= user.infant %>人 <br>
+        <% end %>
       </td></tr>
       <tr><td>自己紹介:</td></tr>
       <tr><td>

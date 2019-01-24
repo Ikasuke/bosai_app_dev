@@ -1,8 +1,9 @@
 <!-- partial  みんなのグッズ検索結果 items, like_hash　tab  が必要 -->
 
-      <table class="table row">  <!-- みんなのグッズ一覧 -->
+      <table class="table row ">  <!-- みんなのグッズ一覧 -->
         <tbody class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
        <% items.each do |item| %>  <!-- グッズごとのループ -->
+       
        <tr class="row"><td class="container"> <!-- rowで一つにグッズ表示部それをコンテナ化 -->
 <!-- プロフィール画像、グッズ画像、説明部の始まり-->   
           <div class="row">                 <!-- プロフィール画像、グッズ画像、説明を格納するrow -->
@@ -128,7 +129,8 @@
                     </div>   <!-- col-md-2 -->
                  </div>  <!-- コメント記入部 row　end-->
                <% end %>  <!-- form_with Commnet  -->
-          </td></tr> <!-- 一つのグッズの一覧終了  -->
+            <hr style="border: solid 1px;color:#f0c020;">
+          </td></tr><!-- 一つのグッズの一覧終了  -->
        <% end %> <!-- グッズごとのループ終了 -->
       </tbody>
       </table>  <!--グッズ一覧終了 -->

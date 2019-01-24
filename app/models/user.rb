@@ -33,8 +33,11 @@
 #  public_name            :string(255)      default(""), not null
 #  area1                  :string(255)      default(""), not null
 #  area2                  :string(255)
-#  family                 :string(255)
 #  profile                :text(65535)
+#  senior                 :integer          default(0), not null
+#  middle                 :integer          default(0), not null
+#  junior                 :integer          default(0), not null
+#  infant                 :integer          default(0), not null
 #
 
 class User < ApplicationRecord
@@ -65,9 +68,7 @@ class User < ApplicationRecord
   # public_nameは30文字以内であること
   validates :public_name,
             length: {maximum: 30, too_log: "長すぎます。ニックネーム"}
-  # familyは100文字以内であること
-  validates :family,
-            length: {maximum: 100, too_log: "長すぎます。家族構成"}
+
   # profileは5000文字以内であること
   validates :profile,
             length: {maximum: 5000, too_log: "長すぎます。自己紹介"}

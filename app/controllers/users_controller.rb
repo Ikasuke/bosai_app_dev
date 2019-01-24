@@ -20,6 +20,12 @@ class UsersController < ApplicationController
         end
       end
     end
+
+    ## 人数用
+    @volume_selects = Array.new()
+    21.times do |t|
+      @volume_selects.push(t)
+    end
     if params[:u_error_messages].nil?
       @u_error_details = {key: "no_error"}   #ダミーのkeyとvalueを入れておく エラー防止
     else
@@ -91,6 +97,6 @@ class UsersController < ApplicationController
 
   # strong_parameter :public_name, :area,
   def user_params
-    params.require(:user).permit(:public_name, :area1, :area2, :family, :avatar, :profile)
+    params.require(:user).permit(:public_name, :area1, :area2, :senior, :middle, :junior, :infant, :avatar, :profile)
   end
 end

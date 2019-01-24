@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_06_052722) do
+ActiveRecord::Schema.define(version: 2019_01_17_012853) do
 
   create_table "categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -127,8 +127,11 @@ ActiveRecord::Schema.define(version: 2019_01_06_052722) do
     t.string "public_name", default: "", null: false
     t.string "area1", default: "", null: false
     t.string "area2"
-    t.string "family"
     t.text "profile"
+    t.integer "senior", default: 0, null: false
+    t.integer "middle", default: 0, null: false
+    t.integer "junior", default: 0, null: false
+    t.integer "infant", default: 0, null: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

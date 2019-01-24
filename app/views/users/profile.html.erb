@@ -44,23 +44,30 @@
                 <%= form.select :area1, [@user.area1],{} ,{ class: "form-control" }  %>
           </div>
           <div class="field form-group">
-                <%= form.label :"地域" %>
+                <%= form.label :"市町村" %>
                 <%= form.select :area2, [@user.area2],{} ,{ class: "form-control" }  %>
-          </div>
-           <% if @u_error_details.key?(:family) %>  <!-- errorが生じた場合にerror表示にする -->
-                <div class ="error_state">
-                   <%= @u_error_details[:family][0].values[1] %><%= @u_error_messages[:family][0]%>
-                </div>
-              <div class="field form-group">
-                <%= form.label :"家族構成(100文字以内)" %>
-                <%= form.text_field :family, class: "form-control", style: "background-color: #ffA0A0;"  %>
-              </div>
-           <% else %>
-                <div class="field form-group">
-                <%= form.label :"家族構成(100文字以内)" %>
-                <%= form.text_field :family, class: "form-control"  %>
-             </div>
-           <% end %>
+          </div> 
+          <div> 家族構成 </div>
+            <div class="field form-group"> 
+                 <%= form.label :"大人(65歳以上)" %>
+                 &emsp;<%= form.select :senior, @volume_selects,{:prompt => "人数を選択して下さい"}, {:class => "btn category_tab", style:"width:70px;"}%>
+                 &emsp;人
+            </div>
+             <div class="field form-group"> 
+                 <%= form.label :"大人(20歳〜64歳)" %>
+                  &emsp;<%= form.select :middle, @volume_selects,{:prompt => "人数を選択して下さい"}, {:class => "btn category_tab", style:"width:70px;" }%>
+                  &emsp;人
+            </div>
+             <div class="field form-group"> 
+                 <%= form.label :"子供(6歳〜19歳)" %>
+                  &emsp;<%= form.select :junior, @volume_selects,{:prompt => "人数を選択して下さい"}, {:class => "btn category_tab", style:"width:70px;" }%>
+                  &emsp;人
+            </div>
+             <div class="field form-group"> 
+                 <%= form.label :"未就学児(0歳〜5歳)" %>
+                  &emsp;<%= form.select :infant, @volume_selects,{:prompt => "人数を選択して下さい"}, {:class => "btn category_tab", style:"width:70px;" }%>
+                  &emsp;人
+            </div>
            <% if @u_error_details.key?(:profile) %>  <!-- errorが生じた場合にerror表示にする -->
                 <div class ="error_state">
                    <%= @u_error_details[:profile][0].values[1] %><%= @u_error_messages[:profile][0]%>

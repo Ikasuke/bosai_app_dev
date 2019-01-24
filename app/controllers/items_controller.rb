@@ -163,17 +163,9 @@ class ItemsController < ApplicationController
     else
       @remindmails = remindmails
     end
-    # # @categoresを準備
+    # # @subcategoriesを準備 hash {category.id =>[[subcate.id,subcate.name],..],...} アイコンのidに格納してjsで使用するために使用
     categories = Category.all
-    category_selects = Array.new()      # 空
-    categories.each do |category|
-      category_select = [category.category_name, category.id]
-      category_selects.push(category_select)
-    end
-    @category_selects = category_selects
-
     @subcategories = {}
-
     categories.each do |category|
       @subcate = Array.new()
       category.subcategories.each do |sub_c|
@@ -181,16 +173,17 @@ class ItemsController < ApplicationController
       end
       @subcategories.store(category.id, @subcate)
     end
-
-    # # item情報 tab1=> params[:category_id], params[:subcategory_id] tab2=> params[:category_id]
+    ## subcate end
+    ## tab1の処理 => 検索部分で入力した値に関して処理していく
+    @family_num = Array.new # 選択した家族構成を格納してjsに応答してもらう
     @select_subcategory = Array.new
-    if params[:tab].nil?
+    if params[:search].nil? #検索していない状態  検索した場合や検索後paginateする場合はnilでない
       @items = Item.where(item_open_flag: 1).page(params[:page]).per(PER).neworder
       @area1 = current_user.area1
       @area2 = current_user.area2
       @select_category_id = ""
-    else
-      if params[:tab] == "tab1"
+    else # params[:search]に値がある場合、true以外はない
+      if params[:search] == "true" # true以外はないが、念のため  検索した場合と検索した後のpaginateはここがtrueになる
         ### 地域検索
         if params[:area1] == "全国" #area1が全国選択されている
           @items = Item.where(item_open_flag: 1).page(params[:page]).per(PER).neworder
@@ -207,6 +200,7 @@ class ItemsController < ApplicationController
             @area2 = params[:area2]
           end
         end
+        ### 地域検索end
         ### カテゴリー検索
         if params[:category_id].nil? # カテゴリは何も選択していない
           @select_category_id = ""
@@ -224,8 +218,29 @@ class ItemsController < ApplicationController
             @select_subcategory = [Subcategory.find(params[:subcategory_id]).subcategory_name, params[:subcategory_id]]
           end
         end
-      end
-    end
+        ### カテゴリー検索end
+        ### 家族検索
+        if params[:family].nil?
+        else
+          if params[:family].include?("一人暮らし")
+            @items = @items.user_only.where(item_open_flag: 1).page(params[:page]).per(PER).neworder
+            @family_num.push("0")
+          end
+          if params[:family].include?("65歳以上の人がいる")
+            @items = @items.user_senior.where(item_open_flag: 1).page(params[:page]).per(PER).neworder
+            @family_num.push("1")
+          end
+          if params[:family].include?("子供がいる(未就学児含む)")
+            @items = @items.user_child.where(item_open_flag: 1).page(params[:page]).per(PER).neworder
+            @family_num.push("2")
+          end
+          if params[:family].include?("未就学児がいる")
+            @items = @items.user_infant.where(item_open_flag: 1).page(params[:page]).per(PER).neworder
+            @family_num.push("3")
+          end
+        end
+      end # params[:search]="true"? end
+    end  # if params[:search].nil? end
     @like_hash = Likeitem.where(user_id: current_user.id).pluck(:id, :item_id).to_h
     ## いいねしたアイテムを表示する準備 tab2
 
