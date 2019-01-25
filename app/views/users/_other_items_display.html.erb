@@ -1,17 +1,16 @@
- <% items_array.each_with_index do |items,i| %>
+  <!--subcategoryでsortしたitemたちを表示 item_cate_sort,categoryが必要  -->
+ <% item_cate_sort[category.id].each_with_index do |items,i| %>   <!--あるcategoryのsubカテゴリー群でeach  -->
        <% if items.nil? %>
        <% else%>
          <div class="row" >
-            <label class="control-label">▪️<%= categories[i].category_name %> </label>
-         </div>  <!-- row category名 -->
+                  <label class="control-label">&emsp;◼<%= category.subcategories[i].subcategory_name %> </label>
+         </div>  <!-- row subcategory名 -->
          <br>
-         <div class="row other_items_<%= categories[i].id %>">
+         <div class="row other_tab_category_subcategory_<%= category.subcategories[i].id %>">
                 <%= render partial: 'other_items', locals: {items: items} %> 
          </div>   <!-- row item -->
       <% end %>  <!-- if end -->
-       <div class = "row other_items_<%= categories[i].id %>_paginate">
-           &emsp;&emsp;<%= paginate items, params: {:category_id => categories[i].id}, :remote => true %>
+       <div class = "row other_tab_category_subcategory_<%= category.subcategories[i].id %>_paginate">
+           &emsp;&emsp;<%= paginate items, params: {:tab => "tab_category",:subcategory_id => category.subcategories[i].id}, :remote => true %>
                    </div> 
-            
  <% end %> 
- 

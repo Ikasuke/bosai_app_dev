@@ -58,7 +58,7 @@
         <% if user.profile.blank? %>
          <span class="yet_blank"> 自己紹介を記入してください</span>
        <% else %>
-         <p style="font-size: 12px;"> <%= user.profile %> </p>
+         <p style="font-size: 12px;  word-break: break-all;"> <%= user.profile %> </p>
        <% end %>
       </td></tr>
       <% if remindmails.nil? %>
