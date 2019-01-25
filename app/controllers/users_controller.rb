@@ -1,6 +1,6 @@
 # encoding: utf-8
 class UsersController < ApplicationController
-  PER = 2
+  PER = 10
 
   def profile
     @user = current_user
@@ -19,6 +19,12 @@ class UsersController < ApplicationController
         else
         end
       end
+    end
+
+    ## 人数用
+    @volume_selects = Array.new()
+    21.times do |t|
+      @volume_selects.push(t)
     end
     if params[:u_error_messages].nil?
       @u_error_details = {key: "no_error"}   #ダミーのkeyとvalueを入れておく エラー防止
@@ -53,25 +59,31 @@ class UsersController < ApplicationController
   def area
   end
 
+  def area_city
+  end
+
   def show # カテゴリーごとに別れたアイテムを表示する
     @user = User.find(params[:id])
     ## カテゴリー
     @categories = Category.all
-    @items_array = Array.new()
-    # グッズを表示するために登録されているものを呼び出す
-    if params[:category_id] #この時、paginateが押された
-      @categories.each do |category| #押されたpaginateのカテゴリだけpaginate
-        if params[:category_id] == "#{category.id}"
-          items_c = @user.items.where(category_id: category.id).where(item_open_flag: 1).page(params[:page]).per(PER).neworder
-          @items_array.push(items_c)
-        end
-      end
-    else #paginateが押されないと１ページ目を表示
+    @item_cate_sort = {}
+
+    if params[:tab] == "tab_category" #この時、tab1~3のpaginateが押された
+      @items_array = Array.new()
+      #押されたpaginateのカテゴリだけpaginate
+      items_subcate = @user.items.where(subcategory_id: params[:subcategory_id].to_i).where(item_open_flag: 1).page(params[:page]).per(PER).neworder
+      @items_array.push(items_subcate) #押されたpaginateのsubcateogryのitemのみ格納
+    else #tab1~3のpaginateが押されない (他のタブを見ている、tab1-3の最初の状態を見ている => 1ページ目)
       @categories.each do |category|
-        items_c = @user.items.where(category_id: category.id).where(item_open_flag: 1).page(1).per(PER).neworder
-        @items_array.push(items_c)
+        @items_array = Array.new()
+        @subcategories = category.subcategories
+        @subcategories.each do |subcategory|
+          items_subcate = @user.items.where(subcategory_id: subcategory.id).where(item_open_flag: 1).page(1).per(PER).neworder
+          @items_array.push(items_subcate)
+        end
+        @item_cate_sort.store(category.id, @items_array)   #  {1(category)=>[[(sub1のitem)],[(sub2のitem)]..],2(category)=>[[sub3],[sbu4]..],.. }が作られる
       end
-    end
+    end  #if end
 
     if params[:tab] == "other_murmurs"
       @murmurs = @user.murmurs.page(params[:page]).per(PER).neworder
@@ -88,6 +100,6 @@ class UsersController < ApplicationController
 
   # strong_parameter :public_name, :area,
   def user_params
-    params.require(:user).permit(:public_name, :area1, :area2, :family, :avatar, :profile)
+    params.require(:user).permit(:public_name, :area1, :area2, :senior, :middle, :junior, :infant, :avatar, :profile)
   end
 end

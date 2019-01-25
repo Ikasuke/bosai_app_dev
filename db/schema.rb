@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_04_053352) do
+ActiveRecord::Schema.define(version: 2019_01_17_012853) do
 
   create_table "categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -55,7 +55,9 @@ ActiveRecord::Schema.define(version: 2019_01_04_053352) do
     t.string "picture_content_type"
     t.integer "picture_file_size"
     t.datetime "picture_updated_at"
+    t.bigint "subcategory_id"
     t.index ["category_id"], name: "index_items_on_category_id"
+    t.index ["subcategory_id"], name: "index_items_on_subcategory_id"
     t.index ["user_id"], name: "index_items_on_user_id"
   end
 
@@ -88,6 +90,14 @@ ActiveRecord::Schema.define(version: 2019_01_04_053352) do
     t.index ["user_id"], name: "index_remindmails_on_user_id"
   end
 
+  create_table "subcategories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "subcategory_name", default: "", null: false
+    t.bigint "category_id"
+    t.index ["category_id"], name: "index_subcategories_on_category_id"
+  end
+
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -117,8 +127,11 @@ ActiveRecord::Schema.define(version: 2019_01_04_053352) do
     t.string "public_name", default: "", null: false
     t.string "area1", default: "", null: false
     t.string "area2"
-    t.string "family"
     t.text "profile"
+    t.integer "senior", default: 0, null: false
+    t.integer "middle", default: 0, null: false
+    t.integer "junior", default: 0, null: false
+    t.integer "infant", default: 0, null: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -128,9 +141,11 @@ ActiveRecord::Schema.define(version: 2019_01_04_053352) do
   add_foreign_key "comments", "items"
   add_foreign_key "comments", "users"
   add_foreign_key "items", "categories"
+  add_foreign_key "items", "subcategories"
   add_foreign_key "items", "users"
   add_foreign_key "likeitems", "items"
   add_foreign_key "likeitems", "users"
   add_foreign_key "murmurs", "users"
   add_foreign_key "remindmails", "users"
+  add_foreign_key "subcategories", "categories"
 end

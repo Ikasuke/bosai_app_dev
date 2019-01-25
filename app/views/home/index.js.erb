@@ -4,21 +4,17 @@ if ("<%= params[:tab] %>" == 'tab1') {
 $(".home_tab1_paginate").html( "&emsp;&emsp;<%= escape_javascript(paginate @items, :remote => true) %>" );
 }
 
-if ("<%= params[:tab] %>" == 'tab2') {
-    <% @categories.each do |category| %>
-        <% if params[:category_id] == "#{category.id}" %>
-               $(".tab2_category_<%= category.id %>").html( "<%= escape_javascript(render partial: 'items', locals: {items: @items_array[0]}) %>" );
-               $(".tab2_category_<%= category.id %>_paginate").html( "&emsp;&emsp;<%= escape_javascript(paginate @items_array[0], params: {:tab => "tab2",:category_id => category.id}, :remote => true) %>" );
-        <% end %>
-    <% end %>
+if ("<%= params[:tab] %>" == 'tab_category') {
+               $(".tab_category_subcategory_<%= params[:subcategory_id].to_i %>").html( "<%= escape_javascript(render partial: 'items', locals: {items: @items_array[0]}) %>" );
+               $(".tab_category_subcategory_<%= params[:subcategory_id].to_i %>_paginate").html( "&emsp;&emsp;<%= escape_javascript(paginate @items_array[0], params: {:tab => "tab_category",:subcategory_id => params[:subcategory_id].to_i}, :remote => true) %>" );
 }
 
-if ("<%= params[:tab] %>" == 'tab3') {
-     console.log("tab3");
+if ("<%= params[:tab] %>" == 'tab5') {
+     console.log("tab5");
      <% 4.times do |t| %>
          <% if params[:dead] == "#{t}" %>
-             $(".tab3_dead_<%= t %>").html( "<%= escape_javascript(render partial: 'items', locals: {items: @items_expiry_array[t]}) %>" );
-            $(".tab3_dead_<%= t %>_paginate").html( "&emsp;&emsp;<%= escape_javascript(paginate @items_expiry_array[t], params: {:tab => "tab3",:dead => t}, :remote => true) %>" );
+             $(".tab5_dead_<%= t %>").html( "<%= escape_javascript(render partial: 'items', locals: {items: @items_expiry_array[t]}) %>" );
+            $(".tab5_dead_<%= t %>_paginate").html( "&emsp;&emsp;<%= escape_javascript(paginate @items_expiry_array[t], params: {:tab => "tab5",:dead => t}, :remote => true) %>" );
          <% end %>
      <% end %>
 } 

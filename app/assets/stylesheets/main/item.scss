@@ -1,4 +1,5 @@
 
+
 .box_name{
     float: left;
     position:relative;
@@ -87,4 +88,23 @@
     content: "";
    height:100%;
    width: 100%;
+}
+
+// 写真選択アイコン
+.img_point{
+  cursor: pointer;
+}
+
+///////// smart /////
+
+.smart_new{
+  font-size: 40px;
+}
+
+.smart_edit{
+  font-size: 40px;
+}
+
+.img_smart{
+  cursor: pointer;
 }

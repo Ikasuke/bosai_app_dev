@@ -1,6 +1,6 @@
 # encoding: utf-8
 class MurmursController < ApplicationController
-  PER = 4
+  PER = 10
 
   def index
     ## sidebar
@@ -15,9 +15,29 @@ class MurmursController < ApplicationController
       @remindmails = remindmails
     end
     ## main つながり部
+
+    ### 家族検索
+    @user_family_search = User.all
+    if params[:family].nil?
+    else
+      if params[:family].include?("一人暮らし")
+        @user_family_search = @user_family_search.onlyuser
+      end
+      if params[:family].include?("65歳以上の人がいる")
+        @user_family_search = @user_family_search.senior
+      end
+      if params[:family].include?("子供がいる(未就学児含む)")
+        @user_family_search = @user_family_search.child
+      end
+      if params[:family].include?("未就学児がいる")
+        @user_family_search = @user_family_search.infant
+      end
+    end
+    #家族検索end
+
     # 最近発信した順に全てのユーザーを並べる
     @users_sort_late = {}
-    User.all.each do |user|
+    @user_family_search.all.each do |user|
       latest = user.murmurs.maximum(:created_at)
       if latest.nil?
         @users_sort_late.store(user, 0)
@@ -26,11 +46,16 @@ class MurmursController < ApplicationController
       end
     end
     @users_sort_late = @users_sort_late.sort_by { |k, v| v }.reverse.to_h  #発信した順に並んだハッシュ{user, 発信日}
-    #tab1  最近発信した順に並べる
-    if params[:area1].nil?
+
+    ##tab1
+    #エリア検索
+    if params[:area1].nil? #murmursページに入ってきたばかりの時
       @area = "日本全域"
       @allusers = Kaminari.paginate_array(@users_sort_late.keys).page(params[:page]).per(PER)
-    else # params[:area1]がある
+    elsif params[:area1] == "全国" # 検索で全国とした場合
+      @area = "日本全域"
+      @allusers = Kaminari.paginate_array(@users_sort_late.keys).page(params[:page]).per(PER)
+    else # params[:area1]が全国以外である
       @area = "#{params[:area1]}/#{params[:area2]}"
       if params[:area2] == "全地域"
         @users_area1 = Array.new()
@@ -50,6 +75,8 @@ class MurmursController < ApplicationController
         @allusers = Kaminari.paginate_array(@users_area2).page(params[:page]).per(PER)
       end #if end
     end
+    #エリア検索　end
+
     # いいねが多いアイテムを表示させる　最新のつぶやきを表示させる
     @max_items = {}
     @new_murmurs = {}

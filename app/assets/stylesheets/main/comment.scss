@@ -3,12 +3,12 @@
     border: solid 2px;
     border-color: #dddddd;
     overflow: auto;      //scroll 
-    height: 200px;
+    height: 600px;
     //overflow-x: hidden;
-    background-color: #ffffff;
+    background-color: #fffff0;
   }
 
-
+////// 他ユーザー用///
   .comment {
     display: inline-block;
     position: relative; 
@@ -30,13 +30,45 @@
     border: 12px solid transparent;
     border-right: 12px solid #f0f0f0;
 }
-
 .comment p {
     margin: 0;
     padding: 0;
     word-break: break-all;
 
 }
+
+///////////////////////
+//// current_user 用
+.comment_current {
+    display: inline-block;
+    position: relative; 
+    margin: 15px 0 0 0px;
+    padding: 17px 13px;
+    border-radius: 12px;
+    background: #f0f0f0;
+    float: right;
+    
+   
+}
+
+.comment_current:after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    top: 18px; 
+    right: -24px;
+    border: 12px solid transparent;
+    border-left: 12px solid #f0f0f0;
+}
+
+.comment_current p {
+    margin: 0;
+    padding: 0;
+    word-break: break-all;
+
+}
+///////////////////////
+
 
 .com_frame{
     height:100px;

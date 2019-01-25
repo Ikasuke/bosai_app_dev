@@ -19,6 +19,7 @@
 #  picture_content_type :string(255)
 #  picture_file_size    :integer
 #  picture_updated_at   :datetime
+#  subcategory_id       :bigint(8)
 #
 
 class Item < ApplicationRecord
@@ -51,6 +52,8 @@ class Item < ApplicationRecord
   belongs_to :user
   # category
   belongs_to :category
+  # subcategory
+  belongs_to :subcategory
   # comments
   has_many :comments, dependent: :destroy
   # likeitems
@@ -91,5 +94,29 @@ class Item < ApplicationRecord
   #scope likeitem のuser_idが特定のものを探す
   scope :like_item, -> user_id {
           joins(:likeitems).where("likeitems.user_id = ?", user_id).where(item_open_flag: 1)
+        }
+  #scope userのarea1が特定のものを出す
+  scope :user_area1, -> area1 {
+          joins(:user).where("users.area1 = ?", area1).where(item_open_flag: 1)
+        }
+  #scope userのarea2が特定のものを出す
+  scope :user_area2, -> area2 {
+          joins(:user).where("users.area2 = ?", area2).where(item_open_flag: 1)
+        }
+  #scope userのうちfamilyが一人だけのアイテムを出す
+  scope :user_only, -> {
+          joins(:user).where("(users.senior + users.middle + users.junior+ users.infant= ?)", 1)
+        }
+  #scope userのうちfamilyに65歳以上の方がいる人のアイテムを出す
+  scope :user_senior, -> {
+          joins(:user).where("(users.senior > ?)", 0)
+        }
+  #scope userのうちfamilyに子供（0-18）がいる人のアイテムを出す
+  scope :user_child, -> {
+          joins(:user).where("(users.junior + users.infant > ?)", 0)
+        }
+  #scope userのうちfamilyに未就学児がいる人のアイテムを出す
+  scope :user_infant, -> {
+          joins(:user).where("(users.infant > ?)", 0)
         }
 end #class end

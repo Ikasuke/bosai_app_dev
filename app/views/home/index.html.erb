@@ -10,13 +10,19 @@
     <a href="#tab1" class="nav-link active" data-toggle="tab">登録順</a>
   </li>
   <li class="nav-item">
-    <a href="#tab2" class="nav-link" data-toggle="tab">カテゴリー別</a>
+    <a href="#tab2" class="nav-link" data-toggle="tab"><i class="fa fa-tint fa-2x" style="color:#4080ff;"></i></a>
+  </li>
+   <li class="nav-item">
+    <a href="#tab3" class="nav-link" data-toggle="tab"><i class="fa fa-cutlery fa-2x" style="color:#808080;"></i></a>
+  </li>
+   <li class="nav-item">
+    <a href="#tab4" class="nav-link" data-toggle="tab"><i class="fa fa-home fa-2x" style="color:#f8c10e;"></i></a>
   </li>
   <li class="nav-item">
-    <a href="#tab3" class="nav-link" data-toggle="tab">期限近い</a>
+    <a href="#tab5" class="nav-link" data-toggle="tab">期限近い</a>
   </li>
   <li class="nav-item">
-    <a href="#tab4" class="nav-link" data-toggle="tab">新しいコメント (<%= @all_unread_counts%>件) </a>
+    <a href="#tab6" class="nav-link" data-toggle="tab">新しいコメント (<%= @all_unread_counts%>件) </a>
   </li>
 </ul>
 
@@ -34,12 +40,19 @@
         </div>
      </div>   <!-- tab1 -->
      <div id="tab2" class="tab-pane home_tab2">
-          <%= render partial: 'tab2', locals: {items_array: @items_array,categories: @categories} %>
+          <%= render partial: 'tab_category', locals: { item_cate_sort: @item_cate_sort,category: @categories.find(1)} %>
      </div>  <!-- tab2-->
-     <div id="tab3" class="tab-pane home_tab3">  <!-- 期限近いもの -->
-        <%= render partial: 'tab3', locals: { items_expiry_array:  @items_expiry_array} %>
-    </div>  <!-- tab3-->
-      <div id="tab4" class="tab-pane">
+       <div id="tab3" class="tab-pane home_tab3">
+           <%= render partial: 'tab_category', locals: { item_cate_sort: @item_cate_sort,category: @categories.find(2)} %>
+     </div>  <!-- tab3-->
+       <div id="tab4" class="tab-pane home_tab4">
+            <%= render partial: 'tab_category', locals: { item_cate_sort: @item_cate_sort,category: @categories.find(3)} %>
+     </div>  <!-- tab4-->
+
+     <div id="tab5" class="tab-pane home_tab5">  <!-- 期限近いもの -->
+        <%= render partial: 'tab5', locals: { items_expiry_array:  @items_expiry_array} %>
+    </div>  <!-- tab5-->
+      <div id="tab6" class="tab-pane">
          <div class="row" >
          <% if @items_unread.nil? %>
          <% else%>
@@ -56,7 +69,7 @@
            <% end %> <!-- @items_unread.each end-->
          <% end %>  <!-- if end -->
         </div> <!-- row -->
-      </div>  <!-- tab4-->
+      </div>  <!-- tab6-->
 
     </div>  <!-- tab-content -->
 </div>  <!-- items container -->

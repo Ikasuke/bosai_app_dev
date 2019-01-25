@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   get "home", to: "home#index"
   get "adminhome", to: "home#adminhome"
   get "user/area", to: "users#area"
+  get "user/area_city", to: "users#area_city"
   get "info", to: "info#index"
   get "start_info", to: "start#start_info"
   ## user model
@@ -32,6 +33,9 @@ Rails.application.routes.draw do
 
   ##category model
   resources :categories
+
+  ##subcategory model
+  resources :subcategories
 
   ##comment model
   resources :comments
