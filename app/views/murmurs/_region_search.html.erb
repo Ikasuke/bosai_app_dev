@@ -23,12 +23,27 @@
             <div>
                  <p style="font-size:14px;"><%= a_user.public_name %> </p>
                  <p style="font-size:14px;"><%= a_user.area1 %>/ <%= a_user.area2 %>  </p>
+                 <p style="font-size:14px;">
+                    <% if a_user.senior > 0 %>
+                        大人(65歳以上):&emsp;<%= a_user.senior %>人 <br>
+                    <% end %>
+                    <% if a_user.middle > 0 %>
+                        大人(20歳〜64歳):&emsp;<%= a_user.middle %>人 <br>
+                    <% end %>
+                    <% if a_user.junior > 0 %>
+                       子供(6歳〜19歳):&emsp;<%= a_user.junior %>人<br>
+                    <% end %>
+                    <% if a_user.infant > 0 %>
+                       未就学児(0歳〜5歳):&emsp;<%= a_user.infant %>人 <br>
+                    <% end %>
+                 </p>
+                  <p style="font-size:14px;"> 登録グッズ数: <%= a_user.items.count  %>  </p>
+                
             </div>
          </div>
          <div class="col-lg-6 col-md-6 col-sm-6"> 
                
-                <p style="font-size:14px;"> 登録グッズ数: <%= a_user.items.count  %>  </p>
-                <p style="font-size:14px;"> お気に入られ: <%= a_user.favorites_of_to_user.count  %>  </p>
+               
                 <p style="font-size:14px; text-align:left; margin:0;"> 最近の発信:  </p>
                 
                 <% if new_murmurs[a_user.id].nil? %>
@@ -50,6 +65,7 @@
          </div>
          <!-- いいねが多いアイテムを紹介する -->
          <div class="col-lg-3 col-md-3 col-sm-3">
+         <p style="font-size:14px;"> <%= a_user.public_name%>さんのグッズ </p>
          <% if max_items[a_user.id].nil? %>
         <%else %>
                  <%= link_to edit_item_path(max_items[a_user.id]) do %>
@@ -89,7 +105,7 @@
             </div> <!-- お気に入りボタン　row -->
 
 
-        <hr>
+        <hr style="border: solid 1px;color:#f0c020;">
       <% end%> <!-- each end -->
      </div> <!--container-->
      </div>  <!--row -->

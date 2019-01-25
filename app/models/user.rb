@@ -127,4 +127,21 @@ class User < ApplicationRecord
   def send_devise_notification(notification, *args)
     devise_mailer.send(notification, self, *args).deliver_later
   end
+
+  ## onlyuser メソッド  家族構成が一人の人を出力
+  def self.onlyuser
+    User.where("(senior + middle + junior+ infant= ?)", 1)
+  end
+  ## senior メソッド  家族に65歳以上の方がいる人を出力
+  def self.senior
+    User.where("(senior > ?)", 0)
+  end
+  ## child メソッド  家族に子供（0-18）がいる人を出力
+  def self.child
+    User.where("(junior + infant > ?)", 0)
+  end
+  ## infant メソッド  家族に未就学児がいる人を出力
+  def self.infant
+    User.where("(infant > ?)", 0)
+  end
 end
