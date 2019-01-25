@@ -8,7 +8,8 @@
    <thead>
        <th>index</th>
        <th>id</th>
-       <th>名前</th>
+       <th>大分類</th>
+       <th>小分類</th>
        <th>変更</th>
        <th>登録日</th>
        <th>消去</th>
@@ -22,6 +23,9 @@
       <div class="form-group">
           <%= form.text_field :category_name, class: "form-control" %>
       </div>
+  </td>
+  <td>
+       <%= link_to "小分類作成へ", subcategories_path(category_id:category.id),:class=>"btn btn-success" %>
   </td>
   <td>
       <div class="actions">

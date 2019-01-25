@@ -10,6 +10,7 @@ class ItemsController < ApplicationController
 
   def new
     ## @categoresを準備
+
     categories = Category.all
     category_selects = Array.new()      # 空
     categories.each do |category|
@@ -17,6 +18,20 @@ class ItemsController < ApplicationController
       category_selects.push(category_select)
     end
     @category_selects = category_selects
+
+    @subcategories = {}
+
+    categories.each do |category|
+      @subcate = Array.new()
+      category.subcategories.each do |sub_c|
+        @subcate.push([sub_c.subcategory_name, sub_c.id])
+      end
+      @subcategories.store(category.id, @subcate)
+    end
+    @volume_selects = Array.new()
+    101.times do |t|
+      @volume_selects.push("#{t}")
+    end
     if params[:i_error_messages].nil?
       @i_error_details = {key: "no_error"}   #ダミーのkeyとvalueを入れておく エラー防止
     else
@@ -37,6 +52,18 @@ class ItemsController < ApplicationController
         category_selects.push(category_select)
       end
       @category_selects = category_selects
+      @subcategories = {}
+      categories.each do |category|
+        @subcate = Array.new()
+        category.subcategories.each do |sub_c|
+          @subcate.push([sub_c.subcategory_name, sub_c.id])
+        end
+        @subcategories.store(category.id, @subcate)
+      end
+      @volume_selects = Array.new()
+      101.times do |t|
+        @volume_selects.push("#{t}")
+      end
       if params[:i_error_messages].nil?
         @i_error_details = {key: "no_error"}   #ダミーのkeyとvalueを入れておく エラー防止
       else
@@ -60,6 +87,11 @@ class ItemsController < ApplicationController
   def create
     @item = Item.new(item_params)
     @item.user_id = current_user.id
+    if params[:item]["subcategory_id"].blank?
+    else
+      @item.category_id = Subcategory.find(params[:item]["subcategory_id"]).category.id
+    end
+
     # smart用の処理
     if params[:expiry_check].nil?
       #普通
@@ -83,6 +115,10 @@ class ItemsController < ApplicationController
   end # create end
 
   def update
+    if params[:item]["subcategory_id"].blank?
+    else
+      @item.category_id = Subcategory.find(params[:item]["subcategory_id"]).category.id
+    end
     # smart用の処理
     if params[:expiry_check].nil?
       #普通
@@ -97,7 +133,7 @@ class ItemsController < ApplicationController
     end
     respond_to do |format|
       if @item.update(item_params)
-        format.html { redirect_to home_url, notice: " アップデートできました" }
+        format.html { redirect_to home_url, notice: " 更新できました" }
         #format.json { render :show, status: :ok, location: @to_do_item }
       else
         format.html { redirect_to edit_item_path(i_error_messages: @item.errors.messages, i_error_details: @item.errors.details), flash: {error: "更新できませんでした"} }
@@ -127,37 +163,91 @@ class ItemsController < ApplicationController
     else
       @remindmails = remindmails
     end
-    # # @categoresを準備
+    # # @subcategoriesを準備 hash {category.id =>[[subcate.id,subcate.name],..],...} アイコンのidに格納してjsで使用するために使用
     categories = Category.all
-    category_selects = Array.new()      # 空
+    @subcategories = {}
     categories.each do |category|
-      category_select = [category.category_name, category.id]
-      category_selects.push(category_select)
-    end
-    @category_selects = category_selects
-    # # item情報 tab1=> params[:search] tab2=> params[:category_id]
-    if params[:tab].nil?
-      @items = Item.search(params[:search]).page(params[:page]).per(PER).neworder
-    else
-      if params[:tab] == "tab1"
-        @items = Item.search(params[:search]).page(params[:page]).per(PER).neworder
+      @subcate = Array.new()
+      category.subcategories.each do |sub_c|
+        @subcate.push([sub_c.subcategory_name, sub_c.id])
       end
-      if params[:tab] == "tab2"
-        if params[:category_id].nil?
-          @items = Item.search(params[:search]).page(params[:page]).per(PER).neworder
-        else
-          @items = Item.where(category_id: params[:category_id]).where(item_open_flag: 1).page(params[:page]).per(PER).neworder
+      @subcategories.store(category.id, @subcate)
+    end
+    ## subcate end
+    ## tab1の処理 => 検索部分で入力した値に関して処理していく
+    @family_num = Array.new # 選択した家族構成を格納してjsに応答してもらう
+    @select_subcategory = Array.new
+    if params[:search].nil? #検索していない状態  検索した場合や検索後paginateする場合はnilでない
+      @items = Item.where(item_open_flag: 1).page(params[:page]).per(PER).neworder
+      @area1 = current_user.area1
+      @area2 = current_user.area2
+      @select_category_id = ""
+    else # params[:search]に値がある場合、true以外はない
+      if params[:search] == "true" # true以外はないが、念のため  検索した場合と検索した後のpaginateはここがtrueになる
+        ### 地域検索
+        if params[:area1] == "全国" #area1が全国選択されている
+          @items = Item.where(item_open_flag: 1).page(params[:page]).per(PER).neworder
+          @area1 = params[:area1]
+          @area2 = "全地域"
+        else #area1が県を選択している
+          if params[:area2] == "全地域"
+            @items = Item.user_area1(params[:area1]).page(params[:page]).per(PER).neworder
+            @area1 = params[:area1]
+            @area2 = params[:area2]
+          else # area2が全地域以外
+            @items = Item.user_area1(params[:area1]).user_area2(params[:area2]).page(params[:page]).per(PER).neworder
+            @area1 = params[:area1]
+            @area2 = params[:area2]
+          end
         end
-      end
-    end
+        ### 地域検索end
+        ### カテゴリー検索
+        if params[:category_id].nil? # カテゴリは何も選択していない
+          @select_category_id = ""
+        else #何か選択した
+          if params[:subcategory_id].nil? # subcategoryが選択されていない
+            @items = @items.where(category_id: params[:category_id].to_i).where(item_open_flag: 1).page(params[:page]).per(PER).neworder
+            @select_category_id = params[:category_id]
+          elsif params[:subcategory_id].to_i == 0 # subcategoryが「全て」を選択した
+            @items = @items.where(category_id: params[:category_id].to_i).where(item_open_flag: 1).page(params[:page]).per(PER).neworder
+            @select_category_id = params[:category_id]
+            @select_subcategory = ["全て", "0"]
+          else
+            @items = @items.where(category_id: params[:category_id].to_i).where(subcategory_id: params[:subcategory_id].to_i).where(item_open_flag: 1).page(params[:page]).per(PER).neworder
+            @select_category_id = params[:category_id]
+            @select_subcategory = [Subcategory.find(params[:subcategory_id]).subcategory_name, params[:subcategory_id]]
+          end
+        end
+        ### カテゴリー検索end
+        ### 家族検索
+        if params[:family].nil?
+        else
+          if params[:family].include?("一人暮らし")
+            @items = @items.user_only.where(item_open_flag: 1).page(params[:page]).per(PER).neworder
+            @family_num.push("0")
+          end
+          if params[:family].include?("65歳以上の人がいる")
+            @items = @items.user_senior.where(item_open_flag: 1).page(params[:page]).per(PER).neworder
+            @family_num.push("1")
+          end
+          if params[:family].include?("子供がいる(未就学児含む)")
+            @items = @items.user_child.where(item_open_flag: 1).page(params[:page]).per(PER).neworder
+            @family_num.push("2")
+          end
+          if params[:family].include?("未就学児がいる")
+            @items = @items.user_infant.where(item_open_flag: 1).page(params[:page]).per(PER).neworder
+            @family_num.push("3")
+          end
+        end
+        #家族検索end
+      end # params[:search]="true"? end
+    end  # if params[:search].nil? end
     @like_hash = Likeitem.where(user_id: current_user.id).pluck(:id, :item_id).to_h
-    ## いいねしたアイテムを表示する準備
-    if params[:tab] == "tab3"
-      @items_like = Item.like_item(current_user.id).page(params[:page]).per(PER).neworder
-    else
-      @items_like = Item.like_item(current_user.id).page(1).per(PER).neworder
-    end
-    respond_to do |format|
+    ## いいねしたアイテムを表示する準備 tab2
+
+    @items_like = Item.like_item(current_user.id).where(item_open_flag: 1).neworder
+
+    respond_to do |format| ## 一応jsを用意しているが、写真のプレビューが表示されない（jsが発火しない）ため全てlocalnにしてある
       format.html
       format.js
     end
@@ -172,11 +262,11 @@ class ItemsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def item_params
-    params.require(:item).permit(:item_name, :picture, :item_volume, :item_expiry, :item_public_memo, :item_private_memo, :item_open_flag, :category_id)
+    params.require(:item).permit(:item_name, :picture, :item_volume, :item_expiry, :item_public_memo, :item_private_memo, :item_open_flag, :subcategory_id)
   end
 
   def detect_browser
-    if browser.device.mobile? #browser.chrome?
+    if browser.device.mobile? #browser.chrome? #
       request.variant = :smart
     end
   end

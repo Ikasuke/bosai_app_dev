@@ -1,7 +1,6 @@
 
 //ajax で commentboxを表示
 $(document).on('turbolinks:load', function () {
-
  
 
     $('.comments_box').each(function(i,elem){
@@ -15,9 +14,10 @@ $(document).on('turbolinks:load', function () {
   
  
     $('.form_pic_mc').on('change',function(e){
+       console.log(e.target.classList[0].slice(5));
         var file = e.target.files[0], 
         reader = new FileReader(),
-        $preview =$("#preview_"+e.target.classList[0].slice(5));
+        $preview =$(".preview_"+e.target.classList[0].slice(5));
         t = this;
         console.log(file.type.indexOf("image"));
         // 画像ファイル以外の場合は何もしない
@@ -42,7 +42,7 @@ $(document).on('turbolinks:load', function () {
      });
   
 
-
   }); // document
 
+ 
 

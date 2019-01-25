@@ -20,14 +20,51 @@
 　<div class="tab-content row">
     <div id="tab1" class="tab-pane active container">   
       <%= form_with(url: '/murmurs',method: 'get') do |form|%>
-        <div class = "form-group search">
-          <%= form.label :都道府県から検索 %>
-          <%= form.select :area1, [@user.area1],{} ,{ class: "form-control" }  %>
-        </div>
-　      <div class = "form-group search">
-          <%= form.label :詳細なエリアから検索 %>
-          <%= form.select :area2, [@user.area2],{} ,{ class: "form-control" }  %>
-        </div>
+
+       <div class = "col-lg-12 col-md-12 col-sm-12 col-xs-12" >
+  <!-- エリア選択 -->
+        <div class="row area_search">
+          <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+           <span style="font-size:14px; font-weight:bold;">
+           地域を選択
+           </span>
+          </div>
+          <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+           <br>
+           <div class = "form-group search">
+            <%= form.label :都道府県 %>
+            <%= form.select :area1, [@user.area1],{} ,{ class: "form-control" }  %>
+           </div>
+            &emsp;&emsp; 
+　         <div class = "form-group search">
+               <%= form.label :市町村 %>
+               <%= form.select :area2, [@user.area2],{} ,{ class: "form-control" }  %>
+           </div>
+          </div> <!-- col -->
+        </div> <!-- row -->
+<!-- エリア選択end -->
+       <br>
+<!-- 家族構成選択 -->
+        <div class="row family_search">
+          <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+           <span style="font-size:14px; font-weight:bold;">
+            家族構成を選択
+           </span>
+          </div>
+          <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+           <br>
+            <% %w(一人暮らし 65歳以上の人がいる 子供がいる(未就学児含む) 未就学児がいる ).each.with_index do |ingredient,i| %>
+             <label>
+               <%= check_box_tag "family[]", ingredient,false,id:"family_ingredients_#{i}" %>
+               <%= ingredient %>
+               &emsp;
+              </label>
+            <% end %>
+          </div> <!-- col -->   
+        </div> <!-- row -->
+<!-- 家族構成選択end -->
+        <br>
+      </div>
            <%= form.hidden_field :tab, :value => 'tab1' %>
         <%= form.submit "検索", :class=>"btn btn-info" %>
         <% end %>  <!-- form end -->
@@ -40,7 +77,7 @@
            &emsp;&emsp;<%= paginate @allusers,params: {:tab => "tab1"}, :remote => true %>
         </div>
    </div> <!-- tab1 -->
-
+ 
    <div id="tab2" class="tab-pane container">
       <p> お気に入りに登録した人が表示されます </p>
        <p> 表示されない場合は、ページを更新してください </p>
@@ -73,12 +110,13 @@
                               <%= form.text_area :murmur_detail,placeholder: '発信する',class:'form-control'%>
                         </div>  <!-- field -->
                     <!-- picture-->       
-                       <div class="img_field" onClick="$('#file').click()" >  <!-- アイコン表示 jqueryでクリックされるとfiel_fieldに入る -->
+                       <div class="img_field img_point" onClick="$('#file').click()" >  <!-- アイコン表示 jqueryでクリックされるとfiel_fieldに入る -->
                            <i class="fa fa-image fa-2x"></i>
                        </div>
                         <div class = "form-group">
                            <%= form.file_field :murmur_picture, class: 'form_pic', style: "display:none;", id: "file" %>
                         </div>  <!-- form-group -->
+                        <br>
                         <div class="row">
                           <div class="col-lg-4 col-md-4 col-sm-4">
                               <br>

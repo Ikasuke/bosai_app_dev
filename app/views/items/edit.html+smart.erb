@@ -1,123 +1,144 @@
-<div class="items container">
+<div class="items container smart_edit">
 
 <%= form_with(model: @item, local: true) do |form| %>
-<div class="row">
-    <div class="col-md-3">
-<!--name-->       
-　    <div class="field ">
-       <% if @i_error_details.key?(:item_name) %>
-          <div class ="error_state">
-            名前<%= @i_error_messages[:item_name][0]%>
-          </div>
-          <%= form.label :"名前" %>
-          <%= form.text_field :item_name,  style: "background-color: #ffA0A0;" %>
-        <% else %>
-          <%= form.label :"名前" %>
-          <%= form.text_field :item_name%>
-        <% end %>
-      </div> <!-- field-->
-
-<!-- picture-->
-        <div class="preview col-md-10 col-sm-10 col-xs-6">
-        <%= image_tag @item.picture.url, class: "card-img-top"%>
-        </div>
-      <div class = "form-group">
-        <%= form.label :画像を選択 %><br />
-        <%= form.file_field :picture, class: 'form_pic' %>
-     </div>  <!-- form-group-->
-    </div>  <!-- col-md-3-->
-    <div class="col-md-4">
-     <table class="table table-borderless">   
-        <!-- 登録日 -->      
-                <tr>
-                  <td>登録日</td>
-                  <td>  <%= @item.created_at.strftime('%Y年%m月%d日')  %></td>
-                </tr>
- <!-- category-->
-                <tr>
-                  <td>カテゴリー</td>
-                  <td>
-                 <% if @i_error_details.key?(:category_id) %>
-              <div class ="error_state">
-                カテゴリー<%= @i_error_messages[:category_id][0]%>
-              </div>
-              <%= form.select :category_id, @category_selects,{:prompt => "category?"}, {:class => "btn category_tab"}%>
-            <%else%>
-              <%= form.select :category_id, @category_selects,{:prompt => "category?"}, {:class => "btn category_tab"}%>
+<%= form.hidden_field :category_id, :value => @item.category_id , class: "category_id" %>
+<div class="row ">
+  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+<!-- category-->
+   <table class="table">   
+        <tr>
+          <td>大分類</td>
+          <td>
+             &emsp;
+            <span class="water" >  <!-- アイコン表示 jqueryでクリックされるとfiel_fieldに入る -->
+                           <i class="water_icon fa fa-tint fa-3x"  id ="<%= @subcategories[1].to_json %>" style="color:#e0e0ff;"></i>
+                       </span>&emsp;
+            <span class="food">  <!-- アイコン表示 jqueryでクリックされるとfiel_fieldに入る -->
+                          <i class="food_icon fa fa-cutlery fa-3x"  id ="<%= @subcategories[2].to_json %>" style="color:#e0e0e0;"></i>
+             </span>&emsp;
+            <span class="goods">  <!-- アイコン表示 jqueryでクリックされるとfiel_fieldに入る -->
+                          <i class="goods_icon fa fa-home fa-3x"  id ="<%= @subcategories[3].to_json %>" style="color:#fff080;"></i>
+             </span>&emsp;
+             <br><br>
+             <div id="category_display" style="display:none;" ></div>
+           </td>
+        </tr>
+<!-- subcategory-->
+        <tr>
+           <td>小分類</td>
+           <td> 
+            <% if @i_error_details.key?(:subcategory) %>
+               <div class ="error_state">
+                 分類<%= @i_error_messages[:subcategory][0]%>
+               </div>
+            <% else %>
             <% end %>
-                  </td>
-                </tr>
- <!--数量--> 
-               
-                <tr>
-                  <td>  <%= form.label :"数量" %></td>
-                  <td>
-                        <% if @i_error_details.key?(:item_volume) %>
-                            <div class ="error_state">
-                             数量<%= @i_error_messages[:item_volume][0]%>
-                            </div>
-                            <div class="field">
-                              <%= form.text_field :item_volume, style: "background-color: #ffA0A0;"%>
-                            </div>
-                        <% else %>
-                            <div class="field">
-                             <%= form.text_field :item_volume%>
-                             </div>
-                        <% end %>
-                  </td>
-                </tr>
-                
+               <%= form.select :subcategory_id,[[@item.subcategory.subcategory_name,@item.subcategory.id]],{:prompt => "選択してください"}, {:class => "btn category_tab", :style=>"font-size:40px;"}%>
+           </td>
+        </tr>
+<!--name-->   
+        <tr><td>名前</td>
+        <td> 
+          <% if @i_error_details.key?(:item_name) %>
+            <div class ="error_state">
+              名前<%= @i_error_messages[:item_name][0]%>
+            </div>
+            <div class = "field form-group">
+              <%= form.text_field :item_name,class:'form-control',style: "background-color: #ffA0A0; font-size:40px;" %>
+            </div>
+          <% else %>
+            <div class = "field form-group">
+              <%= form.text_field :item_name,class:'form-control',style: "font-size:40px; height:60px;"%>
+            </div>
+          <% end %>
+        </td>
+        </tr>
+<!--数量--> 
+        <tr>
+        <td>  <%= form.label :"数量" %></td>
+        <td>
+           <% if @i_error_details.key?(:item_volume) %>
+              <div class ="error_state">
+                数量<%= @i_error_messages[:item_volume][0]%>
+              </div>
+              <div class="field">
+                <%= form.select :item_volume, @volume_selects,{:prompt => "数量を選択して下さい"}, {:class => "btn category_tab" , :style=>"font-size:40px; background-color: #ffA0A0;"}%>
+              </div>
+           <% else %>
+               <div class="field">
+               <%= form.select :item_volume, @volume_selects,{:prompt => "数量を選択して下さい"}, {:class => "btn category_tab", :style=>"font-size:40px;"}%>
+              </div>
+          <% end %>
+        </td>
+        </tr>
 <!--期限-->
-                <tr>
+　       <tr>
                  <td>期限</td>
                  <td>
                       <% if @e_check.nil? %>
                       <% else %>
                            <div id = <%=@e_check %> ></div>
                       <% end %>
-                       <%= check_box :expiry_check,"check_val",class:"expiry_check" %>
-　                      <%= label_tag :expiry_check, "期限を入力する"%>
+                       <div class="smart_check">
+                             <%= check_box :expiry_check,"check_val",class:"expiry_check",style:" transform: scale(3);" %>
+　                            <%= label_tag :expiry_check, "期限を入力する"%>
+                       </div>
                        <div id="expiry_parts" style="display:none;" >
-                       <%= form.date_select :expiry_parts, { default: { year: @expiry_d[0], month:@expiry_d[1], day: @expiry_d[2] }}, class: 'form-control' %>
+                       <%= form.date_select :expiry_parts, { default: { year: @expiry_d[0], month:@expiry_d[1], day: @expiry_d[2] }}, class: 'form-control',style: "font-size:40px; height:60px;" %>
                      </div>
                     
                    </td>
-                 </tr>
+        </tr>
+<!-- 登録日 -->      
+         <tr>
+         <td>登録日</td> 
+         <td> <%= Time.now.strftime('%Y年%m月%d日') %>(本日)</td>
+         </tr>
+<!-- picture-->   
+           <tr>
+           <td>写真</td>
+           <td> 
+          <div class = "preview">
+             <%= image_tag '' ,class:"card-img-top" %>
+          </div>
+          <div class = "form-group">
+              <%= form.file_field :picture, class: 'form_pic' %>
+          </div>  <!-- form-group -->
+          </td>
+          </tr>
      </table>
-    </div>  <!-- col-md-4 -->
-    <div class="col-md-5">
-        <br>
- <!--public_memo-->    
-  <div class="field form-group">
-     <%= form.label :"公開用memo" %>
-     <%= form.text_area :item_public_memo,class:'form-control'%>
-   </div>
- <!--private_memo-->    
+       <br>
+       <hr>
+<!--public_memo-->    
  <div class="field form-group">
-     <%= form.label :"非公開memo" %>
-     <%= form.text_area :item_private_memo,class:'form-control'%>
-   </div>
+    <%= form.label :"公開用memo" %>
+    <%= form.text_area :item_public_memo,class:'form-control',style: "font-size:40px; height:160px;"%>
+  </div>
+<!--private_memo-->    
+<div class="field form-group">
+    <%= form.label :"非公開memo" %>
+    <%= form.text_area :item_private_memo,class:'form-control',style: "font-size:40px; height:160px;"%>
+  </div>
+
+<div class="field">
+    <%= form.label :"公開する" %>
+    <%= form.check_box :item_open_flag, {style:" transform: scale(3);"},  "公開する", "公開しない"%>
+</div>
+
+ <%= form.submit "更新する", :class=>"btn btn-info",style: "font-size:40px;" %>
+  <%= link_to '削除する', @item, method: :delete, data: { confirm: '削除します。よろしいですか?' }, class: 'btn red',style: "font-size:40px;" %>
+  <%= link_to "戻る", home_path, class: 'btn btn-default gray',style: "font-size:40px;" %>
  
- <div class="field">
-     <%= form.label :"公開する" %>
-     <%= form.check_box :item_open_flag, {},  "公開する", "公開しない"%>
- </div>
- 
- <%= form.submit "更新する", :class=>"btn btn-info" %>
-  <%= link_to 'Destroy', @item, method: :delete, data: { confirm: '削除します。よろしいですか?' }, class: 'btn red' %>
-  <%= link_to "戻る", home_path, class: 'btn btn-default gray' %>
- 
- </div> <!--col-md-5 -->
+ </div> <!--col -->
  </div>   <!-- row -->
 <% end %>  <!--  form_with end -->
-
 </div>  <!-- items container -->
 
 <br>
 
-<div class="items container">
+<div class="items container smart_edit">
     <nav class = "navbar bg-warning navbar-dark box-header row">
-        <a class = "navbar-brand">コメント</a>
+        <a class = "navbar-brand" style="font-size:40px;">コメント</a>
       </nav>
 <!-- コメント欄始まり-->     
            <div class="row"> <!--コメント欄 -->    
@@ -130,30 +151,30 @@
     <!-- コメント記入部-->
                <%= form_with model: Comment.new do |form|%>
                  <div class="row">
-                    <div class="col-md-10">
+                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
                       <div class="field form-group" style="margin:0;">
                               <%= form.text_area :comment_detail,placeholder: 'コメントを記入してください',class:'form-control'%>
                       </div>  <!-- field box_comment_detail-->
                       <%= form.hidden_field :item_id, :value => @item.id %>
                       <!-- picture-->       
                        <div class="img_field" onClick='$("#file_<%= @item.id %>").click()' >  <!-- アイコン表示 jqueryでクリックされるとfiel_fieldに入る -->
-                           <i class="fa fa-image fa-2x"></i>
+                           <i class="fa fa-image fa-2x img_smart"></i>
                        </div>
+                        <br>
                         <div class = "form-group">
                            <%= form.file_field :comment_picture, class: "item_#{@item.id} form_pic_mc", style: "display:none;", id: "file_#{@item.id}" %>
                         </div>  <!-- form-group -->
                         <div class="row">
                           <div class="col-lg-4 col-md-4 col-sm-4">
-                              <br>
-                               <div id= "preview_<%= @item.id %>">
+                               <div class= "preview_<%= @item.id %>">
                                   <%= image_tag '' ,class:"card-img-top" %>
                                </div>
                           </div>
                         </div>
                         <!-- picture end -->
                     </div>
-                    <div class="col-md-2">
-                       <%= form.submit "コメント", :class=>"btn btn-info",:name=> "tab4_commit_id#{@item.id}" %>
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                       <%= form.submit "コメント", :class=>"btn btn-info",:name=> "tab4_commit_id#{@item.id}", :style=>"font-size:36px;" %>
                     </div>   <!-- col-md-2 -->
                  </div>  <!-- コメント記入部 row　end-->
                <% end %>  <!-- form_with Commnet  -->

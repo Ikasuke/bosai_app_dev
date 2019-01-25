@@ -1,25 +1,49 @@
+<% if @item.comments.blank? %>
+<% else %>      
+<div class="row comments" id="<%= @tab %>_comments_<%= @item.id %>" name="<%= @tab %>_comments_<%= @item.id %>" >
+ <% @item.comments.each do |comment| %>
 
- <div class="row comments" id="<%= @tab %>_comments_<%= @item.id %>" name="<%= @tab %>_comments_<%= @item.id %>" >
-                 <% @item.comments.each do |comment| %>
-   <!-- 画像始まり-->    
-                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                    <% if comment.user.id == current_user.id %>
-                        <%= link_to home_path do %>
-                        <div class= "p-3 com_frame">
-                           <%= image_tag comment.user.avatar.url, class: "com_pic rounded-circle"%>
-                        </div>
-                      <% end %>
+   <% if comment.user.id == current_user.id %>
+<!-- cuurent.user のコメント　　右へ-->
+     <!-- 吹き出し始まり-->                
+            <div class=" col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                <div class="comment_current">  
+                    <% if comment.comment_picture_file_name.nil? %>
                     <% else %>
-                      <%= link_to user_path(comment.user.id) do %>
-                        <div class= "p-3 com_frame">
-                           <%= image_tag comment.user.avatar.url, class: "com_pic rounded-circle"%>
-                        </div>
-                      <% end %>
-                    <% end %>
-                    
+                      <div class= " p-3 pic_frame">
+                         <%= image_tag comment.comment_picture.url, class: "item_pic"%>
+                      </div>
+                   <% end %>
+                       <p><%= simple_format(comment.comment_detail) %></p>
+                       <div class="comment_time">
+                          <p><%= comment.created_at.strftime('%Y/%m/%d-%H:%M') %>
+                       </div>
+                </div>
+             </div> 
+     <!-- 吹き出し終わり -->
+     <!-- 画像始まり-->    
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                <%= link_to home_path do %>
+                   <div class= "p-3 com_frame">
+                     <%= image_tag comment.user.avatar.url, class: "com_pic rounded-circle"%>
+                   </div>
+                <% end %>    
                       <p> <%= comment.user.public_name %></p>
                  </div>
-   <!-- 画像終わり-->    
+   <!-- 画像終わり--> 
+   
+   <% else %>
+<!-- no cuurent.user のコメント　　左へ-->    
+     <!-- 画像始まり-->    
+             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                    <%= link_to user_path(comment.user.id) do %>
+                        <div class= "p-3 com_frame">
+                           <%= image_tag comment.user.avatar.url, class: "com_pic rounded-circle"%>
+                        </div>
+                    <% end %>          
+                      <p> <%= comment.user.public_name %></p>
+             </div>
+     <!-- 画像終わり-->    
      <!-- 吹き出し始まり-->                
                  <div class=" col-lg-9 col-md-9 col-sm-9 col-xs-9">
                      <div class="comment">  
@@ -36,8 +60,11 @@
                     </div>
                  </div> 
      <!-- 吹き出し終わり --> 
-                 <% end %> 
-                </div> <!-- row comments -->
+    <% end %>  <!-- if corrent.user? end -->
+ <% end %>  <!-- @item.comment.each end-->
+</div> <!-- row comments -->
+<% end %>
+<!------ エラーコメント表示用  -->
                  <div class ="row comment_error">
                 <% if @c_errors_messages.blank? %>
                 <% else %>

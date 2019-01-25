@@ -1,55 +1,63 @@
 <div class="items container">
     
-<%= form_with model: Item.new do |form|%>    
+<%= form_with model: Item.new do |form|%>   
  <div class="row">
-     <div class="col-md-3">
-<!--name-->    
-   <br>
-       <div class="field">
+     <div class="col-md-6">
+       <br>
+<!-- category-->
+   <table class="table ">   
+        <tr>
+          <td>大分類</td>
+          <td>
+             &emsp;
+            <span class="water" >  <!-- アイコン表示 jqueryでクリックされるとfiel_fieldに入る -->
+                           <i class="water_icon fa fa-tint fa-3x"  id ="<%= @subcategories[1].to_json %>" style="color:#e0e0ff;"></i>
+                       </span>&emsp;
+            <span class="food">  <!-- アイコン表示 jqueryでクリックされるとfiel_fieldに入る -->
+                          <i class="food_icon fa fa-cutlery fa-3x"  id ="<%= @subcategories[2].to_json %>" style="color:#e0e0e0;"></i>
+             </span>&emsp;
+            <span class="goods">  <!-- アイコン表示 jqueryでクリックされるとfiel_fieldに入る -->
+                          <i class="goods_icon fa fa-home fa-3x"  id ="<%= @subcategories[3].to_json %>" style="color:#fff080;"></i>
+             </span>&emsp;
+             <br><br>
+             <div id="category_display" style="display:none;" ></div>
+           </td>
+        </tr>
+
+<!-- subcategory-->
+        <tr>
+           <td>小分類</td>
+           <td> 
+            <% if @i_error_details.key?(:subcategory) %>
+               <div class ="error_state">
+                 分類<%= @i_error_messages[:subcategory][0]%>
+               </div>
+            <% else %>
+            <% end %>
+               <%= form.select :subcategory_id,[],{:prompt => "選択してください"}, {:class => "btn category_tab"}%>
+           </td>
+        </tr>
+      
+<!--name-->   
+    <tr><td>名前</td>
+      <td> 
         <% if @i_error_details.key?(:item_name) %>
           <div class ="error_state">
             名前<%= @i_error_messages[:item_name][0]%>
           </div>
-          <%= form.label :"名前" %>
-          <%= form.text_field :item_name,  style: "background-color: #ffA0A0;" %>
-        <% else %>
-          <%= form.label :"名前" %>
-          <%= form.text_field :item_name%>
-        <% end %>
-       </div>  <!-- field box_name-->
-<!-- picture-->       
-          <div class = "preview col-md-10 col-sm-10 col-xs-6">
-             <%= image_tag '/noimage.jpg' ,class:"card-img-top" %>
+         <div class = "field form-group">
+          <%= form.text_field :item_name,class:'form-control',style: "background-color: #ffA0A0;" %>
           </div>
-        
-          <div class = "form-group">
-               <%= form.label :画像を選択 %><br />
-              <%= form.file_field :picture, class: 'form_pic' %>
-          </div>  <!-- form-group -->
-     </div>  <!-- col-md-3-->
-     <div class="col-md-4">
-　    <table class="table table-borderless">   
-<!-- 登録日 -->      
-        <tr>
-          <td>登録日</td>
-          <td> <%= Time.now.strftime('%Y年%m月%d日') %>(本日)</td>
-        </tr>
-<!-- category-->
-        <tr>
-          <td>カテゴリー</td>
-          <td>
-            <% if @i_error_details.key?(:category_id) %>
-              <div class ="error_state">
-                カテゴリー<%= @i_error_messages[:category_id][0]%>
-              </div>
-              <%= form.select :category_id, @category_selects,{:prompt => "category?"}, {:class => "btn category_tab"}%>
-            <%else%>
-              <%= form.select :category_id, @category_selects,{:prompt => "category?"}, {:class => "btn category_tab"}%>
-            <% end %>
-          </td>
-        </tr>
-<!--数量--> 
+        <% else %>
+        <div class = "field form-group">
+          <%= form.text_field :item_name,class:'form-control'%>
+          </div>
+        <% end %>
       
+       </td>
+       </tr>
+       <!--数量--> 
+  
          <tr>
           <td>  <%= form.label :"数量" %></td>
           <td>
@@ -58,16 +66,17 @@
                 数量<%= @i_error_messages[:item_volume][0]%>
               </div>
               <div class="field">
-                <%= form.text_field :item_volume, style: "background-color: #ffA0A0;"%>
+                <%= form.select :item_volume, @volume_selects,{:prompt => "数量を選択して下さい"}, {:class => "btn category_tab"},style: "background-color: #ffA0A0;"%>
               </div>
             <% else %>
                <div class="field">
-                <%= form.text_field :item_volume%>
+               <%= form.select :item_volume, @volume_selects,{:prompt => "数量を選択して下さい"}, {:class => "btn category_tab"}%>
               </div>
             <% end %>
           </td>
          </tr>
-<!--期限-->
+         <!--期限-->
+         
         <tr>
           <td>期限</td>
           <td>
@@ -82,21 +91,57 @@
                     </div>
           </td>
         </tr>
+        <!-- 登録日 -->      
+        <tr>
+          <td>登録日</td>
+          <td> <%= Time.now.strftime('%Y年%m月%d日') %>(本日)</td>
+        </tr>
       </table>
-     </div>  <!-- col-md-4 -->
-     <div class="col-md-5">
+    </div>  <!-- col-md-3-->
+    <br>
+     <div class="col-md-6">
+     <br>
+<!-- picture--> 
+         <div class="row"><div class="col-md-5"></div>
+           <div class="col-md-3"> 
+            <p style="text-align:left; margin:0;"> &emsp;写真 </p>
+　           <div class="img_field" onClick="$('#file').click()" style="height:60px;" >  <!-- アイコン表示 jqueryでクリックされるとfiel_fieldに入る -->
+                   <i class="fa fa-image fa-3x img_point"></i>
+             </div>
+           </div>
+           <div class="col-md-4">
+              <div class = "form-group">
+                  <%= form.file_field :picture, class: 'form_pic', style: "display:none;", id: "file" %>
+              </div>  <!-- form-group -->
+           </div>
+          </div> <!-- row end-->
+          <br>
+          <div class="row"> <div class="col-md-3"></div>
+              <div class="col-lg-6 col-md-6 col-sm-6">
+                      <div class = "preview">
+                          <%= image_tag '' ,class:"card-img-top" %>
+                      </div>
+              </div>
+          </div>
        <br>
 <!--public_memo-->    
- <div class="field form-group">
-    <%= form.label :"公開用memo" %>
-    <%= form.text_area :item_public_memo,class:'form-control'%>
-  </div>
+          <div class="row">
+              <div class="col-md-12">
+                 <div class="field form-group">
+                   <%= form.label :"公開用memo" %>
+                  <%= form.text_area :item_public_memo,class:'form-control'%>
+                 </div>
+               </div>
+           </div>
 <!--private_memo-->    
-<div class="field form-group">
-    <%= form.label :"非公開memo" %>
-    <%= form.text_area :item_private_memo,class:'form-control'%>
-  </div>
-
+          <div class="row">
+              <div class="col-md-12">
+                  <div class="field form-group">
+                    <%= form.label :"非公開memo" %>
+                    <%= form.text_area :item_private_memo,class:'form-control'%>
+                 </div>
+              </div>
+          </div>
 <div class="field">
     <%= form.label :"公開する" %>
     <%= form.check_box :item_open_flag, {},  "公開する", "公開しない"%>
