@@ -1,0 +1,80 @@
+<div style="font-size:40px;">
+<br>
+  <nav class = "navbar bg-warning navbar-dark box-header row">
+    <a class = "navbar-brand" style="color:#ffffff; font-size:40px;">あなたの防災グッズ</a>
+  </nav>
+  
+  <!-- タブボタン部分 -->
+<ul class="nav nav-tabs" style="font-size:36px;padding: 20px 20px;">
+  <li class="nav-item">
+    <a href="#tab1" class="nav-link active" data-toggle="tab">登録順</a>
+  </li>
+  <li class="nav-item">
+    <a href="#tab2" class="nav-link" data-toggle="tab"><i class="fa fa-tint fa-2x" style="color:#4080ff;"></i></a>
+  </li>
+   <li class="nav-item">
+    <a href="#tab3" class="nav-link" data-toggle="tab"><i class="fa fa-cutlery fa-2x" style="color:#808080;"></i></a>
+  </li>
+   <li class="nav-item">
+    <a href="#tab4" class="nav-link" data-toggle="tab"><i class="fa fa-home fa-2x" style="color:#f8c10e;"></i></a>
+  </li>
+  <li class="nav-item">
+    <a href="#tab5" class="nav-link" data-toggle="tab">期限近い</a>
+  </li>
+  <li class="nav-item">
+    <a href="#tab6" class="nav-link" data-toggle="tab">新しいコメント (<%= @all_unread_counts%>件) </a>
+  </li>
+</ul>
+
+    <br>
+   <div class="tab-content">
+     <div id="tab1" class="tab-pane active">
+         <% if @items.nil? %>
+         <% else%>
+            <div class="home_tab1">
+             <%= render partial: 'tab1', locals: {items: @items} %>
+            </div> 
+         <% end %>  <!-- if end -->
+        <div class = "row home_tab1_paginate">
+           &emsp;&emsp;<%= paginate @items,params: {:tab => "tab1"}, :remote => true %>
+        </div>
+             <br><br><br><br>
+     </div>   <!-- tab1 -->
+     <div id="tab2" class="tab-pane home_tab2">
+          <%= render partial: 'tab_category', locals: { item_cate_sort: @item_cate_sort,category: @categories.find(1)} %>
+     </div>  <!-- tab2-->
+          <br><br><br><br>
+       <div id="tab3" class="tab-pane home_tab3">
+           <%= render partial: 'tab_category', locals: { item_cate_sort: @item_cate_sort,category: @categories.find(2)} %>
+     </div>  <!-- tab3-->
+          <br><br><br><br>
+       <div id="tab4" class="tab-pane home_tab4">
+            <%= render partial: 'tab_category', locals: { item_cate_sort: @item_cate_sort,category: @categories.find(3)} %>
+     </div>  <!-- tab4-->
+           <br><br><br><br>
+     <div id="tab5" class="tab-pane home_tab5">  <!-- 期限近いもの -->
+        <%= render partial: 'tab5', locals: { items_expiry_array:  @items_expiry_array} %>
+    </div>  <!-- tab5-->
+         <br><br><br><br>
+      <div id="tab6" class="tab-pane">
+         <div class="row" >
+         <% if @items_unread.nil? %>
+         <% else%>
+            <% @items_unread.each do |item| %>
+              <% counts = 0 %>
+              <% item.comments.each do |comment| %>
+                <% if comment.read == "unread" %>
+                    <% counts = counts +1 %> 
+                <% end %> 
+              <% end %>
+              <% if counts > 0 %> 
+                 <%= render partial: 'item_table', locals: {item: item} %> 
+              <% end %>
+           <% end %> <!-- @items_unread.each end-->
+         <% end %>  <!-- if end -->
+        </div> <!-- row -->
+      </div>  <!-- tab6-->
+           <br><br><br><br>
+  </div>
+    </div>  <!-- tab-content -->
+  

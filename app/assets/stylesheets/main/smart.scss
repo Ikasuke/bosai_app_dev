@@ -1,0 +1,79 @@
+.smart_footer{
+    font-size:28px;
+}
+.items_smart{
+     text-align: center;
+  }
+
+  .smart_table td {
+    border-top: solid 1px !important;
+  }
+  .smart_header{
+    font-size:28px;
+}
+
+.smart_footer li {
+   display: inline;
+   padding: 10px 30px;
+
+}
+
+.wrapper{
+  min-height: 86vh;
+  position: relative;/*←相対位置*/
+}
+footer {
+  width: 100%;	  /* フッターの横幅を指定する */
+ position: fixed;
+  bottom: 0; /*下に固定*/
+  background-color: #f0c020;	/* フッターの背景色を指定する */
+   color: #FFFFFF;	/* フッターのフォントの色を指定する */
+ }	
+.contents{
+    overflow: auto;   
+  height: 86vh;
+}
+
+  /*===============================================================
+      nav_profile  プロフィールをsimple_sidebarで表示
+  ================================================================*/
+  .nav_profile {
+    background: #fff;
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
+  }
+  .nav_profile .nav_profile_list li {
+    border-bottom: 1px solid #ccc;
+    box-sizing: border-box;
+    width: 100%;
+    word-break: break-all;
+  }
+  .nav_profile .nav_profile_list li a {
+    color: #333;
+    display: block;
+    padding: 15px 10px;
+    text-decoration: none;
+  }
+   
+
+  .pic_frame_smart{
+    position: relative;
+   border:solid 1px;
+   height:200px;
+}
+// 写真部分の右上に赤い丸
+.pic_frame_smart p{
+    position: absolute;
+    color: #ffffff;
+    background-color: #ff0000;
+    top:0;
+    right:0;
+    margin: 0px;
+    
+    text-align: center;
+    line-height: 30px;
+   
+    width: 30px;
+ height: 30px;
+    border-radius: 50%;
+}

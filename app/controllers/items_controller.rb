@@ -39,7 +39,6 @@ class ItemsController < ApplicationController
       @i_error_messages = params[:i_error_messages]   # エラーのメッセージ
       @i_error_details = params[:i_error_details]     #エラーが表示された部分が格納
     end
-    render :layout => "item_new.html.erb"
   end
 
   def edit #自分のitemしか編集できないようにする
