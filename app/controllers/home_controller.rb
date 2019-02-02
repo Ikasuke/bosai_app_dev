@@ -3,7 +3,6 @@
 
 class HomeController < ApplicationController
   before_action :authenticate_admin_user!, only: [:adminhome]
-  before_action :detect_browser
   # kaminari paging 一ページあたりの表示数
   PER = 8  # tab1
   PER_2 = 4  # tab2
@@ -89,10 +88,4 @@ class HomeController < ApplicationController
   end
 
   private
-
-  def detect_browser
-    if browser.device.mobile? #browser.chrome? #
-      request.variant = :smart
-    end
-  end
 end   #class end

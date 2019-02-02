@@ -9,9 +9,9 @@
   .top_phrase p{
       position: absolute;
       top: 50%;
-      left: 50%;
-      -webkit-transform: translate(-50%, -50%);
-      transform: translate(-50%, -50%);
+      left: 40%;
+      -webkit-transform: translate(-40%, -50%);
+      transform: translate(-40%, -50%);
       line-height: 140%;
       text-align: center;
   }
@@ -63,5 +63,62 @@
     }
 
 .start_info h5{
+    border-bottom: solid 3px #f0c020;
+}
+
+ /*===============================================================
+      smart_phone
+  ================================================================*/
+  .top_phrase_smart{
+    position: relative;
+     height: 300px; 
+     border-radius: 10px;
+     font-size: 58px;
+     font-weight: bold;
+     color: #ffffff;
+     background-color: #f0d040;
+  }
+  .top_phrase_smart p{
+      position: absolute;
+      padding: 60px 50px;
+      line-height: 160%;
+      text-align: center;
+  }
+
+  .sub_phrase_smart{
+    position: relative;
+     height: 180px; 
+     border-radius: 5px;
+     font-size: 32px;
+     font-weight: bold;
+     color: #606060;
+     background-color: #ffffa0;
+  }
+  .sub_phrase_smart p{
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translate(0%, -50%);
+    transform: translate(0%, -50%);
+    line-height: 140%;
+}
+
+.bs_explain_smart{
+    border-radius: 5px;
+    border: solid 2px;
+    border-color: #c0c0c0;
+    background-color: #fffff7;
+    margin: 10px;
+}
+.bs_explain_smart h5{
+//background-color: #ffffa0;
+font-size: 48px;
+ border-bottom: solid 3px #f0c020;
+}
+.bs_explain_smart p{
+    font-size: 40px;
+    color: #606060;
+    }
+
+.start_info_smart h5{
     border-bottom: solid 3px #f0c020;
 }

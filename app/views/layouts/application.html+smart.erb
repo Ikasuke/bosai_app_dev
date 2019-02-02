@@ -13,9 +13,12 @@
    
   <div class="wrapper">
 <!-- header -->
+    <header>
      <%= render "layouts/header" %>
+     </header>
 <!-- header end -->
 <!-- simple_sidebar --> 
+   <% if user_signed_in? %>
      <nav class="nav_profile">
       	<ul class="nav_profile_list" style="font-size:40px;list-style: none;">
 		     <li>プロフィール</li>
@@ -66,9 +69,11 @@
 	     </ul>
 	     <!-- /.gNav__list -->
      </nav>
+    <% end %>
 <!-- simple_sidebar end -->
-<!-- main6 footer -->
-     <div id="mainContent">
+<!-- main& footer -->
+     <div id="mainContent" style="font-size:48px;">
+       <br><br>
         <%= flash_message(flash[:success], :success) if flash[:success] %>
         <%= flash_message(flash[:error], :danger) if flash[:error] %>
         <%= flash_message(flash[:alert], :warning) if flash[:alert] %>
@@ -78,7 +83,6 @@
         <%= render "layouts/footer" %>         
       </footer>
      </div>
-
    </div> <!-- wrapper end-->
   </body>
 </html>

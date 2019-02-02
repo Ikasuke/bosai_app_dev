@@ -1,8 +1,9 @@
 <div class="items_smart">
-    
+ <br><br>
+  <h1 style="font-size:64px;"> 防災アイテムの新規登録 </h1>
+  <br>
 <%= form_with model: Item.new do |form|%>    
 <div class="smart_new">
-
 <!-- category-->
    <table class="table smart_table" >   
         <tr>
@@ -119,11 +120,14 @@
     <%= form.check_box :item_open_flag, {style:" transform: scale(3);"},  "公開する", "公開しない"%>
     &emsp;<%= form.label :"公開する" %>
 </div>
-
-<%= form.submit "登録する", :class=>"btn btn-info",style: "font-size:40px; width:300px;" %>
-<br><br><br><br><br><br>
+<br>
+<%= form.submit "登録する", :class=>"btn btn-info",style: "font-size:52px; width:400px;" %>
+<br><br>
 
 </div>  
 <% end %>  <!--  form_with end -->
 
 </div> 
+
+<%= render "layouts/yield_footer" %>  
+  <br><br><br><br>

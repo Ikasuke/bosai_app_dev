@@ -1,5 +1,6 @@
-<div class="smart_footer">
- <ul class="nav">
+<% if user_signed_in? %>
+ <div class="smart_footer">
+  <ul class="nav">
    <li>
 　   <%= link_to home_path do %>
        <i class="fa fa-file-text-o fa-3x"></i>
@@ -30,4 +31,22 @@
           <p> &emsp;つながり</p>
        <% end %>
     </li>
-</div>
+  </ul>
+ </div>
+<% else %>
+ <div class="smart_footer_before_login">
+  <ul class="nav">
+     <li>
+    　<%= link_to root_path do %>
+         <i class="fa fa-reply fa-3x "></i> 
+         <p>&emsp;トップ</p>
+      <% end %>
+     </li>
+     <li>
+    　<%= link_to start_info_path do %>
+         <i class="fa fa-info fa-3x"></i> 
+         <p>防災情報</p>
+      <% end %>
+   </li>
+  </ul>
+<% end %>

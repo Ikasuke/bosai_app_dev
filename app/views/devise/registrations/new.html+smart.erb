@@ -1,0 +1,36 @@
+<h1 style="font-size:64px;">新規登録</h1>
+<div style="font-size:48px;margin:30px;">
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= devise_error_messages! %>
+
+  <div class="form-group">
+    <%= f.label :ユーザーネーム（ローマ字）%><br />
+    <%= f.text_field :name, autofocus: true, autocomplete: "name", class: "", placeholder: "Enter username",style: "font-size:40px; height:100px; width:800px;  border:solid;" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :メールアドレス %><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "", placeholder: "Enter email",style: "font-size:40px; height:100px; width:800px;  border:solid;" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :パスワード %>
+    <% if @minimum_password_length %>
+    <em>(<%= @minimum_password_length %> 文字以上入力)</em>
+    <% end %><br />
+    <%= f.password_field :password, autocomplete: "off", class: "", placeholder: "Password",style: "font-size:40px; height:100px; width:800px;  border:solid;" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :パスワード再入力 %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "off", class: "", placeholder: "password_confirmation",style: "font-size:40px; height:100px; width:800px;  border:solid;" %>
+  </div>
+  <br>
+  <div class="actions pb-5">
+    <%= f.submit "登録", class: "btn btn-primary",style: "font-size:48px; width:400px;" %>
+  </div>
+<% end %>
+
+<%= render "devise/shared/links" %>
+<br><br><br><br>
+</div>

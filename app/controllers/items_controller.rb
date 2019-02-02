@@ -1,7 +1,7 @@
 # encoding: utf-8
 class ItemsController < ApplicationController
   before_action :set_item, only: [:edit, :update, :destroy, :show]
-  before_action :detect_browser
+
   PER = 10
 
   def show #他人のも観れる
@@ -77,7 +77,10 @@ class ItemsController < ApplicationController
         @expiry_d = [@item.item_expiry.strftime("%Y").to_i, @item.item_expiry.strftime("%m").to_i, @item.item_expiry.strftime("%d").to_i]
       end
 
-      render :layout => "item_new.html.erb"
+      if browser.device.mobile? #browser.chrome? #
+      else
+        render :layout => "item_new.html.erb"
+      end
     else
       redirect_to item_url     #自分のじゃないので、showへ
     end
@@ -262,11 +265,5 @@ class ItemsController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def item_params
     params.require(:item).permit(:item_name, :picture, :item_volume, :item_expiry, :item_public_memo, :item_private_memo, :item_open_flag, :subcategory_id)
-  end
-
-  def detect_browser
-    if browser.device.mobile? #browser.chrome? #
-      request.variant = :smart
-    end
   end
 end # class end

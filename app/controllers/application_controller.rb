@@ -1,11 +1,12 @@
+# encoding: utf-8
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :authenticate_user!
-
+  before_action :detect_browser
   rescue_from SecurityError do |_exception|
-    redirect_to root_url, notice: 'アドミン画面へのアクセス権限がありません'
+    redirect_to root_url, notice: "アドミン画面へのアクセス権限がありません"
   end
 
   protected
@@ -22,5 +23,11 @@ class ApplicationController < ActionController::Base
 
   def authenticate_admin_user!
     raise SecurityError unless current_user.try(:admin?)
+  end
+
+  def detect_browser
+    if browser.device.mobile? #browser.chrome? #
+      request.variant = :smart
+    end
   end
 end
