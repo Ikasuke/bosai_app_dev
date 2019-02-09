@@ -4,9 +4,9 @@
 class HomeController < ApplicationController
   before_action :authenticate_admin_user!, only: [:adminhome]
   # kaminari paging 一ページあたりの表示数
-  PER = 8  # tab1
-  PER_2 = 4  # tab2
-  PER_3 = 4  # tab5
+  PER = 24  # tab1
+  PER_2 = 12  # tab2-4
+  PER_3 = 12  # tab5
 
   def index
     @user = current_user
