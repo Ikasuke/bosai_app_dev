@@ -1,6 +1,6 @@
 # encoding: utf-8
 class UsersController < ApplicationController
-  PER = 10
+  PER = 12
 
   def profile
     @user = current_user
