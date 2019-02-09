@@ -1,0 +1,53 @@
+<h1 style="font-size:64px;">ログイン情報編集</h1>
+<div style="font-size:48px;margin:30px;">
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+  <%= devise_error_messages! %>
+
+  <div class="form-group">
+    <%= f.label :ユーザーネーム（ローマ字） %><br />
+    <%= f.text_field :name, autofocus: true, autocomplete: "name", class: "", placeholder: "Enter username",style: "font-size:40px; height:100px; width:800px;  border:solid;" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :ログイン用メールアドレス %><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "", placeholder: "Enter email",style: "font-size:40px; height:100px; width:800px;  border:solid;" %>
+  </div>
+
+  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :新しいパスワード %> <i>(変更しない場合は、空欄のままにしておいて下さい。)</i><br />
+     <em><%= @minimum_password_length %> 文字以上</em>
+    <%= f.password_field :password, autocomplete: "off", class: "", placeholder: "Password",style: "font-size:40px; height:100px; width:800px;  border:solid;" %>
+    <% if @minimum_password_length %>
+      <br />   
+    <% end %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :パスワード再入力 %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "off", class: "", placeholder: "password_confirmation",style: "font-size:40px; height:100px; width:800px;  border:solid;" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :現在のパスワード %> <i>(ユーザー情報を変更する場合には入力が必要です。)</i><br />
+    <%= f.password_field :current_password, autocomplete: "off", class: "", placeholder: "Current password",style: "font-size:40px; height:100px; width:800px;  border:solid;" %>
+  </div>
+
+  <div class="actions pb-5">
+    <%= f.submit "アップデート", class: "btn btn-primary",style: "font-size:48px; width:400px;" %>
+     <%= link_to"戻る", home_path,:class=> 'btn gray',style: "font-size:48px; width:400px;"  %>
+  </div>
+<% end %>
+
+<h1 style="font-size:64px;">アカウント削除</h1>
+
+<p>削除する場合はこちらです。
+<%= button_to "アカウントを削除する", registration_path(resource_name), data: { confirm: "本当に、削除しますか？" }, method: :delete, class: "btn btn-danger mb-5", style: "font-size:48px;" %></p>
+
+<%= render "layouts/yield_footer" %>  
+<br><br><br><br>
+</div>
+<br>
