@@ -1,0 +1,85 @@
+
+.smart_footer{
+    font-size:28px;
+}
+.items_smart{
+     text-align: center;
+     font-size: 40px;
+  }
+　
+  .smart_table td {
+    border-top: solid 1px !important;
+  }
+  .smart_header{
+    font-size:28px;
+}
+
+.smart_footer li {
+   display: inline;
+   padding: 20px 30px 0 30px;
+}
+.smart_footer_before_login {
+  font-size:28px;
+  padding: 0 50px;
+}
+.smart_footer_before_login li {
+  display: inline;
+  padding: 20px 55px 0px 55px;
+}
+
+.wrapper{
+  min-height: 86vh;
+  position: relative;/*←相対位置*/
+}
+header {
+  width: 100%;
+  position: fixed;
+  z-index: 4;   /* headerがmainより上に前面にくるように  */
+  
+}
+footer {
+  width: 100%;	  /* フッターの横幅を指定する */
+ position: fixed;
+  bottom: 0; /*下に固定*/
+  background-color: #f0c020;	/* フッターの背景色を指定する */
+   color: #FFFFFF;	/* フッターのフォントの色を指定する */
+ }	
+.contents{
+    overflow: auto;   
+  height: 86vh;
+}
+
+  /*===============================================================
+      nav_profile  プロフィールをsimple_sidebarで表示
+  ================================================================*/
+  .nav_profile {
+    background: #fff;
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
+  }
+  .nav_profile .nav_profile_list li {
+    border-bottom: 1px solid #ccc;
+    box-sizing: border-box;
+    width: 100%;
+    word-break: break-all;
+  }
+  .nav_profile .nav_profile_list li a {
+    color: #333;
+    display: block;
+    padding: 15px 10px;
+    text-decoration: none;
+  }
+   
+.smart_new{
+  font-size: 40px;
+}
+
+.img_smart{
+  cursor: pointer;
+}
+
+// タッチスクロールを滑らかに
+html {
+  -webkit-overflow-scrolling: touch;
+}
+

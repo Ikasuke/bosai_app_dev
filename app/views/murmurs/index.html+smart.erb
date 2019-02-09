@@ -1,0 +1,136 @@
+<div class="items">
+        <nav class = "navbar bg-warning navbar-dark box-header">
+          <a class = "navbar-brand" style="color:#ffffff; font-size:48px;">つながり</a>
+        </nav>
+
+<!-- タブボタン部分 -->
+<ul class="nav nav-tabs">
+        <li class="nav-item" style="border: solid 1px; border-color: #c0c0c0;">
+          <a href="#tab1" class="nav-link active" data-toggle="tab">他のユーザーの発信</a>
+        </li>
+        <li class="nav-item" style="border: solid 1px; border-color: #c0c0c0;">
+          <a href="#tab2" class="nav-link" data-toggle="tab">お気に入りの人</a>
+        </li>
+        <li class="nav-item" style="border: solid 1px; border-color: #c0c0c0;">
+          <a href="#tab3" class="nav-link" data-toggle="tab">発信する</a>
+        </li>
+      </ul>
+
+<!-- タブ内容部分 -->
+　<div class="tab-content">
+    <div id="tab1" class="tab-pane active">   
+      <%= form_with(url: '/murmurs',method: 'get') do |form|%>
+
+       <div>
+  <!-- エリア選択 -->
+        <div class="area_search">
+          <div style="font-weight:bold;">
+           地域を選択
+          </div>
+           <br>
+           <div class = "form-group">
+            <%= form.label :都道府県 %>
+            <%= form.select :area1, [@user.area1],{} ,{ class: "" }  %>
+           </div>
+            &emsp;&emsp; 
+　         <div class = "form-group">
+               <%= form.label :市町村 %>
+               <%= form.select :area2, [@user.area2],{} ,{ class: "" }  %>
+           </div>
+        </div> <!-- area_search end -->
+<!-- エリア選択end -->
+       <br>
+<!-- 家族構成選択 -->
+        <div class="family_search">
+          <div class="font-weight:bold;">
+            家族構成を選択
+          </div>
+           <br>
+            <% %w(一人暮らし 65歳以上の人がいる 子供がいる(未就学児含む) 未就学児がいる ).each.with_index do |ingredient,i| %>
+             <div>
+               <%= check_box_tag "family[]", ingredient,false,id:"family_ingredients_#{i}",style:" transform: scale(3);" %>
+               &emsp;<%= ingredient %>
+               &emsp;
+              </div>
+            <% end %>
+        </div> <!--family_search end -->
+<!-- 家族構成選択end -->
+        <br>
+      </div>
+           <%= form.hidden_field :tab, :value => 'tab1' %>
+        <%= form.submit "検索", :class=>"btn btn-info", :style=>"font-size:54px; width:200px;" %>
+        <% end %>  <!-- form end -->
+      <br>
+       <hr style="border: solid 3px;color:#c0c0c0;">
+      <div class="" id="region_search_tab1">
+          <%= render partial: 'region_search', locals: {allusers: @allusers, max_items: @max_items, favorite_hash: @favorite_hash, tab: "tab1", new_murmurs: @new_murmurs} %>   <!-- 検索結果が表示される -->
+      </div>
+      <div class = "row region_search_tab1_pagenate">
+           &emsp;&emsp;<%= paginate @allusers,params: {:tab => "tab1"}, :remote => true %>
+        </div>
+   </div> <!-- tab1 -->
+ 
+   <div id="tab2" class="tab-pane">
+      <p> お気に入りに登録した人が表示されます </p>
+       <p> 表示されない場合は、ページを更新してください </p>
+      <hr>
+    <div class="" id="region_search_tab2">
+          <%= render partial: 'region_search', locals: {allusers: @favorite_users, max_items: @max_items, favorite_hash: @favorite_hash, tab: "tab2", new_murmurs: @new_murmurs} %>   <!-- 検索結果が表示される -->
+      </div>
+      <div class = "row region_search_tab2_pagenate">
+           &emsp;&emsp;<%= paginate @favorite_users,params: {:tab => "tab2"}, :remote => true %>
+        </div>
+
+
+   </div>  <!-- tab2 end-->
+   <div id="tab3" class="tab-pane">
+      　   
+<!--  つぶやき記入部 -->
+        <%= form_with model: Murmur.new do |form|%>
+                 <div class="row" style="margin:10px;">
+                    <div class="col-md-9">
+                       <div class="m_errors_messages" style="color:#ff0000;"></div>
+                        <div class="field form-group murmur_write" style="margin:0;">
+                              <%= form.text_area :murmur_detail,placeholder: '発信する',class:'',style: "height:300px;"%>
+                        </div>  <!-- field -->
+                    <!-- picture-->       
+                       <div class="img_field img_point" onClick="$('#file').click()" >  <!-- アイコン表示 jqueryでクリックされるとfiel_fieldに入る -->
+                           <i class="fa fa-image fa-2x"></i>
+                       </div>
+                        <div class = "form-group">
+                           <%= form.file_field :murmur_picture, class: 'form_pic', style: "display:none;", id: "file" %>
+                        </div>  <!-- form-group -->
+                        <br>
+                        <div class="row">
+                          <div class="col-lg-6 col-md-6 col-sm-6">
+                              <br>
+                               <div class = "preview">
+                                  <%= image_tag '' ,class:"card-img-top" %>
+                               </div>
+                          </div>
+                        </div>
+                        <!-- picture end -->
+                    </div> <!-- col end -->
+                    <div class="col-md-3">
+                       <%= form.submit "発信する", :class=>"btn btn-info", style:"font-size:48px;" %>
+                    </div>   <!-- col-md-3 -->
+                 </div>  <!-- コメント記入部 row　end-->
+        <% end %>  <!-- form_with Commnet  -->
+<!-- つぶやき記入部 end --> 
+   <Hr style="border: solid 3px; border-color:#c0c0c0;">
+     <p style="text-align:left; font-size:36px;"> 自分の今までの発信<%= @all_murmurs_count %>件</p>
+     <div class="" id="region_search_tab3">
+          <%= render partial: 'tab3', locals: {murmurs: @murmurs, tab: "tab3"} %>   <!-- 検索結果が表示される -->
+     </div>
+     <div class = "row region_search_tab3_pagenate">
+           &emsp;&emsp;<%= paginate @murmurs,params: {:tab => "tab3"}, :remote => true %>
+     </div>
+      
+   </div>  <!-- tab3 end-->
+ 
+　</div>  <!-- tab-content -->
+</div>  <!-- items container-->
+
+
+<%= render "layouts/yield_footer" %>  
+  <br><br><br><br>

@@ -1,0 +1,56 @@
+<div class="container" style="margin:20px; padding: 0 100px;">
+<h1> お問い合わせフォーム </h1>
+
+<%= form_with(model: @contact, local: true) do |f| %>
+ 
+<!-- 名前 -->
+ <%= f.label :"お名前" %>
+    <% if @error_details.key?(:contact_name) %>
+          <div class ="error_state">
+            名前<%= @error_messages[:contact_name][0]%>
+          </div>
+          <div class = "field form-group">
+             <%= f.text_field :contact_name,class:'form-control',style: "background-color: #ffA0A0;" %>
+          </div>
+    <% else %>
+          <div class = "field form-group">
+             <%= f.text_field :contact_name,class:'form-control'%>
+          </div>
+    <% end %>
+<!-- 名前end -->
+<!-- メール -->
+ <%= f.label :"メールアドレス" %>
+    <% if @error_details.key?(:contact_email) %>
+          <div class ="error_state">
+            メールアドレス<%= @error_messages[:contact_email][0]%>
+          </div>
+          <div class = "field form-group">
+             <%= f.text_field :contact_email,class:'form-control',style: "background-color: #ffA0A0;" %>
+          </div>
+    <% else %>
+          <div class = "field form-group">
+             <%= f.text_field :contact_email,class:'form-control'%>
+          </div>
+    <% end %>
+<!-- メールend -->
+<!-- メッセージ -->
+ <%= f.label :"メッセージ" %>
+    <% if @error_details.key?(:message) %>
+          <div class ="error_state">
+            メッセージ<%= @error_messages[:message][0]%>
+          </div>
+          <div class = "field form-group">
+             <%= f.text_area :message,class:'form-control',style: "background-color: #ffA0A0; height:300px;" %>
+          </div>
+    <% else %>
+          <div class = "field form-group">
+             <%= f.text_area :message,class:'form-control', style: "height:300px;"%>
+          </div>
+    <% end %>
+<!-- メッセージend -->
+<div>
+ <%= f.submit "送信する", :class=> "btn btn-info" %>
+ </div>
+<% end %>
+
+</div>

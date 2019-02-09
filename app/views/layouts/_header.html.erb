@@ -1,20 +1,25 @@
-<nav class = "navbar bg-warning navbar-dark">
-  <a class = "navbar-brand" href="/"><%=ApplicationHelper::APP_NAME %></a>
+<nav class = "navbar navbar-expand-md bg-warning navbar-dark">
+  
+<a class = "navbar-brand" href="/"><%=ApplicationHelper::APP_NAME %></a>
     <% if user_signed_in? %>
-       <ul class="nav justfy-content-end">
-            <% if current_user.role == "admin" %>
-            <li class="nav-item">
-             <%= link_to "アドミンページ", adminhome_path, class: "nav-link text-secondary"%>
-            </li>
-            <% end %>
-            <li class="nav-item">
-              <%= link_to "ログイン情報編集", edit_user_registration_path, class: "nav-link text-secondary"%>
-            </li>
-            <li class="nav-item">
-              <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "nav-link text-secondary"%>
-            </li>
-
-        </ul>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end " id="navbarNavAltMarkup">
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                   <% if current_user.role == "admin" %>
+                      <%= link_to "アドミンページ", adminhome_path, class: "nav-link text-secondary"%>
+                  <% end %>
+                </li>
+                <li class="nav-item dropdown"> 
+                   <%= link_to "ログイン情報編集", edit_user_registration_path, class: "nav-link text-secondary"%>
+                </li>
+                <li class="nav-item dropdown">
+                  <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "nav-link text-secondary"%>
+                </li>
+            </ul>
+        </div>
     <% end %>
 </nav>
 <br>

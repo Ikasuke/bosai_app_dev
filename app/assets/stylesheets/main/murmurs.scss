@@ -22,3 +22,24 @@
 .murmur_pic{
   height:200px;
 }
+
+/*===============================================================
+      smart_phone
+  ================================================================*/
+
+  .murmur_smart {
+    border: solid 1px;
+        border-color: #c0c0c0;
+}
+
+.murmur_smart p{
+        text-align: left;
+        font-size:36px;
+        word-break: break-all;
+        overflow: hidden;
+        
+}
+
+.murmur_pic_smart{
+  width:400px;
+}

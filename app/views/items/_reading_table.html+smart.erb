@@ -1,0 +1,154 @@
+<!-- partial  みんなのグッズ検索結果 items, like_hash　tab  が必要 -->
+
+      <table class="table">  <!-- みんなのグッズ一覧 -->
+        <tbody>
+       <% items.each do |item| %>  <!-- グッズごとのループ -->
+       <tr><td>
+<!-- プロフィール画像、グッズ画像、説明部の始まり-->   
+   <!-- グッズ画像、説明を格納する -->
+          <div class="row"> 
+          <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="item_smart">  <!-- グッズ画像部  -->
+                  <%= link_to edit_item_path(item) do %>
+                     <div class= " p-3 pic_frame_smart" style="height:300px;">
+                        <%= image_tag item.picture.url, class: "item_pic"%>
+                        <% if current_user == item.user then %>
+                          <% counts = 0 %>
+                          <% item.comments.each do |comment|%>
+                             <% if comment.read == "unread" %>
+                                 <% counts = counts +1 %> 
+                             <% end %> 
+                          <% end %>
+                          <% if counts > 0 %>
+                            <p> <%= counts %> </p>
+                          <% end %> 
+                        <% end %> <!-- if current_user end -->
+                     </div> <!-- pic_frame-->
+                  <% end %> <!-- link_to end -->
+             </div> <!--グッズ画像部end item_smart end -->
+            </div> <!-- col end-->
+            <div class="col-lg-6 col-md-6 col-sm-6"> <!--説明部  -->
+              <table class="table">
+                  <tr><td>名前:</td><td><%= item.item_name %> </td></tr>
+                  <tr><td>大分類:</td>
+                      <td>
+                          <% if item.category.id == 1 %>
+                              <i class="fa fa-tint fa-2x" style="color:#4080ff;"></i>
+                          <% elsif item.category.id == 2 %>
+                              <i class="fa fa-cutlery fa-2x" style="color:#808080;"></i>
+                          <% elsif item.category.id == 3 %>
+                              <i class="fa fa-home fa-2x" style="color:#f8c10e;"></i>
+                          <% end %>
+                            <%= item.category.category_name %> 
+                      </td>
+                  </tr>
+                  <tr><td>小分類:</td><td><%= item.subcategory.subcategory_name %> </td></tr>
+              </table>      
+                  <dev class="public_memo_explain">
+                      <%= simple_format(item.item_public_memo) %>
+                  </dev>
+            </div>  
+          </div> 
+  <!-- グッズ画像、説明を格納するrow のend -->
+  <!-- プロフィールを格納するrow -->
+          <div class="row">
+             <div class="col-lg-6 col-md-6 col-sm-6"> 
+    <!-- イイネボタン、いいね数、コメント数表示部の始まり-->   
+                 <div class="row"> <!-- イイネボタン-->
+                     <div class="col-lg-1 col-md-1 col-sm-1"></div>
+                        <div class= "col-lg-11 col-md-11 col-sm-11"> <!-- いいねボタン-->
+                           <div  class="goodbtn_item<%= item.id %> goodbtn_part_smart">
+                             <% if like_hash.has_value?(item.id)%>
+                               <%= button_to likeitem_path(like_hash.key(item.id)), method: :delete, class: 'off-btn',remote: true do %>
+                                 取り消す
+                               <% end %>
+                             <% else %>
+     　                         <%= form_with model: Likeitem.new do |form|%>
+                                  <%= form.hidden_field :item_id, :value => item.id %>
+                                  <%= form.hidden_field :user_id, :value => current_user.id %>
+                                  <%= form.submit "いいね", :class=>"good-btn" %>
+                                <% end %>       
+                             <% end %>
+                           </div>
+                           <br>
+                        </div> <!-- いいねボタン end -->
+                  </div>  <!-- row end いいねボタン -->
+                  <div class="row"> <!-- いいね数、コメント数表示部 -->
+                     <div class="col-lg-1 col-md-1 col-sm-1"></div>
+                        <div class= "col-lg-11 col-md-11 col-sm-11"> <!-- いいね数、コメント数-->
+                            <span class="count_part_smart">
+                                 いいね:<span class="count_item<%= item.id %>"><%= item.likeitems.count %></span>件/
+                                 コメント数:<span class="comment_num<%= item.id %>" ><%= item.comments.count %></span>件
+                            </span>
+                        </div> <!-- いいね数、コメント数　end-->
+                 </div>  <!-- row end  いいね数、コメント数表示部  -->
+<!-- イイネボタン、いいね数、コメント数表示部のend-->
+             </div> <!-- col-6 end -->
+             <div class="col-lg-2 col-md-2 col-sm-2">  <!-- プロフィール画像部-->
+               <% if item.user.id == current_user.id %>
+                <%= link_to home_path do %>
+                  <div class= "card p-3">
+                   <%= image_tag item.user.avatar.url, class: "card-img-top rounded-circle", style:"width:120px;"%>
+                  </div>
+                <% end %> <!-- link_to end -->
+               <% else %>
+               <%= link_to user_path(item.user.id) do %>
+                 <div class= "card p-3">
+                  <%= image_tag item.user.avatar.url, class: "card-img-top rounded-circle", style:"width:120px;"%>
+                 </div>
+               <% end %> <!-- link_to end -->
+               <% end %> <!-- if current.user? end -->
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4">
+               <p style="font-size:28px;" align="left"><%= item.user.public_name %> </p>
+               <p style="font-size:28px;"   align="left"> <%= item.user.area1 %>/ <%= item.user.area2 %>  </p>
+             </div>
+          </div> 
+<!--プロフィール部のrow end-->
+
+         <br>
+  <!-- コメント欄始まり-->   
+           <p align="left"style="margin:0; font-size:28px;"> コメント <p>     
+           <div class="row" style="margin:10px;"> <!--コメント欄 -->    
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 comments_box" id="<%= tab %>_comments_box_<%= item.id %>" >
+              <!-- comment/index をjs で呼び出して表示  -->
+              </div>   
+           </div> <!-- row-->
+  <!-- コメント欄終わり -->
+          <br>
+  <!-- コメント記入部始まり -->
+         <!-- コメント記入部-->
+               <%= form_with model: Comment.new do |form|%>
+                 <div class="row">
+                    <div class="col-md-9">
+                      <div class="field form-group" style="margin:0; text-align:left;">
+                              <%= form.text_area :comment_detail,placeholder: 'コメントを記入してください',class:'', style:"width:700px;"%>
+                      </div>  <!-- field -->
+                      <%= form.hidden_field :item_id, :value => item.id %>
+                       <!-- picture-->       
+                       <div class="img_field" onClick='$("#file_<%= item.id %>").click()' >  <!-- アイコン表示 jqueryでクリックされるとfiel_fieldに入る -->
+                           <i class="fa fa-image fa-2x img_point"></i>
+                       </div>
+                        <br>
+                        <div class = "form-group">
+                           <%= form.file_field :comment_picture, class: "item_#{item.id} form_pic_mc", style: "display:none;", id: "file_#{item.id}" %>
+                        </div>  <!-- form-group -->
+                        <div class="row">
+                          <div class="col-lg-4 col-md-4 col-sm-4">
+                               <div class= "preview_<%= item.id %>">
+                                  <%= image_tag '' ,class:"card-img-top" %>
+                               </div>
+                          </div>
+                        </div>
+                        <!-- picture end -->
+                    </div>
+                    <div class="col-md-3">
+                       <%= form.submit "コメント", :class=>"btn btn-info",:name=> "#{tab}_commit_id#{item.id}",style: "font-size:48px; width:200px;" %>
+                    </div>   <!-- col-md-2 -->
+                 </div>  <!-- コメント記入部 row　end-->
+               <% end %>  <!-- form_with Commnet  -->
+            <hr style="border: solid 1px;color:#f0c020;">
+          </td></tr><!-- 一つのグッズの一覧終了  -->
+       <% end %> <!-- グッズごとのループ終了 -->
+      </tbody>
+      </table>  <!--グッズ一覧終了 -->

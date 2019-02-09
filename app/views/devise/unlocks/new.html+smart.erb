@@ -1,0 +1,18 @@
+<h1 style="font-size:64px;">アカウント凍結解除メールの再送信をする</h1>
+<div style="font-size:48px;margin:30px;">
+ <%= form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f| %>
+   <%= devise_error_messages! %>
+
+  <div class="form-group">
+    <%= f.label :メールアドレス %><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "", placeholder: "Enter email",style: "font-size:40px; height:100px; width:800px;  border:solid;" %>
+  </div>
+ 
+ <br>
+  <div class="actions pb-5">
+    <%= f.submit "アカウント凍結解除メールの再送信" %>
+  </div>
+ <% end %>
+
+ <%= render "devise/shared/links" %>
+</div>
