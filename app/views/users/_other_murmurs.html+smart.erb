@@ -5,19 +5,19 @@
                   <div class= "card p-3">
                    <%= image_tag murmur.user.avatar.url, class: "card-img-top rounded-circle"%>
                   </div>
-                  <p style="font-size:14px;"><%= murmur.user.public_name %> </p>
-                    <p style="font-size:12px;"> <%= murmur.user.area1 %>/ <%= murmur.user.area2 %>  </p>   
+                  <p style="font-size:28px;"><%= murmur.user.public_name %> </p>
+                    <p style="font-size:18px;"> <%= murmur.user.area1 %>/ <%= murmur.user.area2 %>  </p>   
               </div> <!-- col end-->
               <div class="col-lg-10 col-md-10 col-sm-10">
                      <div class="comment">
                            <% if murmur.murmur_picture_file_name.nil? %>
                            <% else %>
-                              <div class= " p-3 pic_frame">
+                              <div class= " p-3 pic_frame_smart" style="height:500px;">
                                   <%= image_tag murmur.murmur_picture.url, class: "item_pic"%>
                               </div>
                            <% end %>   
                               <p> <%= simple_format(murmur.murmur_detail) %> </p>
-                              <div class="comment_time">
+                              <div class="comment_time_smart">
                                   <p><%= murmur.created_at.strftime('%Y/%m/%d-%H:%M') %> </p>
                                </div>
                     </div>  <!-- comment end-->

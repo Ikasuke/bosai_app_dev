@@ -41,10 +41,8 @@
      top:0;
      right:0;
      margin: 0px;
-     
      text-align: center;
      line-height: 30px;
-    
      width: 30px;
 	height: 30px;
      border-radius: 50%;
@@ -55,7 +53,8 @@
     height:100%;
   }
   
-  .public_memo_explain p{
+
+  .public_memo_explain {
     text-align: left;
     border-radius: 0px;
     border: solid 1px;
@@ -94,3 +93,44 @@
 .img_point{
   cursor: pointer;
 }
+
+/*===============================================================
+      smart_phone
+  ================================================================*/
+
+  .item_smart{
+    text-align: center;
+    font-size:28px;
+    font-family: 'HiraKakuProN-W6';
+ }
+
+.pic_frame_smart{
+    position: relative;
+   border:solid 1px;
+   height:200px;
+}
+// 写真部分の右上に赤い丸
+.pic_frame_smart p{
+    position: absolute;
+    color: #ffffff;
+    background-color: #ff0000;
+    top:0;
+    right:0;
+    margin: 0px;
+    text-align: center;
+    line-height: 60px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    font-size:28px;
+}
+
+.public_memo_explain_smart {
+    text-align: left;
+    border-radius: 0px;
+    border: solid 1px;
+    border-color: #dddddd;
+    background-color: #fafafa;
+    word-break: break-all;
+    font-size: 40px;
+  }

@@ -62,10 +62,6 @@
     color: #606060;
     }
 
-.start_info h5{
-    border-bottom: solid 3px #f0c020;
-}
-
  /*===============================================================
       smart_phone
   ================================================================*/
@@ -122,3 +118,18 @@ font-size: 48px;
 .start_info_smart h5{
     border-bottom: solid 3px #f0c020;
 }
+
+.bs_explain_smart{
+    border-radius: 10px;
+    border: solid 3px;
+    border-color: #c0c0c0;
+    background-color: #fffff7;
+}
+.bs_explain_smart h5{
+//background-color: #ffffa0;
+ border-bottom: solid 3px #f0c020;
+}
+.bs_explain_smart p{
+    font-size: 48px;
+    color: #606060;
+    }

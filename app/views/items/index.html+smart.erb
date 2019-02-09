@@ -1,0 +1,113 @@
+<div class="items">
+        <nav class = "navbar bg-warning navbar-dark box-header">
+          <a class = "navbar-brand" style="color:#ffffff; font-size:48px;">みんなのグッズ</a>
+        </nav>
+
+  <!-- タブボタン部分 -->
+       <ul class="nav nav-tabs">
+        <li class="nav-item" style="border: solid 1px; border-color: #c0c0c0;">
+          <a href="#tab1" class="nav-link active" data-toggle="tab">グッズを探す</a>
+        </li>
+        <li class="nav-item" style="border: solid 1px; border-color: #c0c0c0;">
+          <a href="#tab2" class="nav-link" data-toggle="tab">いいねグッズ</a>
+        </li>
+      </ul>
+
+ <br>
+<!-- タブ内容部分 -->
+  <div class="tab-content">
+    <div id="tab1" class="tab-pane active">   
+        <%= form_with(url: '/items',method: 'get',local: true) do |form|%>
+        <%= form.hidden_field :select_category_id, :value => @select_category_id , class: "select_category_id" %>  <!-- js用カテゴリアイコン 検索結果が表示されるように変数を格納 -->
+        <%= form.hidden_field :family_num, :value => @family_num , class: "family_num" %> <!-- js用家族構成チェックボックス 検索結果が表示されるように変数を格納 -->
+<!-- 検索選択部分 -->
+<!-- カテゴリー選択 -->
+        <div class = "category_search">
+          <div style="font-weight:bold;">
+          分類を選択
+          </div>
+          <br>
+           <%= form.label :大分類 %>
+          <div>
+            <span class="water_search" style="padding: 0 40px;" >  <!-- アイコン表示 jqueryでクリックされるとfiel_fieldに入る -->
+                           <i class="water_icon fa fa-tint fa-3x"  id ="<%= @subcategories[1].to_json %>" style="color:#e0e0ff;"></i>
+            </span>
+            <span class="food_search" style="padding: 0 40px;">  <!-- アイコン表示 jqueryでクリックされるとfiel_fieldに入る -->
+                          <i class="food_icon fa fa-cutlery fa-3x"  id ="<%= @subcategories[2].to_json %>" style="color:#e0e0e0;"></i>
+            </span>
+            <span class="goods_search" style="padding: 0 40px;">  <!-- アイコン表示 jqueryでクリックされるとfiel_fieldに入る -->
+                          <i class="goods_icon fa fa-home fa-3x"  id ="<%= @subcategories[3].to_json %>" style="color:#fff080;"></i>
+            </span>
+          </div>
+          <div id="category_display" style="display:none;" >
+          </div>
+             <br>
+          <div>
+             <%= form.label :小分類 %>
+             <br>
+               <%= form.select :subcategory_id,[@select_subcategory],{}, {:class => "category_tab" , :style=>"font-size:40px; width:500px;"}%>
+          </div>
+          <br> 
+        </div> <!-- category_search end-->
+<!-- カテゴリー選択end -->
+          <br>
+<!-- エリア選択 -->
+        <div class="area_search">
+           <div style="font-weight:bold;">
+           地域を選択
+           </div>
+           <br>
+           <div class = "form-group">
+              <%= form.label :都道府県 %>
+              <%= form.select :area1, [@area1],{} ,{ class: "" }  %>
+           </div> 
+　         <div class = "form-group">
+              <%= form.label :市町村 %>
+              <%= form.select :area2, [@area2],{} ,{ class: "" }  %>
+           </div>
+        </div> <!-- area_search end -->
+<!-- エリア選択end -->
+          <br>
+<!-- 家族構成選択 -->
+        <div class="family_search">
+           <div style="font-weight:bold;">
+            家族構成を選択
+          </div>
+           <br>
+            <% %w(一人暮らし 65歳以上の人がいる 子供がいる(未就学児含む) 未就学児がいる ).each.with_index do |ingredient,i| %>
+             <div>
+               <%= check_box_tag "family[]", ingredient,false,id:"family_ingredients_#{i}",style:" transform: scale(3);" %>
+               &emsp;<%= ingredient %>
+               &emsp;
+              </div>
+            <% end %>
+        </div> <!-- family_search end -->
+<!-- 家族構成選択end -->
+         <br>
+        <%= form.hidden_field :search, :value => 'true' %>
+        <%= form.submit "検索", :class=>"btn btn-info", :style=>"font-size:54px; width:200px;" %>
+        <% end %>
+       <br>
+       <hr style="border: solid 3px;color:#c0c0c0;">
+      <div class="reading_table" id="reading_table_tab1">
+          <%= render partial: 'reading_table', locals: {items: @items, like_hash: @like_hash, tab: "tab1"} %>   <!-- 検索結果が表示される -->
+      </div>
+      <div class = "row reading_table_tab1_pagenate">
+            &emsp;&emsp;<%= paginate @items,params: {:tab => "tab1", :area1 => @area1, :area2=>@area2}, :remote => false %>  <!-- trueにするとコメント画像の一時表示ができない（jsが発火しないため) -->
+      </div>
+   </div> <!-- tab1 container-->
+
+   <div id="tab2" class="tab-pane">
+       <p> いいねしたアイテムが表示されます </p>
+       <p> 表示されない場合は、ページを更新してください </p>
+        <div class="reading_table" id="reading_table_tab2">
+           <%= render partial: 'reading_table', locals: {items: @items_like, like_hash: @like_hash, tab: "tab2"} %> 
+        </div>
+
+   </div>  <!-- tab2 end-->
+  
+</div>  <!-- tab-content -->
+</div>  <!-- items container-->
+
+<%= render "layouts/yield_footer" %>  
+  <br><br><br><br>

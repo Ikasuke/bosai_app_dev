@@ -1,49 +1,54 @@
-<div class="items container">
-<div class="row">
-    <div class="col-md-3">
-<!--name-->       
-　    
-      <p>グッズ名:<%= @item.item_name%>
-
-<!-- picture-->
-        <div class="preview col-md-10 col-sm-10 col-xs-6">
-        <%= image_tag @item.picture.url, class: "card-img-top"%>
-        </div>
-    </div>  <!-- col-md-3-->
-    <div class="col-md-6">
-     <table class="table table-borderless">   
-               <tr><td></td><td></td></tr>
- <!-- category-->
+<div class="items">
+   
+     <table class="table table-borderless">
+<!--name-->    
+               <tr>
+                 <td> グッズ名:
+                 </td>
+                 <td> <%= @item.item_name%>
+                 </td>
+                 </tr>
+ <!-- 大分類-->
                 <tr>
-                  <td>カテゴリー</td>
-                  <td>
-                      <% if @item.category.id == 1 %>
+                  <td>大分類</td>
+                  <td> <% if @item.category.id == 1 %>
                               <i class="fa fa-tint fa-2x" style="color:#4080ff;"></i>
                           <% elsif @item.category.id == 2 %>
                               <i class="fa fa-cutlery fa-2x" style="color:#808080;"></i>
                           <% elsif @item.category.id == 3 %>
                               <i class="fa fa-home fa-2x" style="color:#f8c10e;"></i>
                           <% end %>
-                            <%= @item.category.category_name %> 
                   </td>
                 </tr>
-<!--public_memo-->    
+<!-- 小分類-->
                 <tr>
-                  <td>memo</td>
-                  <td>
-                     <div class="public_memo_explain">
-                         <p><%= @item.item_public_memo %></p>
-                    </div>
+                  <td>小分類</td>
+                  <td>   <%= @item.subcategory.subcategory_name %>
                   </td>
                 </tr>
+
      </table>
-    </div>  <!-- col-md-4 -->
-    <div class="col-md-3">
       
+<!-- picture-->
+        <div class="" style="margin:100px;" >
+          <%= image_tag @item.picture.url, class: "card-img-top"%>
+        </div>
+
+   
+
+<!--public_memo--> 
+<p>memo<p>   
+   <div class="public_memo_explain_smart" style="margin:10px;">
+                        <%= simple_format(@item.item_public_memo) %>
+   </div>
+
 <br>
 
 <!-- イイネボタン、いいね数、コメント数表示部の始まり-->   
-                <div  class="goodbtn_item<%= @item.id %> goodbtn_part">
+           <div class="row">
+            <div class="col-md-3"></div>
+               <div class="col-md-6">
+                <div  class="goodbtn_item<%= @item.id %> goodbtn_part_smart">
                    <% if @like_hash.has_value?(@item.id)%>
                      <%= button_to likeitem_path(@like_hash.key(@item.id)), method: :delete, class: 'off-btn',remote: true do %>
                      取り消す
@@ -56,41 +61,43 @@
                       <% end %>       
                    <% end %>
                 </div> <!-- いいねボタン -->
+            </div>
+            </div>
             <div class="count_region"> <!-- いいね数、コメント数-->
-                  <span class="count_part">
+                  <span class="count_part_smart">
                       いいね:<span class="count_item<%= @item.id %>"><%= @item.likeitems.count %></span>件/
                       コメント数:<span class="comment_num<%= @item.id %>" ><%= @item.comments.count %></span>件
                   </span>
             </div> <!-- いいね数、コメント数　end-->
 
-  <br><br><br> 
+  <br><br>
     
-  <%= link_to "#{@item.user.public_name}さんのページへ", user_path(@item.user.id), class: 'btn btn-default gray',style: "font-size: 12px;" %>
- </div> <!--col-md-3 -->
- </div>   <!-- row -->
+  <%= link_to "#{@item.user.public_name}さんのページへ", user_path(@item.user.id), class: 'btn btn-default gray',style: "font-size: 48px;" %>
+  <br><br>
 
-</div>  <!-- items container -->
+</div>  <!-- items -->
 
 <br>
 
-<div class="items container">
-    <nav class = "navbar bg-warning navbar-dark box-header row">
-        <a class = "navbar-brand">コメント</a>
+<div class="items">
+    <nav class = "navbar bg-warning navbar-dark box-header">
+        <a class = "navbar-brand" style="font-size:48px;">コメント</a>
       </nav>
  <!-- コメント欄始まり  * tab0とする-->        
-           <div class="row"> <!--コメント欄 -->    
-              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 comments_box" id="tab0_comments_box_<%= @item.id %>" >
+           <div style="padding: 0 20px;"> <!--コメント欄 -->    
+              <div class="comments_box" id="tab0_comments_box_<%= @item.id %>" >
               <!-- comment/index をjs で呼び出して表示  -->
               </div>   
            </div> <!-- row-->
   <!-- コメント欄終わり -->
-       <!-- コメント記入部-->
+     <br>     
+  <!-- コメント記入部-->
                <%= form_with model: Comment.new do |form|%>
                  <div class="row">
-                    <div class="col-md-10">
-                      <div class="field form-group" style="margin:0;">
-                              <%= form.text_area :comment_detail,placeholder: 'コメントを記入してください',class:'form-control'%>
-                      </div>  <!-- field-->
+                    <div class="col-md-9">
+                      <div class="field form-group" style="margin:0; text-align:left;">
+                              <%= form.text_area :comment_detail,placeholder: 'コメントを記入してください',class:'', style:"width:700px;"%>
+                      </div>  <!-- field -->
                       <%= form.hidden_field :item_id, :value => @item.id %>
                        <!-- picture-->       
                        <div class="img_field img_point" onClick='$("#file_<%= @item.id %>").click()' >  <!-- アイコン表示 jqueryでクリックされるとfiel_fieldに入る -->
@@ -111,17 +118,15 @@
                         <!-- picture end -->
 
                     </div>
-                    <div class="col-md-2">
-                       <%= form.submit "コメント", :class=>"btn btn-info",:name=> "tab0_commit_id#{@item.id}" %>
-                    </div>   <!-- col-md-2 -->
+                    <div class="col-md-3">
+                       <%= form.submit "コメント", :class=>"btn btn-info",:name=> "tab0_commit_id#{@item.id}",style: "font-size:48px; width:200px;"  %>
+                    </div>   <!-- col-md-3 -->
                  </div>  <!-- コメント記入部 row　end-->
                <% end %>  <!-- form_with Commnet  -->
 
   </div>   <!-- items container end-->
 
 </div>
-
-
-<% content_for :sidebar_left do %>
- <%= render partial: 'layouts/sidebar', locals: {user: @item.user, remindmails: nil} %>
-<% end %>
+<br>
+<%= render "layouts/yield_footer" %>  
+  <br><br><br><br>

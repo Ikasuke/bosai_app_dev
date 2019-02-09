@@ -1,0 +1,109 @@
+<div class="items">
+  <nav class = "navbar bg-info navbar-dark box-header">
+    <a class = "navbar-brand" style="color:#ffffff; font-size:48px;"><%= @user.public_name %>さんの防災について</a>
+  </nav>
+   <!-- タブボタン部分 -->
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a href="#tab1" class="nav-link active" data-toggle="tab"><i class="fa fa-tint fa-2x" style="color:#4080ff;"></i></a>
+  </li>
+   <li class="nav-item">
+    <a href="#tab2" class="nav-link" data-toggle="tab"><i class="fa fa-cutlery fa-2x" style="color:#808080;"></i></a>
+  </li>
+  <li class="nav-item">
+    <a href="#tab3" class="nav-link" data-toggle="tab"><i class="fa fa-home fa-2x" style="color:#f8c10e;"></i></a>
+  </li>
+  <li class="nav-item">
+    <a href="#tab4" class="nav-link" data-toggle="tab">発信履歴</a>
+  </li>
+</ul>
+    <br>
+    <div class="tab-content">
+      <div id="tab1" class="tab-pane other_tab1 active">
+          <%= render partial: 'other_items_display', locals: { item_cate_sort: @item_cate_sort,category: @categories.find(1)} %>
+     </div>  <!-- tab1-->
+       <div id="tab2" class="tab-pane other_tab2">
+           <%= render partial: 'other_items_display', locals: { item_cate_sort: @item_cate_sort,category: @categories.find(2)} %>
+     </div>  <!-- tab2-->
+       <div id="tab3" class="tab-pane other_tab3">
+            <%= render partial: 'other_items_display', locals: { item_cate_sort: @item_cate_sort,category: @categories.find(3)} %>
+     </div>  <!-- tab3-->
+
+<!-- tab4 -->
+      <div id="tab4" class="tab-pane">
+        <div class="other_murmurs">
+         <%= render partial: 'other_murmurs', locals: {murmurs: @murmurs} %>
+        </div>
+        <div class = "row other_murmurs_paginate">
+           &emsp;&emsp;<%= paginate @murmurs, params: {:tab => "other_murmurs"}, :remote => true %>
+        </div> 
+     </div>
+<!-- tab4 end-->
+    </div> <!-- tab-content end -->
+</div>  <!-- items container -->
+
+<br><br>
+<!----   プロフィール   ---->
+<div class= 'profile'>
+    <div>
+      <nav class = "navbar bg-info navbar-dark box-header">
+          <a class = "navbar-brand" style="color: #ffffff;  font-size:48px;">プロフィール</a>
+      </nav>
+   <div class='row'>
+        <div class="col-md-12">
+           <%= link_to user_profile_path do %>
+             <div class= "card p-4" style="width: 500px;">
+                   <%= image_tag @user.avatar.url, class: "card-img-top rounded-circle"%>
+             </div>
+             <% end %>
+        </div>
+   <div class="col-md-12">
+      <table class="table table-striped table-condensed ">
+      
+      <tr><td>ニックネーム:</td></tr>
+      <tr><td>
+       <% if @user.public_name.blank? %>
+        <span class="yet_blank" style="font-size: 48px;"> 未記入 <span>
+       <% else %>
+         <%= @user.public_name %>
+       <% end %>
+      </td></tr>
+      <tr><td>エリア:</td></tr> 
+      <tr><td>
+       <% if @user.area1.blank? %>
+         <span class="yet_blank" style="font-size: 48px;"> 未記入<span>
+       <% else %>
+         <%= @user.area1 %> / <%= @user.area2 %>
+       <% end %>
+      </td></tr>
+      <tr><td>家族構成:</td></tr>
+      <tr><td>
+         <% if @user.senior > 0 %>
+          大人(65歳以上):&emsp;<%= @user.senior %>人 <br>
+        <% end %>
+        <% if @user.middle > 0 %>
+          大人(20歳〜64歳):&emsp;<%= @user.middle %>人 <br>
+        <% end %>
+        <% if @user.junior > 0 %>
+          子供(6歳〜19歳):&emsp;<%= @user.junior %>人<br>
+        <% end %>
+        <% if @user.infant > 0 %>
+          未就学児(0歳〜5歳):&emsp;<%= @user.infant %>人 <br>
+        <% end %>
+      </td></tr>
+      <tr><td>自己紹介:</td></tr>
+      <tr><td>
+        <% if @user.profile.blank? %>
+         <span class="yet_blank"style="font-size: 48px;" > 未記入</span>
+       <% else %>
+         <p style="font-size: 48px;  word-break: break-all;"> <%= @user.profile %> </p>
+       <% end %>
+      </td></tr>
+     </table>
+    </div>  
+</div>  <!-- col-mid-12 -->
+</div>
+</div>
+
+<%= render "layouts/yield_footer" %>  
+  <br><br><br><br>
