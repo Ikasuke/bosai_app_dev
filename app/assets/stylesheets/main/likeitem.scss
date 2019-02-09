@@ -8,7 +8,6 @@
   .good-btn{
      background-color: #e0e0e0;
      width: 100%;
-     font-size: 14px;
      border-radius: 5px;
      border: solid 1px;
      border-color: #c0c0c0;
@@ -20,7 +19,6 @@
   .off-btn{
     background-color: #f8c10e;
     width: 100%;
-    font-size: 14px;
     border-radius: 5px;
     border: solid 1px;
     border-color: #c0c0c0;
@@ -39,4 +37,21 @@
     position: absolute;
     top: 5px;
     left: 0;
+}
+
+/*===============================================================
+      smart_phone
+  ================================================================*/
+
+.count_part_smart{
+    font-size: 32px;
+    position: absolute;
+    top: 5px;
+    left: 0;
+}
+
+.goodbtn_part_smart{
+    position: relative;
+    height: 60px;
+      
 }

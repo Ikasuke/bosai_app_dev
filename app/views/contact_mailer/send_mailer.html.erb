@@ -1,0 +1,10 @@
+<h3><%= @contact.contact_name %> 様 から問い合わせがありました。</h3>
+
+<h5> お名前 </h5>
+<p> <%= @contact.contact_name %> </p>
+
+<h5> メールアドレス </h5>
+<p> <%= @contact.contact_email %> </p>
+
+<h5>お問い合わせ内容</h5>
+<%= simple_format(@contact.message) %>

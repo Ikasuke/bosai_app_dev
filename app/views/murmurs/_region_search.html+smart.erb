@@ -1,0 +1,98 @@
+<!-- partial  地域の人々検索結果 @allusers, @max_items,@favorite_hash @new_murmursが必要 -->
+ <div class="">
+  <%if tab == "tab1" %>
+   <p style="font-size:48px;"> &emsp;&emsp;<%= @area %> を表示しています</p>
+   <% end %>
+   <div class="">  
+       <% allusers.each do |a_user| %>
+        <div class="row" style="margin:5px;">
+         <div class="col-lg-4 col-md-4 col-sm-4">  <!-- プロフィール画像部-->
+           <% if a_user.id == current_user.id %>
+                <%= link_to home_path do %>
+                  <div class= "card p-3">
+                    <%= image_tag a_user.avatar.url, class: "card-img-top rounded-circle"%>
+                  </div>
+                <% end %> <!-- link_to end -->
+               <% else %>
+               <%= link_to user_path(a_user.id) do %>
+                 <div class= "card p-3">
+                  <%= image_tag a_user.avatar.url, class: "card-img-top rounded-circle"%>
+                 </div>
+               <% end %> <!-- link_to end -->
+               <% end %> <!-- if current.user? end -->
+            <div>
+                 <p style="font-size:34px;"><%= a_user.public_name %> </p>
+                 <p style="font-size:30px;"><%= a_user.area1 %>/ <%= a_user.area2 %>  </p>
+                 <p style="font-size:24px;">
+                    <% if a_user.senior > 0 %>
+                        大人(65歳以上):&emsp;<%= a_user.senior %>人 <br>
+                    <% end %>
+                    <% if a_user.middle > 0 %>
+                        大人(20歳〜64歳):&emsp;<%= a_user.middle %>人 <br>
+                    <% end %>
+                    <% if a_user.junior > 0 %>
+                       子供(6歳〜19歳):&emsp;<%= a_user.junior %>人<br>
+                    <% end %>
+                    <% if a_user.infant > 0 %>
+                       未就学児(0歳〜5歳):&emsp;<%= a_user.infant %>人 <br>
+                    <% end %>
+                 </p>
+                  <p style="font-size:30px;"> 登録グッズ数: <%= a_user.items.count  %>  </p>
+            </div> 
+         </div>  <!-- プロフィール画像部 end-->
+         <div class="col-lg-8 col-md-8 col-sm-8">    
+                <p style="font-size:32px; text-align:left; margin:0;"> 最近の発信:  </p>
+                
+                <% if new_murmurs[a_user.id].nil? %>
+                  <div div class="murmur_smart"  style="color: #a0a0a0;">  
+                    <%= simple_format("ありません") %>  
+                  </div>
+                 <%else %>
+                  <div div class="murmur_smart">  
+                       <% if new_murmurs[a_user.id].murmur_picture_file_name.nil? %>
+                       <% else %>
+                          <div class= "p-3">
+                              <%= image_tag new_murmurs[a_user.id].murmur_picture.url, class: "murmur_pic_smart"%>
+                          </div>
+                       <% end %>
+                    <%= simple_format(new_murmurs[a_user.id].murmur_detail) %>  
+                  </div>
+                  <p style="font-size:20px; text-align: left;"> <%= new_murmurs[a_user.id].created_at.strftime('%Y/%m/%d-%H:%M') %> </p>
+                 <% end %>
+         </div>
+         <!-- スマホでは、スペースがないため、いいねが多いアイテムを紹介しない -->
+        </div>  <!-- row end -->
+
+<!--お気に入りボタン  -->
+　       <div class="row" style="margin:5px;"> <!--row-->
+            <div class= "col-lg-5 col-md-5 col-sm-5"> 
+                <div  class="favorite_btn_<%= a_user.id %> goodbtn_part_smart">
+                   <% if favorite_hash.has_value?(a_user.id)%>
+                     <%= button_to favorite_path(favorite_hash.key(a_user.id)), method: :delete, class: 'off-btn',remote: true do %>
+                     取り消す
+                     <% end %>
+                   <% else %>
+     　               <%= form_with model: Favorite.new do |form|%>
+                        <%= form.hidden_field :to_user_id, :value => a_user.id %>
+                        <%= form.hidden_field :from_user_id, :value => current_user.id %>
+                        <%= form.submit "お気に入り", :class=>"good-btn" %>
+                      <% end %>       
+                   <% end %>
+                </div>
+            </div>  <!--  col end -->
+         </div>
+<!-- お気に入りボタンend -->
+<!-- お気に入り数  -->
+            <div class="row" style="margin:10px; padding: 0 10px; ">
+               <div class="col-lg-7 col-md-7 col-sm-7 count_region">
+                  <span class="count_part_smart">
+                      お気に入り:<span class="count_favorite<%= a_user.id %>"><%= a_user.favorites_of_to_user.count %></span>件
+                </span>                
+               </div>
+            </div> 
+<!-- お気に入り end -->
+  <br><br>
+        <hr style="border: solid 1px;color:#f0c020;">
+      <% end%> <!-- each end -->
+     </div> <!--container-->
+     </div>  <!--row -->

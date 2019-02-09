@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>防災ストッカー</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body data-controller="<%= params[:controller] %>" data-action="<%= params[:action] %>">
+   
+  <div class="wrapper">
+<!-- header -->
+    <header>
+     <%= render "layouts/header" %>
+     </header>
+<!-- header end -->
+<!-- simple_sidebar --> 
+   <% if user_signed_in? %>
+     <nav class="nav_profile">
+      	<ul class="nav_profile_list" style="font-size:40px;list-style: none;">
+		     <li>プロフィール</li>
+         <li><%= link_to user_profile_path do %>
+             <div class= "card p-4">
+                   <%= image_tag current_user.avatar.url, class: "card-img-top rounded-circle"%>
+             </div>
+             <% end %>
+         </li>
+         <li style="padding: 20px 20px;"><% if current_user.public_name.blank? %>
+              <span class="yet_blank"> ニックネームを記入してください <span>
+              <% else %>
+              <%= current_user.public_name %>
+              <% end %>
+          </li>
+          <li style="padding: 20px 20px;"> <% if current_user.area1.blank? %>
+                 <span class="yet_blank"> エリアを記入してください<span>
+               <% else %>
+                 <%= current_user.area1 %> / <%= current_user.area2 %>
+               <% end %>
+          </li>
+          <li style="padding: 20px 20px;"> <% if current_user.senior > 0 %>
+                大人(65歳以上):&emsp;<%= current_user.senior %>人 <br>
+               <% end %>
+               <% if current_user.middle > 0 %>
+                 大人(20歳〜64歳):&emsp;<%= current_user.middle %>人 <br>
+               <% end %>
+               <% if current_user.junior > 0 %>
+                 子供(6歳〜19歳):&emsp;<%= current_user.junior %>人<br>
+               <% end %>
+               <% if current_user.infant > 0 %>
+                 未就学児(0歳〜5歳):&emsp;<%= current_user.infant %>人 <br>
+               <% end %></li>
+           <li style="padding: 20px 20px;"><% if current_user.profile.blank? %>
+                   <span class="yet_blank"> 自己紹介を記入してください</span>
+               <% else %>
+                  <p style="font-size: 28px;  word-break: break-all;"> <%= current_user.profile %> </p>
+               <% end %></li>
+           <% if current_user.remindmails.nil? %>
+           <% else%>
+              <% current_user.remindmails.each_with_index do |remindmail, i| %>
+                <li><%= "メールアドレス#{i+1}"%><br> 
+                  <%= remindmail.remind_email %>
+                </li>
+              <% end %>
+            <% end %>
+           <li style="padding: 20px 20px;"><%= link_to '編集する', user_profile_path, style: "color:#4080ff;" %></li>
+	     </ul>
+	     <!-- /.gNav__list -->
+     </nav>
+    <% end %>
+<!-- simple_sidebar end -->
+<!-- main& footer -->
+     <div id="mainContent" style="font-size:48px;">
+       <br><br>
+        <%= flash_message(flash[:success], :success) if flash[:success] %>
+        <%= flash_message(flash[:error], :danger) if flash[:error] %>
+        <%= flash_message(flash[:alert], :warning) if flash[:alert] %>
+        <%= flash_message(flash[:notice], :info) if flash[:notice] %>
+              <div class="contents"><%= yield %> </div>
+      <footer>
+        <%= render "layouts/footer" %>         
+      </footer>
+     </div>
+   </div> <!-- wrapper end-->
+  </body>
+</html>

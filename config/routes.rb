@@ -48,4 +48,7 @@ Rails.application.routes.draw do
 
   ##favorite model
   resources :favorites
+
+  ##contact model
+  resources :contacts, only: [:new, :create]
 end

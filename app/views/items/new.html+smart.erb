@@ -1,10 +1,11 @@
-<div class="items container">
-    
+<div class="items_smart">
+ <br><br>
+  <h1 style="font-size:64px;"> 防災アイテムの新規登録 </h1>
+  <br>
 <%= form_with model: Item.new do |form|%>    
-<div class="row smart_new">
-  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+<div class="smart_new">
 <!-- category-->
-   <table class="table">   
+   <table class="table smart_table" >   
         <tr>
           <td>大分類</td>
           <td>
@@ -32,7 +33,7 @@
                </div>
             <% else %>
             <% end %>
-               <%= form.select :subcategory_id,[],{:prompt => "選択してください"}, {:class => "btn category_tab", :style=>"font-size:40px;"}%>
+               <%= form.select :subcategory_id,[],{:prompt => "選択してください"}, {:class => " category_tab", :style=>"font-size:40px;"}%>
            </td>
         </tr>
 <!--name-->   
@@ -43,11 +44,11 @@
               名前<%= @i_error_messages[:item_name][0]%>
             </div>
             <div class = "field form-group">
-              <%= form.text_field :item_name,class:'form-control',style: "background-color: #ffA0A0; font-size:40px;" %>
+              <%= form.text_field :item_name,class:'',style: "background-color: #ffA0A0; font-size:40px; height:60px; width:800px;  border:solid;" %>
             </div>
           <% else %>
             <div class = "field form-group">
-              <%= form.text_field :item_name,class:'form-control',style: "font-size:40px; height:60px;"%>
+              <%= form.text_field :item_name,class:'',style: "font-size:40px; height:60px; width:800px;  border:solid;"%>
             </div>
           <% end %>
         </td>
@@ -61,11 +62,11 @@
                 数量<%= @i_error_messages[:item_volume][0]%>
               </div>
               <div class="field">
-                <%= form.select :item_volume, @volume_selects,{:prompt => "数量を選択して下さい"}, {:class => "btn category_tab" , :style=>"font-size:40px; background-color: #ffA0A0;"}%>
+                <%= form.select :item_volume, @volume_selects,{:prompt => "数量を選択して下さい"}, {:class => "category_tab" , :style=>"font-size:40px; background-color: #ffA0A0;"}%>
               </div>
            <% else %>
                <div class="field">
-               <%= form.select :item_volume, @volume_selects,{:prompt => "数量を選択して下さい"}, {:class => "btn category_tab", :style=>"font-size:40px;"}%>
+               <%= form.select :item_volume, @volume_selects,{:prompt => "数量を選択して下さい"}, {:class => "category_tab", :style=>"font-size:40px;"}%>
               </div>
           <% end %>
         </td>
@@ -79,7 +80,7 @@
 　          <%= label_tag :expiry_check, "期限を入力する"%>
           </div>
             <div id="expiry_parts" style="display:none;" >
-              <%= form.date_select :expiry_parts, {}, class: 'form-control',style: "font-size:40px; height:60px;" %>
+              <%= form.date_select :expiry_parts, {}, class: '',style: "font-size:40px; width:200px;  height:100px;" %>
               </div>
           </td>
         </tr>
@@ -106,23 +107,27 @@
 <!--public_memo-->    
  <div class="field form-group">
     <%= form.label :"公開用memo" %>
-    <%= form.text_area :item_public_memo,class:'form-control',style: "font-size:40px; height:160px;"%>
+    <%= form.text_area :item_public_memo,class:'',style: "font-size:40px; width:800px; height:240px;"%>
   </div>
 <!--private_memo-->    
 <div class="field form-group">
     <%= form.label :"非公開memo" %>
-    <%= form.text_area :item_private_memo,class:'form-control',style: "font-size:40px; height:160px;"%>
+    <%= form.text_area :item_private_memo,class:'',style: "font-size:40px; width:800px; height:240px;"%>
   </div>
 
 <div class="field">
-    <%= form.label :"公開する" %>
+    
     <%= form.check_box :item_open_flag, {style:" transform: scale(3);"},  "公開する", "公開しない"%>
+    &emsp;<%= form.label :"公開する" %>
 </div>
+<br>
+<%= form.submit "登録する", :class=>"btn btn-info",style: "font-size:52px; width:400px;" %>
+<br><br>
 
-<%= form.submit "登録する", :class=>"btn btn-info",style: "font-size:40px;" %>
-
- </div> <!--col -->
-</div>   <!-- row -->
+</div>  
 <% end %>  <!--  form_with end -->
 
-</div>  <!-- container -->
+</div> 
+
+<%= render "layouts/yield_footer" %>  
+  <br><br><br><br>

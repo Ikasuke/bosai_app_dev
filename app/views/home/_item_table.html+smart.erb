@@ -1,0 +1,29 @@
+<!--  itemが必要   -->
+ <!-- 未読コメントの数を計算 -->
+   <% counts = 0 %>
+    <% item.comments.each do |comment|%>
+        <% if comment.read == "unread" %>
+           <% counts = counts +1 %> 
+        <% end %> 
+    <% end %>
+ <!--  計算終了 -->
+          <div class="item col-lg-3 col-md-4 col-sm-4">
+               <%= link_to edit_item_path(item) do %>
+                  <div class= " p-1 pic_frame_smart">
+                      <%= image_tag item.picture.url, class: "item_pic"%>
+                      <% if counts > 0 %>
+                      <p> <%= counts %> </p>
+                      <% end %>
+                   </div> <!-- pic_frame-->
+                <% end %> <!-- link_to end -->
+                 <table class="table" style="font-size:32px;">
+                   <tr><td><%= "名前"%></td> <td><%= item.item_name %></td></tr>
+                   <tr><td><%= "数量"%></td> <td><%= item.item_volume %></td></tr>
+                   <% if item.item_expiry.blank? %>
+                   <tr><td><%= "期限"%></td> <td> なし </td></tr>
+                   <% else %>
+                   <tr><td><%= "期限"%></td> <td><%= item.item_expiry.strftime('%Y年%m月%d日') %></td></tr>
+                   <% end %>  <!-- if item.expiry end-->
+                 </table>
+               </div> <!-- item-->
+            

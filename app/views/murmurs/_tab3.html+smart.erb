@@ -1,0 +1,21 @@
+<!-- @murmursが必要 -->
+<% @murmurs.each do |murmur| %>  <!-- 呟きごとのループ -->
+         <div class="row" style="margin:20px;">
+              <div class="col-lg-12 col-md-12 col-sm-12">
+                     <div class="comment">  
+                           <% if murmur.murmur_picture_file_name.nil? %>
+                           <% else %>
+                              <div class= " p-3 pic_frame_smart" style="height:500px;" >
+                                  <%= image_tag murmur.murmur_picture.url, class: "item_pic"%>
+                              </div>
+                           <% end %>
+                              <p> <%= simple_format(murmur.murmur_detail) %> </p>
+                              <div class="comment_time_smart">
+                                  <p><%= murmur.created_at.strftime('%Y/%m/%d-%H:%M') %> </p>
+                               </div>
+                    </div>  <!-- comment end-->
+              </div> <!-- col end -->
+        </div> <!-- row end -->
+    <br>
+        <hr style="border: solid 1px;color:#f0c020;">
+      <% end %>
