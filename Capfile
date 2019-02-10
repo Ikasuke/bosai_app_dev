@@ -14,6 +14,7 @@ require "capistrano/scm/git"
 require "capistrano/puma"
 require "capistrano/nginx"
 require "capistrano/sidekiq"
+require "whenever/capistrano"
 
 install_plugin Capistrano::SCM::Git
 install_plugin Capistrano::Puma
