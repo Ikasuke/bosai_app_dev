@@ -40,6 +40,7 @@ set :sidekiq_config, "#{current_path}/config/sidekiq.yml"
 
 #whenever
 set :whenever_identifier, -> { "#{fetch(:application)}_#{fetch(:stage)}" }
+set :whenever_roles, -> { :batch }
 
 namespace :puma do
   desc "Create Directories for Puma Pids and Socket"
