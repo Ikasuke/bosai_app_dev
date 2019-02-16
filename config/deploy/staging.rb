@@ -53,4 +53,4 @@
 #     auth_methods: %w(publickey password)
 #     # password: "please use keys"
 #   }
-server "ria10.example.com", user: "ria10", roles: %w{web app batch} # batchを足した
+#server "ria10.example.com", user: "ria10", roles: %w{web app batch} # batchを足した
