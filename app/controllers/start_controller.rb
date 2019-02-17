@@ -17,4 +17,8 @@ class StartController < ApplicationController
 
   def start_info
   end
+
+  def admin_info
+    render :layout => "startpage"
+  end
 end

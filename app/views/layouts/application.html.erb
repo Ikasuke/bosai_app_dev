@@ -18,8 +18,8 @@
         <%= flash_message(flash[:alert], :warning) if flash[:alert] %>
         <%= flash_message(flash[:notice], :info) if flash[:notice] %>
         <div class="row">
-              <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12"> <%= yield :sidebar_left %></div>    
-              <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12"><%= yield %> </div>
+              <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12"> <%= yield :sidebar_left %></div>    
+              <div class="col-lg-9 col-md-8 col-sm-12 col-xs-12"><%= yield %> </div>
         </div>
      </div>
 
