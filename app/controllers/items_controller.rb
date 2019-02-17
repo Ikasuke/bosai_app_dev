@@ -5,6 +5,10 @@ class ItemsController < ApplicationController
   PER = 10
 
   def show #他人のも観れる
+    if Item.find(params[:id]).item_open_flag == "公開しない"
+      #公開していないので見せない=> 404 erroeにする
+      render :file => "#{Rails.root}/public/404", :layout => false, :status => :not_found
+    end
     @like_hash = Likeitem.where(user_id: current_user.id).pluck(:id, :item_id).to_h
   end
 

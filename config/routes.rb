@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   get "user/area_city", to: "users#area_city"
   get "info", to: "info#index"
   get "start_info", to: "start#start_info"
+  get "admin_info", to: "start#admin_info"
   ## user model
   get "user/profile", to: "users#profile"
   resources :users
