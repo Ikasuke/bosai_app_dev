@@ -16,9 +16,16 @@ class StartController < ApplicationController
   end
 
   def start_info
+    if browser.device.mobile? #browser.chrome? #
+    else
+      render :layout => "startpage"
+    end
   end
 
   def admin_info
-    render :layout => "startpage"
+    if browser.device.mobile? #browser.chrome? #
+    else
+      render :layout => "startpage"
+    end
   end
 end
