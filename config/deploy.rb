@@ -42,6 +42,15 @@ set :sidekiq_config, "#{current_path}/config/sidekiq.yml"
 set :whenever_identifier, -> { "#{fetch(:application)}_#{fetch(:stage)}" }
 set :whenever_roles, -> { :app }
 
+#nginx
+set :nginx_use_ssl, true
+set :nginx_server_name, "bosai-stocker.com"
+set :nginx_ssl_certificate, "/etc/pki/nginx/bosai-stocker.com.chained.cert"
+set :nginx_ssl_certificate_key, "/etc/pki/nginx/bosai-stocker.com.key"
+#set :nginx_config_name about=> RailsSamplApp_production
+set :nginx_ssl_protocol, "TLSv1 TLSv1.1 TLSv1.2"
+set :nginx_ssl_ciphers, "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH"
+
 namespace :puma do
   desc "Create Directories for Puma Pids and Socket"
   task :make_dirs do

@@ -104,6 +104,7 @@ Rails.application.configure do
       access_key_id: Rails.application.credentials.production[:AWS_ACCESS_KEY_ID],
       secret_access_key: Rails.application.credentials.production[:AWS_SECRET_ACCESS_KEY],
     },
+    s3_protocol: "https",
   }
 
   # Action mailer

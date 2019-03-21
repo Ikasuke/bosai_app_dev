@@ -25,7 +25,7 @@ server {
 <% if fetch(:nginx_ssl_certificate) -%>
   ssl_certificate <%= fetch(:nginx_ssl_certificate) %>;
 <% else -%>
-  ssl_certificate /etc/ssl/certs/<%= fetch(:nginx_config_name) %>.crt;
+  ssl_certificate /etc/ssl/nginx/<%= fetch(:nginx_config_name) %>.crt;
 <% end -%>
 <% if fetch(:nginx_ssl_certificate_key) -%>
   ssl_certificate_key <%= fetch(:nginx_ssl_certificate_key) %>;
@@ -38,16 +38,20 @@ server {
   server_name <%= fetch(:nginx_server_name) %>;
   root <%= current_path %>/public;
   try_files $uri/index.html $uri @puma_<%= fetch(:nginx_config_name) %>;
-
-  client_max_body_size 4G;
+  ssl_protocols <%= fetch(:nginx_ssl_protocol) %>;
+  ssl_ciphers <%= fetch(:nginx_ssl_ciphers) %>;
+  client_max_body_size 20M;
   keepalive_timeout 10;
-
+  
   error_page 500 502 504 /500.html;
   error_page 503 @503;
 
   location @puma_<%= fetch(:nginx_config_name) %> {
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header Host $host;
+    proxy_set_header X-Forwarded-Host $host;
+    proxy_set_header X-Forwarded-Server $host;
+    proxy_set_header X-Real-IP $remote_addr;
     proxy_redirect off;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection "Upgrade";
