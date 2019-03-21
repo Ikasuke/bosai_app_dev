@@ -49,7 +49,7 @@ Rails.application.configure do
   # config.action_cable.allowed_request_origins = [ 'http://example.com', /http:\/\/example.*/ ]
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-   config.force_ssl = true
+  config.force_ssl = true
 
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
@@ -104,7 +104,7 @@ Rails.application.configure do
       access_key_id: Rails.application.credentials.production[:AWS_ACCESS_KEY_ID],
       secret_access_key: Rails.application.credentials.production[:AWS_SECRET_ACCESS_KEY],
     },
-    s3_protocol: :https,
+    s3_protocol: :http,
   }
 
   # Action mailer
