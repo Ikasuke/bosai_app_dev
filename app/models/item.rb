@@ -25,7 +25,8 @@
 class Item < ApplicationRecord
   has_attached_file :picture,
                     styles: {medium: "300x300>", thumb: "100x100>"},
-                    default_url: "http://localhost:3000/noimage.jpg"
+                    convert_options: {all: "-strip"},
+                    default_url: "/noimage.jpg"
 
   ## validation
   validates_attachment_content_type :picture, content_type: ["image/jpeg", "image/gif", "image/png"]

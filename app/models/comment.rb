@@ -20,7 +20,8 @@ class Comment < ApplicationRecord
   #paperclip
   has_attached_file :comment_picture,
                     styles: {medium: "300x300>", thumb: "100x100>"},
-                    default_url: "http://localhost:3000/noimage.jpg"
+                    convert_options: {all: "-strip"},
+                    default_url: "/noimage.jpg"
 
   ## validation
   #item_nameは空でないこと、長さが1000文字以内であること

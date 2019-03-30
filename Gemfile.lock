@@ -145,6 +145,7 @@ GEM
       warden (~> 1.2.3)
     erubi (1.7.1)
     execjs (2.7.0)
+    exifjs-rails (1.0.0.beta1)
     faker (1.9.1)
       i18n (>= 0.7)
     ffi (1.9.25)
@@ -407,6 +408,7 @@ DEPENDENCIES
   capistrano3-puma
   coffee-rails (~> 4.2)
   devise
+  exifjs-rails
   faker
   font-awesome-rails
   jbuilder (~> 2.5)

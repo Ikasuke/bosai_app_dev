@@ -18,13 +18,14 @@ class Murmur < ApplicationRecord
   #paperclip
   has_attached_file :murmur_picture,
                     styles: {medium: "300x300>", thumb: "100x100>"},
-                    default_url: "http://localhost:3000/noimage.jpg"
+                    convert_options: {all: "-strip"},
+                    default_url: "/noimage.jpg"
 
   # #リレーション
   # user
   belongs_to :user
- ## validation
- validates_attachment_content_type :murmur_picture, content_type: ["image/jpeg", "image/gif", "image/png"]
+  ## validation
+  validates_attachment_content_type :murmur_picture, content_type: ["image/jpeg", "image/gif", "image/png"]
   #validate 空でないこと、長さが3000以内であること
   validates :murmur_detail, presence: true, length: {maximum: 3000}
   ##scope　　最新の登録が前に来るように

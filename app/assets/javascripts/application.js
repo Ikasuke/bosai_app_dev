@@ -22,8 +22,8 @@
 //= require moment
 //= require moment/ja
 //= require tempusdominus-bootstrap-4.js
+//= require exif-js/exif
 //= require_tree ./main
-
 
    $(document).on('turbolinks:load', function () {
     $('#datetimepicker1').datetimepicker({       
@@ -51,34 +51,75 @@
     });
 
 
-
     $('.form_pic').on('change',function(e){
         var file = e.target.files[0], 
         reader = new FileReader(),
         $preview =$(".preview");
         t = this;
-        console.log(file.type.indexOf("image"));
+        //console.log(file.type.indexOf("image"));
+
         // 画像ファイル以外の場合は何もしない
         if (file.type.indexOf("image") < 0) {
              return false;
         }
         
             reader.onload = (function(file){
-                console.log(file);
+                console.log("orientation" + file);
+                
+                var orientation = 1;
+                EXIF.getData(file, function(){
+                    orientation = file.exifdata.Orientation;
+                    if (orientation == undefined){ orientation = 1}
+                });
                  return function(e){
+                    console.log(orientation);
                      //既存のプレビューを削除
                      $preview.empty();
                      // change_picの領域にロードした画像を表示するimgタグを追加
+                   if(orientation == 6 ||orientation == 5){
                      $preview.append($('<img>').attr({
                                src: e.target.result,
                                class: "preview card-img-bottom",
-                               title: file.name
+                               title: file.name,
+                                style: "width:266px; transform:rotate(90deg);"    
                      }));
+                    }
+                    else if(orientation == 1 ||orientation == 2){
+                        $preview.append($('<img>').attr({
+                                  src: e.target.result,
+                                  class: "preview card-img-bottom",
+                                  title: file.name,
+                                  style: "width:200px;"
+                        }));
+                    }
+                    else if(orientation == 8 ||orientation == 7){
+                        $preview.append($('<img>').attr({
+                                  src: e.target.result,
+                                  class: "preview card-img-bottom",
+                                  title: file.name,
+                                  style: "width:266px; transform:rotate(270deg);"
+                        }));
+                    }
+                    else if(orientation == 3 || orientation == 4){
+                        $preview.append($('<img>').attr({
+                                  src: e.target.result,
+                                  class: "preview card-img-bottom",
+                                  title: file.name,
+                                  style: "width:200px; transform:rotate(180deg);"
+                        }));
+                    }
+                    else{
+                        $preview.append($('<img>').attr({
+                                  src: e.target.result,
+                                  class: "preview card-img-bottom",
+                                  title: file.name,
+                                  style: "width:200px;"
+                        }));
+                    } 
                  };
                 })(file);
-          reader.readAsDataURL(file);      
+          reader.readAsDataURL(file);
      });
-  
   
 
 }); //document end
