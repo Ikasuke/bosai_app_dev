@@ -10,7 +10,7 @@
           <div class="item col-lg-3 col-md-4 col-sm-4">
                <%= link_to edit_item_path(item) do %>
                   <div class= " p-3 pic_frame">
-                      <%= image_tag item.picture.url, class: "item_pic"%>
+                      <%= image_tag item.picture.url(:medium), class: "item_pic"%>
                       <% if counts > 0 %>
                       <p> <%= counts %> </p>
                       <% end %>

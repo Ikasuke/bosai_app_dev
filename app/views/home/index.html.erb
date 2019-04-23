@@ -1,28 +1,28 @@
 
 <div class="items container ">
   <nav class = "navbar bg-warning navbar-dark box-header row">
-    <a class = "navbar-brand" style="color:#ffffff;">あなたの防災グッズ</a>
+    <a class = "navbar-brand" style="color:#ffffff;">あなたの防災アイテム</a>
   </nav>
   
   <!-- タブボタン部分 -->
 <ul class="nav nav-tabs">
   <li class="nav-item">
-    <a href="#tab1" class="nav-link active" data-toggle="tab">登録順</a>
+    <a href="#tab1" class="nav-link active tab_icon" data-toggle="tab" title="登録順に防災アイテムが表示されます">登録順</a>
   </li>
   <li class="nav-item">
-    <a href="#tab2" class="nav-link" data-toggle="tab"><i class="fa fa-tint fa-2x" style="color:#4080ff;"></i></a>
+    <a href="#tab2" class="nav-link tab_icon" data-toggle="tab" title="登録した「水・飲料」が表示されます"><i class="fa fa-tint fa-2x" style="color:#4080ff;"></i></a>
   </li>
    <li class="nav-item">
-    <a href="#tab3" class="nav-link" data-toggle="tab"><i class="fa fa-cutlery fa-2x" style="color:#808080;"></i></a>
+    <a href="#tab3" class="nav-link tab_icon" data-toggle="tab" title="登録した「食料品」が表示されます"><i class="fa fa-cutlery fa-2x" style="color:#808080;"></i></a>
   </li>
    <li class="nav-item">
-    <a href="#tab4" class="nav-link" data-toggle="tab"><i class="fa fa-home fa-2x" style="color:#f8c10e;"></i></a>
+    <a href="#tab4" class="nav-link tab_icon" data-toggle="tab" title="登録した「防災グッズ」が表示されます"><i class="fa fa-home fa-2x" style="color:#f8c10e;"></i></a>
   </li>
   <li class="nav-item">
-    <a href="#tab5" class="nav-link" data-toggle="tab">期限近い</a>
+    <a href="#tab5" class="nav-link tab_icon" data-toggle="tab" title="期限が近い防災アイテムが表示されます">期限近い</a>
   </li>
   <li class="nav-item">
-    <a href="#tab6" class="nav-link" data-toggle="tab">新しいコメント (<%= @all_unread_counts%>件) </a>
+    <a href="#tab6" class="nav-link tab_icon" data-toggle="tab" title="新しくコメントされた防災アイテムが表示されます">新しいコメント (<%= @all_unread_counts%>件) </a>
   </li>
 </ul>
 

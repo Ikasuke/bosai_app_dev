@@ -1,5 +1,7 @@
 {
   "name": "bosai_app_dev",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "exif-js": "^2.3.0"
+  }
 }

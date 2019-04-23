@@ -50,7 +50,8 @@ class User < ApplicationRecord
 
   has_attached_file :avatar,
                     styles: {medium: "300x300>", thumb: "100x100>"},
-                    default_url: "http://localhost:3000/rocket.jpg"
+                    convert_options: {all: "-strip"},
+                    default_url: "/rocket.jpg"
 
   ## validation
   validates_attachment_content_type :avatar, content_type: ["image/jpeg", "image/gif", "image/png"]

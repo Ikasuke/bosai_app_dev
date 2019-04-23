@@ -11,13 +11,13 @@
           <td>
              &emsp;
             <span class="water" >  <!-- アイコン表示 jqueryでクリックされるとfiel_fieldに入る -->
-                           <i class="water_icon fa fa-tint fa-3x"  id ="<%= @subcategories[1].to_json %>" style="color:#e0e0ff;"></i>
+                           <i class="water_icon fa fa-tint fa-3x category_icon"  id ="<%= @subcategories[1].to_json %>" style="color:#e0e0ff;" title="水・飲料"></i>
                        </span>&emsp;
             <span class="food">  <!-- アイコン表示 jqueryでクリックされるとfiel_fieldに入る -->
-                          <i class="food_icon fa fa-cutlery fa-3x"  id ="<%= @subcategories[2].to_json %>" style="color:#e0e0e0;"></i>
+                          <i class="food_icon fa fa-cutlery fa-3x category_icon"  id ="<%= @subcategories[2].to_json %>" style="color:#e0e0e0;" title="食料品"></i>
              </span>&emsp;
             <span class="goods">  <!-- アイコン表示 jqueryでクリックされるとfiel_fieldに入る -->
-                          <i class="goods_icon fa fa-home fa-3x"  id ="<%= @subcategories[3].to_json %>" style="color:#fff080;"></i>
+                          <i class="goods_icon fa fa-home fa-3x category_icon"  id ="<%= @subcategories[3].to_json %>" style="color:#fff080;" title="防災グッズ"></i>
              </span>&emsp;
              <br><br>
              <div id="category_display" style="display:none;" ></div>
@@ -106,7 +106,7 @@
            <div class="col-md-3"> 
             <p style="text-align:left; margin:0;"> &emsp;写真 </p>
 　           <div class="img_field" onClick="$('#file').click()" style="height:60px;" >  <!-- アイコン表示 jqueryでクリックされるとfiel_fieldに入る -->
-                   <i class="fa fa-image fa-3x img_point"></i>
+                   <i class="fa fa-image fa-3x img_point picture_icon" title="クリックして写真を選択してください"></i>
              </div>
            </div>
            <div class="col-md-4">
@@ -118,12 +118,12 @@
           <br>
           <div class="row"> <div class="col-md-3"></div>
               <div class="col-lg-6 col-md-6 col-sm-6">
-                      <div class = "preview">
+                      <div class = "preview" style="">
                           <%= image_tag '' ,class:"card-img-top" %>
                       </div>
               </div>
           </div>
-       <br>
+       <br><br>
 <!--public_memo-->    
           <div class="row">
               <div class="col-md-12">
